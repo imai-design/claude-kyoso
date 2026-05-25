@@ -484,7 +484,21 @@
     <a href="#tiers" class="btn btn-primary">入信する</a>
     <a href="#lore" class="btn btn-ghost">神話を読む</a>
   </div>
-  <p style="margin-top:24px; color:var(--ink-mute); font-size:0.85rem; letter-spacing:0.1em;">⚜ Founding 100名は学徒¥3,000を永年固定 ⚜</p>
+
+  <div style="margin-top:48px; max-width:560px; width:100%;">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+      <div style="font-size:0.85rem; color:var(--ink-mute); letter-spacing:0.15em;">CREW COUNTER</div>
+      <div style="font-size:0.95rem; color:var(--ink); font-weight:700;"><span id="crew-current">0</span> / 10,000 クルー</div>
+    </div>
+    <div style="height:8px; background:var(--cream-deep); border-radius:999px; overflow:hidden; border:1px solid var(--line);">
+      <div id="crew-bar" style="height:100%; width:0.01%; background:linear-gradient(90deg, var(--orange), var(--orange-deep)); transition:width 0.6s ease;"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-top:12px; font-size:0.8rem; color:var(--ink-mute);">
+      <div>⚜ Founding <strong style="color:var(--orange-deep);"><span id="founding-remaining">100</span></strong>枠 残</div>
+      <div>建国: 2026-05-25</div>
+    </div>
+  </div>
+
   <div style="display:none;">
   </div>
 </section>
