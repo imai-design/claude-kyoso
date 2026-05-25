@@ -1,7 +1,7 @@
 {
-  "current": 0,
+  "current": 1,
   "target": 10000,
   "foundingTotal": 100,
-  "foundingRemaining": 100,
+  "foundingRemaining": 99,
   "lastUpdated": "2026-05-26"
 }
