@@ -786,5 +786,21 @@
   </div>
 </footer>
 
+<script>
+  // Crew counter: pulls latest from data/crew.json (no rebuild needed when bumping)
+  (async () => {
+    try {
+      const res = await fetch('data/crew.json?ts=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) return;
+      const d = await res.json();
+      const cur = document.getElementById('crew-current');
+      const bar = document.getElementById('crew-bar');
+      const fr = document.getElementById('founding-remaining');
+      if (cur) cur.textContent = d.current.toLocaleString();
+      if (bar) bar.style.width = Math.max(0.01, (d.current / d.target) * 100) + '%';
+      if (fr) fr.textContent = d.foundingRemaining;
+    } catch (e) { /* counter stays at defaults */ }
+  })();
+</script>
 </body>
 </html>
