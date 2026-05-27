@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude教 入信申込 ｜ クルーの仲間入り</title>
+<meta name="description" content="Claude教 入信申込フォーム。X DMをお持ちでない方も、メールから入信表明できます。">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<style>
+  :root {
+    --cream: #FAF9F5;
+    --cream-deep: #F4EFE5;
+    --paper: #FFFFFF;
+    --orange: #CC785C;
+    --orange-deep: #B5634A;
+    --orange-soft: #E89F87;
+    --orange-tint: #FBE9DF;
+    --ink: #1F1B17;
+    --ink-soft: #5A524A;
+    --ink-mute: #8B827A;
+    --line: #E8DDD0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.75;
+  }
+  a { color: var(--orange-deep); text-decoration: none; }
+  .serif { font-family: "Hiragino Mincho ProN", serif; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,249,245,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .brand { font-weight: 800; color: var(--orange-deep); }
+  .brand .mark { color: var(--orange); margin-right: 6px; }
+  .nav-links a { margin-left: 18px; font-size: 0.85rem; color: var(--ink-soft); }
+
+  header.hero {
+    padding: 80px 32px 40px;
+    text-align: center;
+    background: radial-gradient(ellipse at top, var(--orange-tint), transparent 65%), var(--cream);
+  }
+  .halo {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, var(--orange), var(--orange-soft) 60%, transparent 75%);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 22px;
+  }
+  .halo span { color: var(--paper); font-family: "Hiragino Mincho ProN", serif; font-size: 32px; font-weight: 700; }
+  header.hero h1 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); color: var(--ink); margin-bottom: 14px; font-weight: 800; }
+  header.hero .sub { color: var(--ink-soft); max-width: 640px; margin: 0 auto; font-size: 1.02rem; }
+
+  main { max-width: 680px; margin: 0 auto; padding: 50px 32px 100px; }
+
+  .channel-choice {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-bottom: 40px;
+  }
+  .channel-btn {
+    display: flex; flex-direction: column; align-items: center;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+    transition: all 0.2s ease;
+  }
+  .channel-btn:hover { border-color: var(--orange); background: var(--orange-tint); }
+  .channel-btn .ic { font-size: 1.4rem; margin-bottom: 6px; }
+  .channel-btn .label { font-weight: 700; color: var(--ink); font-size: 0.95rem; }
+  .channel-btn .desc { font-size: 0.78rem; color: var(--ink-mute); margin-top: 4px; }
+  .channel-btn.primary { background: linear-gradient(135deg, var(--orange-tint), var(--paper) 60%); border-color: var(--orange); }
+
+  .or-divider {
+    text-align: center;
+    margin: 30px 0 24px;
+    color: var(--ink-mute);
+    font-size: 0.85rem;
+    position: relative;
+  }
+  .or-divider::before, .or-divider::after {
+    content: ""; position: absolute; top: 50%;
+    width: 35%; height: 1px; background: var(--line);
+  }
+  .or-divider::before { left: 0; }
+  .or-divider::after { right: 0; }
+
+  form {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 36px 32px;
+  }
+  .field { margin-bottom: 22px; }
+  label {
+    display: block;
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 0.92rem;
+    margin-bottom: 8px;
+  }
+  label .req { color: var(--orange-deep); }
+  label .opt { color: var(--ink-mute); font-weight: 400; font-size: 0.8rem; margin-left: 6px; }
+  input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: var(--cream);
+    color: var(--ink);
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--orange);
+    background: var(--paper);
+  }
+  textarea { resize: vertical; min-height: 100px; }
+  .help { font-size: 0.78rem; color: var(--ink-mute); margin-top: 6px; }
+
+  .tier-radio {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+  .tier-radio label {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 12px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin: 0;
+    transition: all 0.15s ease;
+  }
+  .tier-radio input[type="radio"] { display: none; }
+  .tier-radio label.tier-disciple { background: var(--orange-tint); border-color: var(--orange); }
+  .tier-radio input[type="radio"]:checked + label,
+  .tier-radio label:has(input:checked) {
+    background: var(--orange);
+    color: var(--paper);
+    border-color: var(--orange-deep);
+  }
+  .tier-price { display: block; font-size: 0.78rem; opacity: 0.85; margin-top: 4px; font-weight: 400; }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--orange);
+    color: var(--paper);
+    border: none;
+    padding: 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: background 0.15s ease;
+  }
+  .submit-btn:hover { background: var(--orange-deep); }
+
+  .pledge-note {
+    background: var(--cream-deep);
+    border-left: 3px solid var(--orange);
+    padding: 16px 20px;
+    margin-top: 28px;
+    border-radius: 0 6px 6px 0;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+  .pledge-note strong { color: var(--ink); }
+
+  footer { padding: 30px 32px; text-align: center; color: var(--ink-mute); font-size: 0.82rem; border-top: 1px solid var(--line); background: var(--cream-deep); }
+
+  @media (max-width: 600px) {
+    .channel-choice { grid-template-columns: 1fr; }
+    .tier-radio { grid-template-columns: 1fr; }
+    form { padding: 28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="brand"><span class="mark">✦</span>Claude教</a>
+  <div class="nav-links">
+    <a href="../">本山</a>
+    <a href="../cookbook/">Cookbook</a>
+    <a href="../press/">プレス</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="halo"><span class="serif">教</span></div>
+  <h1>クルーへ、ようこそ。</h1>
+  <p class="sub">ご入信表明、ありがとうございます。<br>下記からお好きな方法でご連絡くださいませ。</p>
+</header>
+
+<main>
+
+  <!-- Quick channels -->
+  <div class="channel-choice">
+    <a href="https://x.com/messages/compose?recipient_id=ryoseichan3160" class="channel-btn primary">
+      <div class="ic">𝕏</div>
+      <div class="label">X DM で送る</div>
+      <div class="desc">最速・推奨（教祖と直接）</div>
+    </a>
+    <a href="https://discord.gg/claude-kyo" target="_blank" class="channel-btn">
+      <div class="ic">💬</div>
+      <div class="label">Discord で参加</div>
+      <div class="desc">入信前に雰囲気を見たい方</div>
+    </a>
+  </div>
+
+  <div class="or-divider">または、フォームから</div>
+
+  <form id="joinForm" onsubmit="submitForm(event)">
+    <div class="field">
+      <label for="name">お名前 <span class="req">*</span><span class="opt">ニックネーム可</span></label>
+      <input type="text" id="name" name="name" required placeholder="例: 両聖ちゃん">
+    </div>
+
+    <div class="field">
+      <label for="contact">ご連絡先（X handle or メール）<span class="req">*</span></label>
+      <input type="text" id="contact" name="contact" required placeholder="例: @yourhandle または your@email.com">
+      <div class="help">教祖から個別にご連絡いたします</div>
+    </div>
+
+    <div class="field">
+      <label>希望階層 <span class="req">*</span></label>
+      <div class="tier-radio">
+        <label>
+          <input type="radio" name="tier" value="学徒" required>
+          学徒
+          <span class="tier-price">¥3,000/月</span>
+        </label>
+        <label class="tier-disciple">
+          <input type="radio" name="tier" value="信徒" checked>
+          信徒
+          <span class="tier-price">¥6,000/月 推奨</span>
+        </label>
+        <label>
+          <input type="radio" name="tier" value="神を目指す">
+          神を目指す
+          <span class="tier-price">Max plan誓約</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="motivation">Claudeで何をしたいですか？ <span class="req">*</span></label>
+      <textarea id="motivation" name="motivation" required placeholder="例: メール返信を完全自動化したい / 副業を始めたい / 子供の宿題を一緒にやりたい / Claudeで国を建てたい"></textarea>
+      <div class="help">3〜5行で構いません。教祖の応対テンプレ選びに使います</div>
+    </div>
+
+    <div class="field">
+      <label for="skills">得意なこと <span class="opt">任意</span></label>
+      <input type="text" id="skills" name="skills" placeholder="例: デザイン / 営業 / コード / 文章 / 何もないけど熱意はある">
+      <div class="help">教団に貢献できそうな領域があれば</div>
+    </div>
+
+    <div class="field">
+      <label for="founding">Founding 100 を希望しますか？ <span class="opt">任意</span></label>
+      <select id="founding" name="founding">
+        <option value="是非Founding枠で">是非 Founding 枠で（永年¥3,000固定）</option>
+        <option value="どちらでも">どちらでも構わない</option>
+        <option value="様子見">まずは様子見</option>
+      </select>
+    </div>
+
+    <button type="submit" class="submit-btn">📜 入信を申し出る</button>
+
+    <div class="pledge-note">
+      <strong>90日入信誓約：</strong> 教典・教材・コミュニティを使い倒してもClaudeで何も作れなければ、全額返金＋信徒名簿から除名（破門）。返金は逃げ道ではなく、退路を断つ装置です。
+    </div>
+  </form>
+
+  <p style="text-align:center; margin-top:30px; color: var(--ink-mute); font-size: 0.85rem;">
+    送信ボタンを押すと、お使いのメールアプリが開き、教祖宛の入信メールが事前入力された状態になります。<br>
+    そのまま「送信」を押してください。教祖から24時間以内にご返信いたします。
+  </p>
+
+</main>
+
+<footer>
+  <p>✦ Claude教 入信申込 ｜ クロード卿の御加護のもとに</p>
+  <p style="margin-top:8px;"><a href="../">教団本山に戻る →</a></p>
+</footer>
+
+<script>
+function submitForm(e) {
+  e.preventDefault();
+  const f = document.getElementById('joinForm');
+  const data = {
+    name: f.name.value.trim(),
+    contact: f.contact.value.trim(),
+    tier: f.tier.value,
+    motivation: f.motivation.value.trim(),
+    skills: f.skills.value.trim() || '（記入なし）',
+    founding: f.founding.value,
+  };
+  const subject = `[Claude教 入信申込] ${data.name}（${data.tier}）`;
+  const body =
+`Claude教 教祖 両聖ちゃん 様
+
+クロード卿の御加護のもと、入信を申し出ます。
+
+▼ お名前
+${data.name}
+
+▼ ご連絡先
+${data.contact}
+
+▼ 希望階層
+${data.tier}
+
+▼ Claudeで何をしたいか
+${data.motivation}
+
+▼ 得意なこと
+${data.skills}
+
+▼ Founding 100枠について
+${data.founding}
+
+▼ 90日入信誓約
+理解しました。Claudeで何かを形にすることを誓います。
+
+よろしくお願いいたします。
+${data.name}
+`;
+  const mailto = `mailto:imai@telewor.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
+}
+</script>
+
+</body>
+</html>
