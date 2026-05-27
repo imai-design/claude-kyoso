@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://imai-design.github.io/claude-kyoso/sitemap.xml

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude教 Cookbook ｜ Claudeで何ができるか</title>
-<meta name="description" content="Claudeで誰でもできる10のレシピ。非エンジニア向け、コピペで使える実例集。">
+<title>Claude教 Cookbook ｜ Claudeで何ができるか（15レシピ）</title>
+<meta name="description" content="Claudeで誰でもできる15のレシピ。非エンジニア向け、コピペで使える実例集。">
 <meta property="og:title" content="Claude教 Cookbook ｜ Claudeで何ができるか">
 <meta property="og:description" content="メール・議事録・スプシ整形・LINE変換まで、Claudeで何ができるかの実用レシピ10選。">
 <meta property="og:type" content="article">
@@ -202,7 +202,7 @@
 
 <header class="hero">
   <h1>Claude教 <span class="accent">Cookbook</span></h1>
-  <p class="sub">Claudeで誰でもできる10のレシピ。<br>非エンジニア向け、コピペで使える実例集。<br>これがクルーになると最初に手に入る景色です。</p>
+  <p class="sub">Claudeで誰でもできる15のレシピ。<br>非エンジニア向け、コピペで使える実例集。<br>これがクルーになると最初に手に入る景色です。</p>
 </header>
 
 <main>
@@ -301,6 +301,84 @@
 得意なことは[X]、興味があることは[Y]。
 今日から1ヶ月で月¥30,000を稼ぐための、現実的な手順を10ステップで。</pre>
     <div class="result"><strong>結果：</strong> 個別最適化された10ステップ。完璧ではないが、明日から動ける形になる。Claudeは背中を押すのが得意。</div>
+  </article>
+
+  <h2 style="font-size:1.6rem; margin: 60px 0 24px; color: var(--orange-deep); text-align:center;">— Cookbook v2 拡張 5レシピ —</h2>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">拾壱</div><h2>YouTubeを「教科書」に変える</h2></div>
+    <div class="recipe-tags"><span class="tag">学習</span><span class="tag">情報圧縮</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 1時間の動画を10分で吸収する。教祖の毎日の情報収集はこれで回している。</div>
+    <pre><span class="prompt-label">PROMPT</span>このYouTube動画のURL、要点を「教科書見開き」形式で：
+- 章タイトル
+- 各章の3行要約
+- 図解で書くとしたらこう、というスケッチ説明
+- 自分の仕事に活かすなら何
+[URLを貼る]</pre>
+    <div class="result"><strong>結果：</strong> 60分の動画が10分で頭に入る。Claudeは字幕から自動で吸い上げる。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">拾弐</div><h2>履歴書・職務経歴書を相手別に最適化</h2></div>
+    <div class="recipe-tags"><span class="tag">転職</span><span class="tag">スコープ</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 同じ経歴を、応募先10社全部に同じテンプレで送るのは失礼。Claudeで10社別に最適化。</div>
+    <pre><span class="prompt-label">PROMPT</span>下が私の職務経歴書ベース版。
+応募先の求人票を10社分貼るので、各社向けに：
+- 強調すべき経歴3点
+- 削るべき経歴
+- 自己PRの再構成案
+を出して。
+[ベース職務経歴書 + 求人票10社]</pre>
+    <div class="result"><strong>結果：</strong> 10社分のカスタム職経歴書。書類選考通過率が体感3倍になる。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">拾参</div><h2>夫婦/恋人/家族と冷静に話す</h2></div>
+    <div class="recipe-tags"><span class="tag">関係性</span><span class="tag">人生</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 怒っているとき、Claudeに先に話す。教祖も実践。教義 五「夢を前に進める」は人間関係の夢にも効く。</div>
+    <pre><span class="prompt-label">PROMPT</span>今、パートナーと[テーマ]について揉めている。
+私の主張：[自分の言い分]
+相手の主張：[相手の言い分]
+私の本当の感情：[正直な気持ち]
+
+これを、明日話し合う前に整理したい。
+- 私が悪い点
+- 相手が悪い点
+- 二人で解決すべき点
+- 私が次に言うべき第一声
+を分けて出して。</pre>
+    <div class="result"><strong>結果：</strong> 一晩寝かす代わりにClaudeに話す。第一声が変わると、会話の温度も変わる。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">拾四</div><h2>個人事業の月次決算を10分で</h2></div>
+    <div class="recipe-tags"><span class="tag">経営</span><span class="tag">数字</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 個人事業主のお金の流れを、月末にClaudeで一気に締める。会計ソフト不要レベル。</div>
+    <pre><span class="prompt-label">PROMPT</span>今月の入出金CSV（銀行・カード）を全部渡す。
+これを月次決算形式で：
+- 売上合計
+- 経費合計（カテゴリ別）
+- 利益
+- 来月の改善ポイント3つ
+- 確定申告に向けた注意点
+[CSV添付]</pre>
+    <div class="result"><strong>結果：</strong> 月末の30分作業がClaudeに置き換わる。確定申告期もスムーズ。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">拾五</div><h2>自分の人生を「年表」にしてもらう</h2></div>
+    <div class="recipe-tags"><span class="tag">人生</span><span class="tag">省察</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 自分の人生を俯瞰すると、次の一歩が見える。教祖の年末ルーティンはこれ。教義 五の応用。</div>
+    <pre><span class="prompt-label">PROMPT</span>私の人生のキーイベントを年代順に語る。
+[20歳：◯◯／22歳：◯◯／…現在まで]
+
+これを：
+- 章タイトル付き年表
+- 各章で得たもの・失ったもの
+- 私の人生のテーマ（仮説3つ）
+- 来年やるべきこと（年表の流れから自然に出るもの）
+の形でまとめて。</pre>
+    <div class="result"><strong>結果：</strong> 自分の物語が外から見える。来年のテーマがClaudeから提案される。これが教義 五「夢を前に進める」の最深部。</div>
   </article>
 
   <div class="cta-box">
