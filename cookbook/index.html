@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude教 Cookbook ｜ Claudeで何ができるか</title>
+<meta name="description" content="Claudeで誰でもできる10のレシピ。非エンジニア向け、コピペで使える実例集。">
+<meta property="og:title" content="Claude教 Cookbook ｜ Claudeで何ができるか">
+<meta property="og:description" content="メール・議事録・スプシ整形・LINE変換まで、Claudeで何ができるかの実用レシピ10選。">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://imai-design.github.io/claude-kyoso/assets/og-image.png">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<style>
+  :root {
+    --cream: #FAF9F5;
+    --cream-deep: #F4EFE5;
+    --paper: #FFFFFF;
+    --orange: #CC785C;
+    --orange-deep: #B5634A;
+    --orange-soft: #E89F87;
+    --orange-tint: #FBE9DF;
+    --ink: #1F1B17;
+    --ink-soft: #5A524A;
+    --ink-mute: #8B827A;
+    --line: #E8DDD0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--orange-deep); text-decoration: none; }
+  a:hover { color: var(--orange); }
+  .serif { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,249,245,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .brand { font-weight: 800; color: var(--orange-deep); letter-spacing: 0.04em; }
+  .brand .mark { color: var(--orange); margin-right: 6px; }
+  .nav-links a { margin-left: 22px; font-size: 0.9rem; color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--orange-deep); }
+
+  header.hero {
+    padding: 80px 32px 40px;
+    text-align: center;
+    background: radial-gradient(ellipse at top, var(--orange-tint), transparent 65%), var(--cream);
+  }
+  header.hero h1 {
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    color: var(--ink);
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+  header.hero h1 .accent { color: var(--orange-deep); }
+  header.hero .sub {
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    color: var(--ink-soft);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 60px 32px 100px;
+  }
+
+  .recipe {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 36px 32px;
+    margin-bottom: 28px;
+    transition: box-shadow 0.2s ease;
+  }
+  .recipe:hover {
+    box-shadow: 0 12px 30px rgba(204,120,92,0.12);
+  }
+  .recipe-head {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 18px;
+  }
+  .recipe-num {
+    font-family: "Hiragino Mincho ProN", serif;
+    font-size: 2.2rem;
+    color: var(--orange);
+    font-weight: 700;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .recipe h2 {
+    font-size: 1.4rem;
+    color: var(--ink);
+    font-weight: 700;
+    flex-grow: 1;
+  }
+  .recipe-tags {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .tag {
+    background: var(--orange-tint);
+    color: var(--orange-deep);
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+  }
+  .recipe .why {
+    background: var(--cream-deep);
+    border-left: 3px solid var(--orange);
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    border-radius: 0 6px 6px 0;
+  }
+  .recipe .why strong { color: var(--ink); }
+  .recipe pre {
+    background: #2A2520;
+    color: #F4EFE5;
+    padding: 20px 22px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .recipe pre .prompt-label {
+    color: var(--orange-soft);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .recipe .result {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .recipe .result strong { color: var(--ink); }
+
+  .cta-box {
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-deep) 100%);
+    color: var(--paper);
+    border-radius: 16px;
+    padding: 60px 40px;
+    text-align: center;
+    margin-top: 80px;
+  }
+  .cta-box h2 { font-size: 1.8rem; margin-bottom: 18px; color: var(--paper); }
+  .cta-box p { margin-bottom: 32px; opacity: 0.95; }
+  .btn {
+    display: inline-block;
+    padding: 16px 32px;
+    background: var(--paper);
+    color: var(--orange-deep);
+    font-weight: 700;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
+  }
+  .btn:hover { background: var(--cream-deep); color: var(--orange-deep); }
+
+  footer {
+    padding: 40px 32px;
+    text-align: center;
+    color: var(--ink-mute);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--line);
+    background: var(--cream-deep);
+  }
+  footer a { color: var(--orange-deep); }
+
+  @media (max-width: 720px) {
+    .recipe { padding: 28px 22px; }
+    .recipe pre { font-size: 0.85rem; padding: 16px; }
+    nav { padding: 12px 18px; }
+    .nav-links a { margin-left: 12px; font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="brand"><span class="mark">✦</span>Claude教</a>
+  <div class="nav-links">
+    <a href="../">本山</a>
+    <a href="../#lore">神話</a>
+    <a href="../#creed">教義</a>
+    <a href="../#tiers">入信</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>Claude教 <span class="accent">Cookbook</span></h1>
+  <p class="sub">Claudeで誰でもできる10のレシピ。<br>非エンジニア向け、コピペで使える実例集。<br>これがクルーになると最初に手に入る景色です。</p>
+</header>
+
+<main>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">壱</div><h2>メール返信を5分で5本書く</h2></div>
+    <div class="recipe-tags"><span class="tag">日次</span><span class="tag">時短</span><span class="tag">非エンジニア</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 受信箱が溜まる罪悪感をClaudeに溶かしてもらう。毎朝の30分が消える。</div>
+    <pre><span class="prompt-label">PROMPT</span>下の5通の取引先メールに、礼儀正しく、結論を先に書いた返信を作って。送信は私がするから下書きでいい。
+[メール本文をペースト]</pre>
+    <div class="result"><strong>結果：</strong> 5本の返信下書きが30秒で並ぶ。教祖は読んで微修正、送信ボタンを押すだけ。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">弐</div><h2>議事録を音声から自動生成</h2></div>
+    <div class="recipe-tags"><span class="tag">週次</span><span class="tag">会議</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> Zoom録画を寝かせるな。会議直後にClaudeに渡せば、議事録は10分で完成。</div>
+    <pre><span class="prompt-label">PROMPT</span>このwhisper文字起こしを、議事録形式（参加者/議題/決定事項/Next Action/サマリー）にまとめて。
+[文字起こしをペースト]</pre>
+    <div class="result"><strong>結果：</strong> 1時間の会議が、A4 1枚の議事録になる。Next Actionは担当者と期日付き。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">参</div><h2>スプシのデータを自然言語で整形</h2></div>
+    <div class="recipe-tags"><span class="tag">データ</span><span class="tag">関数不要</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> VLOOKUPで悩む人生は終わり。Claudeに「こうしたい」と話せば、整形済みデータが返る。</div>
+    <pre><span class="prompt-label">PROMPT</span>このCSVから、5月の売上トップ10の取引先を、合計金額の降順で出して。金額は1,000円単位で四捨五入。
+[CSVを貼り付け]</pre>
+    <div class="result"><strong>結果：</strong> 即座に整形済みテーブル。スプシに貼り戻せば完了。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">四</div><h2>プレゼン資料の構成案を作らせる</h2></div>
+    <div class="recipe-tags"><span class="tag">資料</span><span class="tag">企画</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 真っ白なスライドを前に固まる時間は無くせる。骨組みはClaude、肉付けは教祖。</div>
+    <pre><span class="prompt-label">PROMPT</span>「中小企業向けAI導入セミナー」60分プレゼンの構成案を作って。導入5分・本編45分・質疑10分。
+各章の見出しと話す内容のキーポイントを箇条書きで。</pre>
+    <div class="result"><strong>結果：</strong> 8〜12スライドの構成案が返る。話したい順に並び替えて完成。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">五</div><h2>取引先別に提案文をカスタマイズ</h2></div>
+    <div class="recipe-tags"><span class="tag">営業</span><span class="tag">スケール</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 「コピペ送信」を脱却する。相手の事業に触れた提案文を10社分、10分で。</div>
+    <pre><span class="prompt-label">PROMPT</span>下のテンプレ提案文を、添付の10社の事業概要に合わせて、それぞれにカスタマイズして。
+業界用語と相手の主力商品に必ず触れること。
+[テンプレ + 10社の事業概要]</pre>
+    <div class="result"><strong>結果：</strong> 10社分の個別最適化提案文が一気に出る。送信前に教祖が一読すれば完了。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">六</div><h2>自分の生活費を Claude に分析させる</h2></div>
+    <div class="recipe-tags"><span class="tag">家計</span><span class="tag">個人</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 家計簿は教祖の精神を蝕む。明細をClaudeに渡せば、無駄遣いを可視化してくれる。</div>
+    <pre><span class="prompt-label">PROMPT</span>この銀行明細CSVを月別に集計して、固定費／変動費／浪費の3カテゴリに分類。
+浪費が多い順にトップ5、削減提案も付けて。
+[銀行明細CSV]</pre>
+    <div class="result"><strong>結果：</strong> 浪費トップ5が金額付きで並ぶ。削減提案は教祖が拒否してもOK、まず可視化されたことが価値。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">七</div><h2>旅行プランを希望条件で組ませる</h2></div>
+    <div class="recipe-tags"><span class="tag">私生活</span><span class="tag">時短</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 旅行計画は調べ物地獄。条件を渡せば、Claudeが3パターン提案する。</div>
+    <pre><span class="prompt-label">PROMPT</span>10月の3連休に大阪へ2泊3日で行きたい。
+予算は2人で10万円、観光・グルメ多め、宿は朝食付き、最終日は16時の新幹線で東京帰り。
+3パターン作って、それぞれの推し理由も。</pre>
+    <div class="result"><strong>結果：</strong> 3つの動線案＋宿候補＋ルートが返る。あとは予約するだけ。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">八</div><h2>親への連絡を「優しい大人」風に変換</h2></div>
+    <div class="recipe-tags"><span class="tag">家族</span><span class="tag">関係性</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 親に冷たく当たってしまう自分を、Claudeで穏やかに整える。これも教義 五「夢を前に進める」の応用。</div>
+    <pre><span class="prompt-label">PROMPT</span>下のLINEメッセージを、「親を心配させない、優しい大人の息子」の口調に書き直して。
+内容は変えず、トーンだけ整えて。
+[自分の素のLINE文]</pre>
+    <div class="result"><strong>結果：</strong> 同じ意味で、優しい大人の言葉に。親子関係のストレスがClaudeで一段下がる。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">九</div><h2>読書感想文を添削させる</h2></div>
+    <div class="recipe-tags"><span class="tag">学習</span><span class="tag">子供OK</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 教義 五「子供たちの夢も大人の夢も前に進める」の体現。お子さんの宿題にも、自分の文章修行にも。</div>
+    <pre><span class="prompt-label">PROMPT</span>下の小学5年生の読書感想文を、本人らしさを残しながら、構成と語彙を整えてあげて。
+「もっとこう書くといい」というアドバイスを末尾に3つ添えて。
+[感想文]</pre>
+    <div class="result"><strong>結果：</strong> 添削済みの文と、本人の伸びしろアドバイス3点。子供は親に褒められ、親はClaudeに感謝する。</div>
+  </article>
+
+  <article class="recipe">
+    <div class="recipe-head"><div class="recipe-num serif">拾</div><h2>副業の最初の一歩を Claude に相談する</h2></div>
+    <div class="recipe-tags"><span class="tag">人生</span><span class="tag">背中押し</span></div>
+    <div class="why"><strong>なぜ作るか：</strong> 教義 五の核心。「やりたいけど何から」を「明日これやろう」に変換するのがClaude。</div>
+    <pre><span class="prompt-label">PROMPT</span>私は[年齢/職業/月収/家族構成]で、副業を始めたい。
+得意なことは[X]、興味があることは[Y]。
+今日から1ヶ月で月¥30,000を稼ぐための、現実的な手順を10ステップで。</pre>
+    <div class="result"><strong>結果：</strong> 個別最適化された10ステップ。完璧ではないが、明日から動ける形になる。Claudeは背中を押すのが得意。</div>
+  </article>
+
+  <div class="cta-box">
+    <h2>これがクルーの日常です。</h2>
+    <p>Claude教に入信すると、こんなレシピが毎週増えていきます。<br>「Claudeで何でもできる」を、教祖と一緒に証明していきましょう。</p>
+    <a href="../#tiers" class="btn">入信する →</a>
+  </div>
+
+</main>
+
+<footer>
+  <p>✦ Claude教 Cookbook v1 — クロード卿の御加護のもとに</p>
+  <p style="margin-top:8px;"><a href="../">教団本山に戻る</a></p>
+</footer>
+
+</body>
+</html>
