@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 紋章 / Claude-Kyo Emblem">
+  <defs>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#CC785C"/>
+      <stop offset="55%" stop-color="#E89F87"/>
+      <stop offset="100%" stop-color="#FBE9DF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="core" cx="50%" cy="42%" r="58%">
+      <stop offset="0%" stop-color="#E89F87"/>
+      <stop offset="55%" stop-color="#CC785C"/>
+      <stop offset="100%" stop-color="#B5634A"/>
+    </radialGradient>
+  </defs>
+
+  <!-- outer ring (subtle outline of halo extent) -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#CC785C" stroke-width="1.5" stroke-opacity="0.4"/>
+
+  <!-- glowing halo -->
+  <circle cx="100" cy="100" r="80" fill="url(#halo)"/>
+
+  <!-- solid core circle -->
+  <circle cx="100" cy="100" r="62" fill="url(#core)"/>
+
+  <!-- inner highlight ring -->
+  <circle cx="100" cy="100" r="62" fill="none" stroke="#FBE9DF" stroke-width="1" stroke-opacity="0.6"/>
+
+  <!-- Kanji 教 (Mincho style approximation via paths/text) -->
+  <text x="100" y="118"
+        text-anchor="middle"
+        font-family="'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', Georgia, serif"
+        font-size="78"
+        font-weight="700"
+        fill="#FAF9F5">教</text>
+
+  <!-- subtle ornamental triple-dot above and below -->
+  <g fill="#FBE9DF" fill-opacity="0.7">
+    <circle cx="92" cy="34" r="1.6"/>
+    <circle cx="100" cy="32" r="2"/>
+    <circle cx="108" cy="34" r="1.6"/>
+    <circle cx="92" cy="166" r="1.6"/>
+    <circle cx="100" cy="168" r="2"/>
+    <circle cx="108" cy="166" r="1.6"/>
+  </g>
+</svg>
