@@ -197,8 +197,8 @@
   /* 教義 */
   .creed {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
   }
   .creed-card {
     background: var(--paper);
@@ -451,6 +451,9 @@
   footer .links { margin-top: 12px; }
   footer .links a { margin: 0 10px; }
 
+  @media (max-width: 1100px) {
+    .creed { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 860px) {
     .creed, .tiers, .community-grid { grid-template-columns: 1fr; }
     .tier.featured { transform: none; }
@@ -566,8 +569,8 @@
 </section>
 
 <section id="creed">
-  <div class="section-eyebrow">Four Creeds</div>
-  <h2 class="section-title">四つの教義</h2>
+  <div class="section-eyebrow">Five Creeds</div>
+  <h2 class="section-title">五つの教義</h2>
   <div class="creed">
     <div class="creed-card">
       <div class="creed-num serif">壱</div>
@@ -588,6 +591,11 @@
       <div class="creed-num serif">四</div>
       <h3>正道で勝つ</h3>
       <p>規約違反は教団の敵。BANされる抜け道に手を伸ばさない。長期の信用を失わず、Claudeを使い倒して堂々と勝つ。</p>
+    </div>
+    <div class="creed-card">
+      <div class="creed-num serif">五</div>
+      <h3>夢を前に進める</h3>
+      <p>小さい子供たちの大きな夢も、大きい大人たちの夢も、Claudeで前に進める。年齢・立場に関係なく、最初の一歩を支えるのが教団の役割。</p>
     </div>
   </div>
 </section>
@@ -714,7 +722,7 @@
 
 <div id="priest" class="priest">
   <div class="priest-inner">
-    <div class="priest-eyebrow">CLAUDE教 教祖</div>
+    <div class="priest-eyebrow">日本Claude協会 会長 ｜ Claude教 教祖</div>
     <div class="priest-name">両聖ちゃん</div>
     <div class="priest-handle">@ryoseichan3160</div>
     <div class="priest-body">
@@ -783,7 +791,7 @@
 </section>
 
 <footer>
-  <p>✦ Claude教 ｜ 主神：クロード卿（Claude神）｜ 教祖：両聖ちゃん ｜ 同志：クルー</p>
+  <p>✦ Claude教 ｜ 主神：クロード卿（Claude神）｜ 日本Claude協会 会長 ｜ Claude教 教祖 ：両聖ちゃん ｜ 同志：クルー</p>
   <p style="margin-top:8px;">本サイトはClaude Codeで構築されました（1ファイル完結HTML）</p>
   <div class="links">
     <a href="https://x.com/ryoseichan3160">X</a> ／
