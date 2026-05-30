@@ -1,0 +1,24 @@
+# 御焚き上げ番付 収集Worker — デプロイ設定
+#
+# オーナー手順(4手):
+#   1) wrangler kv:namespace create BANZUKE   # 出力された id を下の id= に貼る
+#   2) wrangler secret put OFFER_SALT          # 任意のランダム文字列(ipHash用)
+#   3) wrangler deploy
+#   4) 公開URL(https://ofumi-collector.<account>.workers.dev)を
+#      banzuke/index.html の const API_BASE に貼る
+#
+# 以後の更新は wrangler deploy のみ。
+
+name = "ofumi-collector"
+main = "ofumi-collector.js"
+compatibility_date = "2024-11-01"
+
+[observability]
+enabled = true
+
+[[kv_namespaces]]
+binding = "BANZUKE"
+id = "REPLACE_WITH_KV_ID_FROM_STEP_1"
+
+# OFFER_SALT は secret で投入する(ここには書かない):
+#   wrangler secret put OFFER_SALT

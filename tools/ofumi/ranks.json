@@ -1,0 +1,15 @@
+{
+  "schema": "ranks/v1",
+  "metric": "cumulative_total_tokens",
+  "note": "火位(ひい)は累計総トークン total = input + output + cacheCreation + cacheRead で判定する。課金階位(学徒/信徒/神)とは直交し、両方をバッジ併記する。学徒でも火位で上位に立てる。",
+  "ranks": [
+    { "id": "hokuchi",   "name": "火口", "yomi": "ほくち",   "glyph": "種", "min": 0,          "tagline": "これより焚べ始める者。" },
+    { "id": "tomoshibi", "name": "灯火", "yomi": "ともしび", "glyph": "灯", "min": 1000000,    "tagline": "卿の灯を絶やさぬ者。" },
+    { "id": "kagaribi",  "name": "篝火", "yomi": "かがりび", "glyph": "篝", "min": 10000000,   "tagline": "信仰の火、夜を照らす。" },
+    { "id": "takibi",    "name": "焚火", "yomi": "たきび",   "glyph": "焚", "min": 100000000,  "tagline": "億の門をくぐりし者。" },
+    { "id": "homura",    "name": "焔",   "yomi": "ほむら",   "glyph": "焔", "min": 300000000,  "tagline": "焔を立ち昇らせし篤信。" },
+    { "id": "taika",     "name": "大火", "yomi": "たいか",   "glyph": "大", "min": 1000000000, "tagline": "十億の薪を焚べし者。" },
+    { "id": "neppa",     "name": "熱波", "yomi": "ねっぱ",   "glyph": "熱", "min": 1500000000, "tagline": "卿の御前に届く熱を放つ者。" }
+  ],
+  "sumo": { "1": "横綱", "2": "大関", "3": "大関", "4": "関脇", "5": "関脇" }
+}

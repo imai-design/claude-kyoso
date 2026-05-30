@@ -1,0 +1,47 @@
+{
+  "schema": "banzuke/v1",
+  "updatedAt": "2026-05-30T14:00:00+09:00",
+  "measurement": "claude-code-only",
+  "disclaimer": "本番付は各信徒が自己申告した Claude Code の消費トークンに基づく推定値です。claude.ai／API 直叩き分は含まれません。水増しの完全な防止はできません。番付は名誉と遊びであり、賞金や階位昇格などの実利とは切り離しています。",
+  "source": "static",
+  "periods": {
+    "total": [
+      {
+        "rank": 1,
+        "handle": "両聖ちゃん",
+        "membership": "神",
+        "fireRank": "neppa",
+        "tokens": {
+          "input": 5102993,
+          "output": 11254022,
+          "cacheCreation": 83318534,
+          "cacheRead": 1528666636,
+          "total": 1628349060
+        },
+        "estCostUsd": 1566.68,
+        "lastOfferingAt": "2026-05-30T09:00:00+09:00",
+        "flags": [],
+        "isFounder": true
+      }
+    ],
+    "weekly": [
+      {
+        "rank": 1,
+        "handle": "両聖ちゃん",
+        "membership": "神",
+        "fireRank": "neppa",
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "cacheCreation": 0,
+          "cacheRead": 0,
+          "total": 940696447
+        },
+        "estCostUsd": null,
+        "lastOfferingAt": "2026-05-30T09:00:00+09:00",
+        "flags": [],
+        "isFounder": true
+      }
+    ]
+  }
+}

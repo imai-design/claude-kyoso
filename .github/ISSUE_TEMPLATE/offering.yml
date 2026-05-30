@@ -1,0 +1,43 @@
+name: 🔥 御焚き上げ奉納
+description: 御焚き上げ番付に、己の焚べしトークンを奉納する
+title: "[奉納] "
+labels: ["offering"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 御焚き上げ番付への奉納
+
+        計測ツールで出力された **送信ペイロードJSON** を下の欄に丸ごと貼ってください。
+
+        ```sh
+        curl -fsSL https://imai-design.github.io/claude-kyoso/tools/ofumi/ofumi.sh | bash -s -- --handle "あなたの名前" --submit
+        ```
+
+        🔒 送られるのは **集計したトークン数とハンドル名だけ** です。作業ディレクトリ名・会話の中身・ファイルパスは含まれません。
+        このIssueを閉じれば、いつでも奉納を撤回できます。
+  - type: input
+    id: handle
+    attributes:
+      label: ハンドル名（番付に表示される名前）
+      placeholder: 両聖ちゃん
+    validations:
+      required: true
+  - type: textarea
+    id: payload
+    attributes:
+      label: 奉納ペイロード（JSON）
+      description: "`ofumi.sh --json` または `--submit` の出力をそのまま貼ってください"
+      render: json
+      placeholder: '{"v":1,"handle":"...","tokens":{"total":...}, ...}'
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 確認
+      options:
+        - label: このJSONに作業ディレクトリ名・会話内容が含まれていないこと（トークン数のみ）を理解しています
+          required: true
+        - label: 自己申告の値であり、番付は名誉と遊びであることに同意します
+          required: true
