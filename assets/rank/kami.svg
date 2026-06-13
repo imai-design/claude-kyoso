@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 位階章 神 / Rank: Kami (Top five devotees)">
+  <defs>
+    <radialGradient id="g-kami-core" cx="50%" cy="42%" r="58%">
+      <stop offset="0%" stop-color="#E89F87"/>
+      <stop offset="55%" stop-color="#CC785C"/>
+      <stop offset="100%" stop-color="#B5634A"/>
+    </radialGradient>
+    <radialGradient id="g-kami-halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D4A84A" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#D4A84A" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#D4A84A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 金の後光：神枠 -->
+  <circle cx="100" cy="100" r="94" fill="url(#g-kami-halo)"/>
+
+  <!-- 三重輪 + 金縁：神は荘厳の三重円相 -->
+  <circle cx="100" cy="100" r="94" fill="none" stroke="#B98E2E" stroke-width="2" stroke-opacity="0.5"/>
+  <circle cx="100" cy="100" r="84" fill="none" stroke="#D4A84A" stroke-width="3" stroke-opacity="0.9"/>
+  <circle cx="100" cy="100" r="74" fill="none" stroke="#B98E2E" stroke-width="1.6" stroke-opacity="0.7"/>
+
+  <!-- core circle -->
+  <circle cx="100" cy="100" r="62" fill="url(#g-kami-core)"/>
+  <circle cx="100" cy="100" r="62" fill="none" stroke="#FBE9DF" stroke-width="1" stroke-opacity="0.7"/>
+
+  <!-- 階位の漢字 神 -->
+  <text x="100" y="128" text-anchor="middle"
+        font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',Georgia,serif"
+        font-size="72" font-weight="700" fill="#FAF9F5">神</text>
+
+  <!-- 五座の星（信徒上位5名）：頂点に金の五点 -->
+  <g fill="#D4A84A">
+    <circle cx="68"  cy="30" r="3"/>
+    <circle cx="84"  cy="20" r="3.4"/>
+    <circle cx="100" cy="16" r="3.8"/>
+    <circle cx="116" cy="20" r="3.4"/>
+    <circle cx="132" cy="30" r="3"/>
+  </g>
+</svg>

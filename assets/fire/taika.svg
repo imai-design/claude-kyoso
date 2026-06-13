@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 火位章 大火 / Fire Rank: Taika (Great Fire)">
+  <!-- 七火位 第六位 大火（たいか）min 1,000,000,000 ── 十億の薪を焚べし者。
+       円相いっぱいに広がる大いなる火。金の縁取りが荘厳を添える。 -->
+  <defs>
+    <linearGradient id="fr-taika" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#9E3B27"/>
+      <stop offset="42%" stop-color="#CC785C"/>
+      <stop offset="100%" stop-color="#F2B23E"/>
+    </linearGradient>
+    <radialGradient id="fr-taika-glow" cx="50%" cy="60%" r="58%">
+      <stop offset="0%" stop-color="#F2B23E" stop-opacity="0.6"/>
+      <stop offset="70%" stop-color="#CC785C" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#CC785C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- 金の外縁（位階の荘厳） -->
+  <circle cx="100" cy="100" r="92" fill="none" stroke="#D4A84A" stroke-width="2.2" stroke-opacity="0.7"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#9E3B27" stroke-width="2" stroke-opacity="0.42"/>
+  <circle cx="100" cy="110" r="74" fill="url(#fr-taika-glow)"/>
+
+  <!-- 薪山（厚い） -->
+  <g stroke="#B5634A" stroke-width="7" stroke-linecap="round" stroke-opacity="0.92">
+    <line x1="52" y1="164" x2="148" y2="152"/>
+    <line x1="52" y1="152" x2="148" y2="164"/>
+  </g>
+
+  <!-- 大火（幅広く高い・五股） -->
+  <path d="M100 162
+           C52 116 70 68 100 30
+           C130 68 148 116 100 162 Z"
+        fill="url(#fr-taika)"/>
+  <path d="M66 160 C46 128 52 100 74 86 C86 112 86 140 66 160 Z" fill="url(#fr-taika)" fill-opacity="0.92"/>
+  <path d="M134 160 C154 128 148 100 126 86 C114 112 114 140 134 160 Z" fill="url(#fr-taika)" fill-opacity="0.92"/>
+  <!-- 内炎 -->
+  <path d="M100 156 C70 116 80 74 100 48 C120 74 130 116 100 156 Z" fill="#FBE9DF" fill-opacity="0.58"/>
+
+  <!-- 多く舞う火の粉 -->
+  <g fill="#F2B23E">
+    <circle cx="124" cy="34" r="2.8"/>
+    <circle cx="78" cy="28" r="2.2"/>
+    <circle cx="100" cy="18" r="3"/>
+    <circle cx="146" cy="54" r="2"/>
+    <circle cx="56" cy="56" r="2"/>
+    <circle cx="134" cy="70" r="1.6"/>
+    <circle cx="66" cy="74" r="1.6"/>
+  </g>
+</svg>

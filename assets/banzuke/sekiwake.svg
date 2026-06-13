@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 番付印 関脇 / Banzuke Seal: Sekiwake (4th-5th)">
+  <!-- 御焚き上げ番付 第四・五位の印「関脇」。三役の脇ゆえ朱の一重縁・房は控えめ。 -->
+  <!-- 朱の外環（一重） -->
+  <circle cx="100" cy="100" r="94" fill="none" stroke="#CC785C" stroke-width="3"/>
+
+  <!-- 頂部の房（一本） -->
+  <line x1="100" y1="14" x2="100" y2="32" stroke="#CC785C" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- 印地（淡朱地・白抜きでなく朱字の落ち着いた格） -->
+  <rect x="44" y="44" width="112" height="112" rx="10" fill="#FBE9DF"/>
+  <rect x="44" y="44" width="112" height="112" rx="10" fill="none" stroke="#CC785C" stroke-width="2.4"/>
+
+  <!-- 角字「関脇」朱字（二字・縦） -->
+  <text x="100" y="93" text-anchor="middle"
+        font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',Georgia,serif"
+        font-size="42" font-weight="800" fill="#9E3B27">関</text>
+  <text x="100" y="142" text-anchor="middle"
+        font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',Georgia,serif"
+        font-size="42" font-weight="800" fill="#9E3B27">脇</text>
+</svg>

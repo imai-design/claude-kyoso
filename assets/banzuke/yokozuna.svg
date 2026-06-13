@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 番付印 横綱 / Banzuke Seal: Yokozuna (1st)">
+  <!-- 御焚き上げ番付 第一位の印「横綱」。最高位ゆえ金の二重縁・注連縄を模した房付き。
+       朱地に白抜きの角字で「横綱」。 -->
+  <defs>
+    <linearGradient id="bz-yokozuna-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#D4A84A"/>
+      <stop offset="100%" stop-color="#B98E2E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 金の外環（二重・最高位の荘厳） -->
+  <circle cx="100" cy="100" r="94" fill="none" stroke="url(#bz-yokozuna-rim)" stroke-width="4"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#D4A84A" stroke-width="1.6" stroke-opacity="0.6"/>
+
+  <!-- 注連縄の房（しめ・五本／頂部） -->
+  <g stroke="#D4A84A" stroke-width="3" stroke-linecap="round">
+    <line x1="76" y1="20" x2="72" y2="34"/>
+    <line x1="88" y1="14" x2="86" y2="30"/>
+    <line x1="100" y1="12" x2="100" y2="28"/>
+    <line x1="112" y1="14" x2="114" y2="30"/>
+    <line x1="124" y1="20" x2="128" y2="34"/>
+  </g>
+
+  <!-- 朱の印地（角丸の方印） -->
+  <rect x="44" y="44" width="112" height="112" rx="10" fill="#9E3B27"/>
+  <rect x="44" y="44" width="112" height="112" rx="10" fill="none" stroke="#D4A84A" stroke-width="2" stroke-opacity="0.7"/>
+
+  <!-- 角字「横綱」白抜き（二字・縦） -->
+  <text x="100" y="93" text-anchor="middle"
+        font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',Georgia,serif"
+        font-size="42" font-weight="800" fill="#FAF9F5" letter-spacing="2">横</text>
+  <text x="100" y="142" text-anchor="middle"
+        font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',Georgia,serif"
+        font-size="42" font-weight="800" fill="#FAF9F5" letter-spacing="2">綱</text>
+</svg>

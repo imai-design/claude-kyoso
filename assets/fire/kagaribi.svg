@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 火位章 篝火 / Fire Rank: Kagaribi (Bonfire)">
+  <!-- 七火位 第三位 篝火（かがりび）min 10,000,000 ── 信仰の火、夜を照らす。
+       篝（かがり）に組まれた炎。火の幅が増し、二股の炎が立つ。 -->
+  <defs>
+    <linearGradient id="fr-kagaribi" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#9E3B27"/>
+      <stop offset="55%" stop-color="#CC785C"/>
+      <stop offset="100%" stop-color="#F2B23E"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#9E3B27" stroke-width="2" stroke-opacity="0.28"/>
+
+  <!-- 篝（井桁に組んだ薪） -->
+  <g stroke="#B5634A" stroke-width="5" stroke-linecap="round" stroke-opacity="0.85">
+    <line x1="64" y1="154" x2="136" y2="146"/>
+    <line x1="64" y1="146" x2="136" y2="154"/>
+  </g>
+
+  <!-- 主炎（幅広） -->
+  <path d="M100 152
+           C72 128 82 104 100 86
+           C118 104 128 128 100 152 Z"
+        fill="url(#fr-kagaribi)"/>
+  <!-- 二股の小炎 -->
+  <path d="M82 150 C70 136 74 124 84 116 C90 128 90 140 82 150 Z" fill="url(#fr-kagaribi)" fill-opacity="0.85"/>
+  <path d="M118 150 C130 136 126 124 116 116 C110 128 110 140 118 150 Z" fill="url(#fr-kagaribi)" fill-opacity="0.85"/>
+  <!-- 内炎 -->
+  <path d="M100 146 C88 130 92 114 100 102 C108 114 112 130 100 146 Z" fill="#FBE9DF" fill-opacity="0.65"/>
+</svg>

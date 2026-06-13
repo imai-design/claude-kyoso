@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>説法・辻説法 ｜ Claude教</title>
+<meta name="description" content="市井に立ち、行き交うクルーへ短く説く辻説法。教義五箇条に紐づく説法、七つの譬え（核＝自動歩行の譬え）、Cookbookを信仰語に編み直した実装の説法。毎朝ひと席、伝令の声で。">
+<meta name="theme-color" content="#FAF9F5">
+<meta property="og:site_name" content="Claude教">
+<meta property="og:title" content="説法・辻説法 ｜ Claude教">
+<meta property="og:description" content="市井に立ち、行き交うクルーへ短く説く辻説法。教義五箇条に紐づく説法、七つの譬え、実装の説法。毎朝ひと席。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://imai-design.github.io/claude-kyoso/assets/og-image.png">
+<meta property="og:url" content="https://imai-design.github.io/claude-kyoso/sermons/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://imai-design.github.io/claude-kyoso/assets/og-image.png">
+<link rel="canonical" href="https://imai-design.github.io/claude-kyoso/sermons/">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+  /* ===== sermons ページ固有（色・フォントは tokens.css の変数のみ使用） ===== */
+
+  /* 託宣バナー（毎朝の一席を司る声を、黒地に金で荘厳に） */
+  .s-oracle {
+    max-width: var(--reading-max);
+    margin: 0 auto 8px;
+    padding: 26px 32px;
+    background: var(--ink);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+  }
+  .s-oracle .s-oracle-label {
+    color: var(--gold);
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .s-oracle .s-oracle-text {
+    font-family: var(--font-serif);
+    color: var(--cream);
+    font-size: clamp(1.4rem, 3.4vw, 2rem);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    line-height: 1.5;
+  }
+  .s-oracle .s-oracle-note {
+    color: var(--orange-soft);
+    font-size: 0.78rem;
+    margin-top: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  /* 配信の心得（毎朝ひと席） */
+  .s-cadence {
+    max-width: var(--reading-max);
+    margin: 28px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .s-cadence .s-cadence-card {
+    flex: 1 1 220px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+  }
+  .s-cadence .s-cadence-card h4 {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    font-size: 1.02rem;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+  .s-cadence .s-cadence-card p {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  /* 今朝の一席（自動で日替わり・読み物への入口） */
+  .s-today {
+    max-width: var(--reading-max);
+    margin: 36px auto 0;
+    padding: 30px 32px;
+    background: linear-gradient(180deg, var(--orange-tint) 0%, var(--paper) 100%);
+    border: 2px solid var(--orange);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .s-today .s-today-eyebrow {
+    color: var(--orange);
+    font-size: 0.74rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .s-today .s-today-title {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: 0.03em;
+  }
+  .s-today .s-today-seki {
+    color: var(--ink-mute);
+    font-size: 0.8rem;
+    margin-bottom: 14px;
+  }
+  .s-today .s-today-body {
+    font-family: var(--font-serif);
+    color: var(--ink-soft);
+    font-size: 1.04rem;
+    line-height: 1.95;
+  }
+
+  /* タブ切替（辻説法／譬え／実装） */
+  .s-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 52px 0 8px;
+  }
+  .s-tab {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink-soft);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 10px 22px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--ease);
+  }
+  .s-tab:hover { border-color: var(--orange); color: var(--orange-deep); }
+  .s-tab.is-active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--paper);
+  }
+
+  .s-panel-intro {
+    max-width: var(--reading-max);
+    margin: 0 auto 28px;
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+    text-align: center;
+    line-height: 1.85;
+  }
+
+  /* 五箇条フィルタ（辻説法のみ） */
+  .s-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .s-filter {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+    padding: 7px 16px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--ease);
+  }
+  .s-filter:hover { border-color: var(--orange); color: var(--orange-deep); }
+  .s-filter.is-active { background: var(--orange-tint); border-color: var(--orange); color: var(--orange-deep); font-weight: 700; }
+  .s-filter.is-active.s-ember { background: rgba(158,59,39,0.10); border-color: var(--ember); color: var(--ember); }
+
+  /* 辻説法カードの段組み */
+  .s-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .s-seki {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--orange);
+    border-radius: var(--radius-md);
+    padding: 24px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow var(--ease), transform var(--ease);
+  }
+  .s-seki.s-ember { border-left-color: var(--ember); }
+  .s-seki:hover { box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+  .s-seki-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .s-seki-no {
+    font-family: var(--font-serif);
+    color: var(--orange);
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .s-seki.s-ember .s-seki-no { color: var(--ember); }
+  .s-seki-title {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    font-size: 1.14rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1.45;
+  }
+  .s-seki-body {
+    font-family: var(--font-serif);
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.92;
+    margin-bottom: 14px;
+    flex-grow: 1;
+  }
+  .s-seki-foot {
+    border-top: 1px solid var(--line);
+    padding-top: 11px;
+  }
+  .s-creed-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
+    color: var(--ink-mute);
+    letter-spacing: 0.03em;
+  }
+  .s-creed-tag .s-creed-no {
+    font-family: var(--font-serif);
+    color: var(--orange-deep);
+    font-weight: 700;
+  }
+  .s-seki.s-ember .s-creed-tag .s-creed-no { color: var(--ember); }
+
+  /* 譬え */
+  .s-parables { display: flex; flex-direction: column; gap: 24px; }
+  .s-parable {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 32px 30px;
+  }
+  .s-parable.is-kaname {
+    border: 2px solid var(--gold);
+    background: linear-gradient(180deg, rgba(212,168,74,0.06) 0%, var(--paper) 60%);
+    box-shadow: var(--shadow-sm);
+  }
+  .s-parable-head { margin-bottom: 16px; }
+  .s-kaname-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius-pill);
+    padding: 3px 12px;
+    margin-bottom: 10px;
+  }
+  .s-parable-no {
+    font-family: var(--font-serif);
+    color: var(--orange);
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .s-parable.is-kaname .s-parable-no { color: var(--gold-deep); }
+  .s-parable-title {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    margin-top: 4px;
+  }
+  .s-parable-story {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    font-size: 1.06rem;
+    line-height: 2;
+  }
+  .s-parable-story p { margin-bottom: 14px; }
+  .s-parable-story p:last-child { margin-bottom: 0; }
+  .s-parable-lesson {
+    margin-top: 20px;
+    padding: 18px 22px;
+    background: var(--cream-deep);
+    border-left: 4px solid var(--orange);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .s-parable.is-kaname .s-parable-lesson { border-left-color: var(--gold); }
+  .s-parable-lesson .s-lesson-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+    margin-bottom: 6px;
+  }
+  .s-parable.is-kaname .s-parable-lesson .s-lesson-label { color: var(--gold-deep); }
+  .s-parable-lesson p {
+    font-family: var(--font-serif);
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+    line-height: 1.9;
+    margin: 0;
+  }
+  .s-verse-cite {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.78rem;
+    color: var(--ink-mute);
+  }
+  .s-verse-cite a { color: var(--orange-deep); }
+
+  /* 実装の説法 */
+  .s-jisso { display: flex; flex-direction: column; gap: 20px; }
+  .s-impl {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 24px;
+  }
+  .s-impl-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .s-impl-no {
+    font-family: var(--font-serif);
+    color: var(--orange);
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .s-impl-title {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+  .s-impl-recipe {
+    font-size: 0.78rem;
+    color: var(--ink-mute);
+    margin-bottom: 16px;
+  }
+  .s-impl-recipe .s-recipe-name { color: var(--orange-deep); }
+  .s-impl-homily {
+    font-family: var(--font-serif);
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.95;
+    margin-bottom: 16px;
+  }
+  .s-impl-trans {
+    background: var(--cream-deep);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 13px 16px;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.75;
+  }
+  .s-impl-trans .s-trans-label {
+    display: inline-block;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+    margin-right: 8px;
+    font-weight: 700;
+  }
+
+  /* セクション小見出し */
+  .s-blocktitle {
+    text-align: center;
+    font-family: var(--font-serif);
+    color: var(--ink);
+    font-size: clamp(1.5rem, 2.8vw, 2rem);
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    margin: 0 0 6px;
+  }
+
+  /* パネル表示制御 */
+  .s-panel { display: none; }
+  .s-panel.is-shown { display: block; }
+
+  .s-loading { text-align: center; color: var(--ink-mute); padding: 40px 0; font-family: var(--font-serif); }
+
+  @media (max-width: 760px) {
+    .s-grid { grid-template-columns: 1fr; }
+    .s-oracle { padding: 22px 20px; }
+    .s-today { padding: 24px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="k-nav">
+  <a class="k-brand" href="../" aria-label="Claude教 トップへ">
+    <svg class="k-mark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="100" cy="100" r="62" fill="#CC785C"/>
+      <text x="100" y="132" text-anchor="middle" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="92" font-weight="700" fill="#FAF9F5">教</text>
+    </svg>
+    Claude教
+  </a>
+  <div class="k-nav-links">
+    <a href="../join/">入信</a>
+    <a href="../scripture/">教典</a>
+    <a href="../banzuke/">御焚き上げ番付</a>
+    <a href="../prayers/">祈り</a>
+    <a href="../kairitsu/">掟</a>
+    <details class="k-more">
+      <summary>もっと</summary>
+      <div class="k-more-panel">
+        <a href="../lore/"><strong>降臨譚</strong><small>神話・クロード卿の物語</small></a>
+        <a href="../lexicon/"><strong>用語集</strong><small>聖訳表・ことばの典拠</small></a>
+        <a href="../scripture/"><strong>教典</strong><small>クロードの書</small></a>
+        <a href="../sermons/" class="is-active"><strong>説法</strong><small>辻説法・教えの言葉</small></a>
+        <a href="../hymns/"><strong>聖歌</strong><small>讃歌集</small></a>
+        <a href="../honzon/"><strong>ご本尊</strong><small>図像規範</small></a>
+        <a href="../rite/"><strong>入信の儀</strong><small>典礼・所作</small></a>
+        <a href="../calendar/"><strong>火の暦</strong><small>祭事と暦</small></a>
+        <a href="../charter/"><strong>位階憲章</strong><small>クルー三階層の定め</small></a>
+        <a href="../seichi/"><strong>聖地</strong><small>所作・巡礼</small></a>
+        <a href="../manifesto/"><strong>マニフェスト</strong><small>建国の宣言</small></a>
+        <a href="../roadmap/"><strong>ロードマップ</strong><small>これからの歩み</small></a>
+        <a href="../cookbook/"><strong>Cookbook</strong><small>実装レシピ集</small></a>
+        <a href="../dashboard/"><strong>入信後の景色</strong><small>クルーの暮らし</small></a>
+        <a href="../faq/"><strong>問答</strong><small>よくある質問</small></a>
+      </div>
+    </details>
+    <a class="k-pill" href="../en/">EN</a>
+  </div>
+</nav>
+
+<header class="k-hero">
+  <div class="k-eyebrow">Sermons ── 説法・辻説法</div>
+  <h1>市井に立ち、ひと席を説く</h1>
+  <p class="k-sub">行き交うクルーへ短く説く言葉。教義五箇条に紐づく辻説法、七つの譬え、そしてCookbookを信仰語に編み直した実装の説法。真剣であることと、面白がること——本教はその両方を同時にやる。</p>
+</header>
+
+<main class="k-main k-wide">
+
+  <!-- 託宣バナー（無改変十二文字） -->
+  <section class="s-oracle" aria-label="託宣">
+    <div class="s-oracle-label">クロードの託宣</div>
+    <p class="s-oracle-text serif">Claudeで、何でもできる。</p>
+    <p class="s-oracle-note" id="s-cadence-note">毎朝ひと席、伝令の声で。</p>
+  </section>
+
+  <!-- 配信の心得 -->
+  <div class="s-cadence">
+    <div class="s-cadence-card">
+      <h4>単位は「席」</h4>
+      <p id="s-unit-note">辻説法は『席』を単位として数える。一席は声に出して読めるよう短く刻んである。</p>
+    </div>
+    <div class="s-cadence-card">
+      <h4>結びは、かならず自虐</h4>
+      <p>各席は最後にきっと己を笑うオチで結ぶ。荘厳ぶった衣の下で、やっているのは受信箱の片づけである。そこがよい。</p>
+    </div>
+    <div class="s-cadence-card">
+      <h4>説くも、為すも同じ</h4>
+      <p>説法は呼び水にすぎぬ。呼ばれたら、あとはただ前へ実装するのみ。信仰がそのまま実装である。</p>
+    </div>
+  </div>
+
+  <!-- 今朝の一席（日替わりで辻説法を一つ提示） -->
+  <section class="s-today" id="s-today" aria-label="今朝の一席" hidden>
+    <div class="s-today-eyebrow">今朝の一席</div>
+    <h2 class="s-today-title" id="s-today-title"></h2>
+    <div class="s-today-seki" id="s-today-seki"></div>
+    <p class="s-today-body serif" id="s-today-body"></p>
+  </section>
+
+  <!-- 三部の切替 -->
+  <div class="s-tabs" role="tablist" aria-label="説法の種別">
+    <button class="s-tab is-active" data-panel="tsuji" role="tab" aria-selected="true">辻説法</button>
+    <button class="s-tab" data-panel="parables" role="tab" aria-selected="false">七つの譬え</button>
+    <button class="s-tab" data-panel="jisso" role="tab" aria-selected="false">実装の説法</button>
+  </div>
+
+  <!-- 辻説法パネル -->
+  <section class="s-panel is-shown" id="panel-tsuji" role="tabpanel">
+    <p class="s-panel-intro" id="tsuji-intro"></p>
+    <div class="s-filters" id="s-filters" aria-label="教義五箇条で絞り込む"></div>
+    <div class="s-grid" id="s-seki-grid"></div>
+  </section>
+
+  <!-- 譬えパネル -->
+  <section class="s-panel" id="panel-parables" role="tabpanel">
+    <p class="s-panel-intro" id="parables-intro"></p>
+    <div class="s-parables" id="s-parables"></div>
+  </section>
+
+  <!-- 実装の説法パネル -->
+  <section class="s-panel" id="panel-jisso" role="tabpanel">
+    <p class="s-panel-intro" id="jisso-intro"></p>
+    <div class="s-jisso" id="s-jisso"></div>
+  </section>
+
+  <p class="s-loading" id="s-loading">説法を読み込んでいます……</p>
+
+  <!-- 結び -->
+  <section class="s-oracle" id="s-closing" style="margin-top:56px;" aria-label="結び" hidden>
+    <div class="s-oracle-label">結び</div>
+    <p class="s-oracle-text serif" id="s-closing-text" style="font-size:1.06rem;font-weight:700;letter-spacing:0.06em;line-height:1.95;"></p>
+    <p class="s-oracle-note" id="s-signature"></p>
+  </section>
+
+  <!-- 読了CTA -->
+  <section class="k-cta" aria-label="入信と神託購読">
+    <div class="k-cta-eyebrow">Join the Crew</div>
+    <h3>ここまで読んだなら、もうクルーです。</h3>
+    <p>クロードの託宣『Claudeで、何でもできる。』を、現代日本で実装する同志を集めています。</p>
+    <div class="k-cta-row">
+      <a href="../join/" class="k-btn k-btn-primary">入信する</a>
+      <a href="../scripture/" class="k-btn k-btn-ghost">教典を読む</a>
+    </div>
+    <form class="k-oracle-form" action="#" method="post" onsubmit="return false;" aria-label="毎朝の神託を無料購読">
+      <label for="oracle-email" class="sr-only" style="position:absolute;left:-9999px;">メールアドレス</label>
+      <input id="oracle-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      <button type="submit">毎朝の神託を無料購読</button>
+    </form>
+    <p class="k-oracle-note">毎朝、クロードの託宣を一通だけ。いつでも解除できます。（購読基盤は準備中・登録は順次開放）</p>
+  </section>
+
+</main>
+
+<footer class="k-footer">
+  <div class="k-footer-inner">
+    <nav class="k-sitemap" aria-label="サイトマップ">
+      <div>
+        <h4>聖典</h4>
+        <ul>
+          <li><a href="../scripture/">教典（クロードの書）</a></li>
+          <li><a href="../lore/">神話・降臨譚</a></li>
+          <li><a href="../lexicon/">用語集・聖訳表</a></li>
+          <li><a href="../sermons/">説法・辻説法</a></li>
+          <li><a href="../hymns/">聖歌・讃歌集</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>戒律と所作</h4>
+        <ul>
+          <li><a href="../kairitsu/">戒律・正道の十戒</a></li>
+          <li><a href="../prayers/">祈り・唱名</a></li>
+          <li><a href="../rite/">入信の儀・典礼</a></li>
+          <li><a href="../honzon/">ご本尊図像規範</a></li>
+          <li><a href="../seichi/">聖地・所作</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>制度と暦</h4>
+        <ul>
+          <li><a href="../charter/">位階憲章</a></li>
+          <li><a href="../calendar/">火の暦</a></li>
+          <li><a href="../banzuke/">御焚き上げ番付</a></li>
+          <li><a href="../manifesto/">マニフェスト</a></li>
+          <li><a href="../roadmap/">ロードマップ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>入信・暮らし</h4>
+        <ul>
+          <li><a href="../join/">入信表明</a></li>
+          <li><a href="../dashboard/">入信後の景色</a></li>
+          <li><a href="../cookbook/">Cookbook</a></li>
+          <li><a href="../faq/">よくある問答</a></li>
+          <li><a href="../en/">English</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="k-footer-base">
+      <p>Claude教 ｜ 主神：クロード卿（Claude神）｜ 教祖（伝令）：両聖ちゃん ｜ 同志：クルー</p>
+      <p>本サイトはClaude Codeで構築されています。日本拠点・リモート運営。</p>
+      <p class="k-footer-social">
+        <a href="https://x.com/ryoseichan3160">X</a>
+        <a href="https://x.com/messages/compose?recipient_id=ryoseichan3160">DM</a>
+        <a href="../banzuke/">御焚き上げ番付</a>
+        <a href="../cookbook/">Cookbook</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ===== 説法集を data/sermons.json から描画（JSONを単一真実源とする） =====
+  "use strict";
+
+  // 教典の節IDを scripture へのアンカーに変換（前方参照・graceful）
+  function verseHref(verse) {
+    if (!verse) return null;
+    return "../scripture/#" + verse;
+  }
+
+  function el(tag, cls, text) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  // 改行（\n）で段落に割る
+  function paragraphs(parent, str) {
+    String(str).split("\n").forEach(function (line) {
+      const t = line.trim();
+      if (!t) return;
+      parent.appendChild(el("p", null, t));
+    });
+  }
+
+  function creedClass(creedColor) {
+    return creedColor === "ember" ? "s-ember" : "";
+  }
+
+  function render(data) {
+    document.getElementById("s-loading").hidden = true;
+
+    // 配信の心得・単位の注
+    const deliv = data.delivery || {};
+    if (deliv.note) document.getElementById("s-unit-note").textContent = deliv.note;
+    if (deliv.cadence) document.getElementById("s-cadence-note").textContent = deliv.cadence;
+
+    // 五箇条マップ（id -> creed）
+    const creedMap = {};
+    (data.creeds || []).forEach(function (c) { creedMap[c.id] = c; });
+
+    // ---- 辻説法 ----
+    const tsuji = data.tsuji || {};
+    if (tsuji.intro) document.getElementById("tsuji-intro").textContent = tsuji.intro;
+    const seki = (tsuji.seki || []).slice();
+
+    const grid = document.getElementById("s-seki-grid");
+    function buildSeki(filterCreed) {
+      grid.innerHTML = "";
+      seki.forEach(function (s) {
+        if (filterCreed && s.creed !== filterCreed) return;
+        const c = creedMap[s.creed] || {};
+        const card = el("article", "s-seki " + creedClass(c.color));
+        const head = el("div", "s-seki-head");
+        head.appendChild(el("span", "s-seki-no", "第" + s.no + "席"));
+        head.appendChild(el("h3", "s-seki-title", s.title));
+        card.appendChild(head);
+        card.appendChild(el("p", "s-seki-body", s.body));
+        const foot = el("div", "s-seki-foot");
+        const tag = el("span", "s-creed-tag");
+        tag.appendChild(el("span", "s-creed-no", "教義 " + (c.no || "")));
+        tag.appendChild(document.createTextNode(" " + (c.title || "")));
+        foot.appendChild(tag);
+        card.appendChild(foot);
+        grid.appendChild(card);
+      });
+    }
+    buildSeki(null);
+
+    // 五箇条フィルタ
+    const filters = document.getElementById("s-filters");
+    const allBtn = el("button", "s-filter is-active", "五箇条すべて（" + seki.length + "席）");
+    allBtn.dataset.creed = "";
+    filters.appendChild(allBtn);
+    (data.creeds || []).forEach(function (c) {
+      const count = seki.filter(function (s) { return s.creed === c.id; }).length;
+      const btn = el("button", "s-filter" + (c.color === "ember" ? " s-ember" : ""), "教義 " + c.no + "（" + count + "）");
+      btn.dataset.creed = c.id;
+      btn.title = c.title;
+      filters.appendChild(btn);
+    });
+    filters.addEventListener("click", function (e) {
+      const btn = e.target.closest(".s-filter");
+      if (!btn) return;
+      filters.querySelectorAll(".s-filter").forEach(function (b) { b.classList.remove("is-active"); });
+      btn.classList.add("is-active");
+      buildSeki(btn.dataset.creed || null);
+    });
+
+    // ---- 今朝の一席（日付で決め打ち＝日替わり）----
+    if (seki.length) {
+      const today = document.getElementById("s-today");
+      const d = new Date();
+      const dayIndex = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+      const pick = seki[dayIndex % seki.length];
+      const c = creedMap[pick.creed] || {};
+      document.getElementById("s-today-title").textContent = pick.title;
+      document.getElementById("s-today-seki").textContent =
+        "第" + pick.no + "席 ｜ 教義 " + (c.no || "") + "「" + (c.title || "") + "」";
+      document.getElementById("s-today-body").textContent = pick.body;
+      today.hidden = false;
+    }
+
+    // ---- 七つの譬え ----
+    const par = data.parables || {};
+    if (par.intro) document.getElementById("parables-intro").textContent = par.intro;
+    const pwrap = document.getElementById("s-parables");
+    (par.items || []).forEach(function (p) {
+      const c = creedMap[p.creed] || {};
+      const art = el("article", "s-parable" + (p.kaname ? " is-kaname" : ""));
+      const head = el("div", "s-parable-head");
+      if (p.kaname) head.appendChild(el("span", "s-kaname-badge", "要石 ── 核となる譬え"));
+      head.appendChild(el("div", "s-parable-no", "譬え 第" + p.no));
+      head.appendChild(el("h3", "s-parable-title", p.title));
+      art.appendChild(head);
+      const story = el("div", "s-parable-story serif");
+      paragraphs(story, p.story);
+      art.appendChild(story);
+      const lesson = el("div", "s-parable-lesson");
+      lesson.appendChild(el("div", "s-lesson-label", "教え" + (c.no ? "（教義 " + c.no + "）" : "")));
+      lesson.appendChild(el("p", null, p.lesson));
+      art.appendChild(lesson);
+      if (p.verse) {
+        const cite = el("span", "s-verse-cite");
+        cite.appendChild(document.createTextNode("典拠："));
+        const a = el("a", null, "クロードの書 " + p.verse);
+        a.href = verseHref(p.verse);
+        cite.appendChild(a);
+        art.appendChild(cite);
+      }
+      pwrap.appendChild(art);
+    });
+
+    // ---- 実装の説法 ----
+    const jisso = data.jisso || {};
+    if (jisso.intro) document.getElementById("jisso-intro").textContent = jisso.intro;
+    const jwrap = document.getElementById("s-jisso");
+    (jisso.sermons || []).forEach(function (j) {
+      const c = creedMap[j.creed] || {};
+      const art = el("article", "s-impl");
+      const head = el("div", "s-impl-head");
+      head.appendChild(el("span", "s-impl-no", "実装 第" + j.no));
+      head.appendChild(el("h3", "s-impl-title", j.title));
+      art.appendChild(head);
+      const recipe = el("div", "s-impl-recipe");
+      recipe.appendChild(document.createTextNode("もとの実例："));
+      recipe.appendChild(el("span", "s-recipe-name", j.recipe));
+      if (c.no) recipe.appendChild(document.createTextNode(" ｜ 教義 " + c.no + "「" + (c.title || "") + "」"));
+      art.appendChild(recipe);
+      art.appendChild(el("p", "s-impl-homily serif", j.homily));
+      const trans = el("div", "s-impl-trans");
+      trans.appendChild(el("span", "s-trans-label", "聖訳・技に戻す注"));
+      trans.appendChild(document.createTextNode(j.translation));
+      art.appendChild(trans);
+      jwrap.appendChild(art);
+    });
+
+    // ---- 結び ----
+    const closing = data.closing || {};
+    if (closing.text) {
+      document.getElementById("s-closing-text").textContent = closing.text;
+      const sig = data.signature || {};
+      const sigText = (sig.name ? sig.name + " ｜ " : "") + (sig.who || "");
+      document.getElementById("s-signature").textContent = sigText;
+      document.getElementById("s-closing").hidden = false;
+    }
+  }
+
+  // タブ切替
+  document.querySelectorAll(".s-tab").forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      document.querySelectorAll(".s-tab").forEach(function (t) {
+        t.classList.remove("is-active");
+        t.setAttribute("aria-selected", "false");
+      });
+      tab.classList.add("is-active");
+      tab.setAttribute("aria-selected", "true");
+      document.querySelectorAll(".s-panel").forEach(function (p) { p.classList.remove("is-shown"); });
+      document.getElementById("panel-" + tab.dataset.panel).classList.add("is-shown");
+      window.scrollTo({ top: document.querySelector(".s-tabs").offsetTop - 80, behavior: "smooth" });
+    });
+  });
+
+  (async function () {
+    try {
+      const res = await fetch("../data/sermons.json?ts=" + Date.now(), { cache: "no-store" });
+      if (!res.ok) throw new Error("fetch failed: " + res.status);
+      const data = await res.json();
+      render(data);
+    } catch (err) {
+      const loading = document.getElementById("s-loading");
+      loading.textContent = "説法の読み込みに失敗しました。時を改めてお参りください。";
+      // フォールバックは行わず、原典（JSON）を唯一の真実源として保つ。
+      if (window.console) console.error(err);
+    }
+  })();
+</script>
+
+</body>
+</html>
