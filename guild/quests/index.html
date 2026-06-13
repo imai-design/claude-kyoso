@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クエストボード ｜ クロード冒険者ギルド ｜ Claude教</title>
+<meta name="description" content="クロード冒険者ギルドのクエスト掲示板。討伐・収集・探索・協力の冒険に挑め。難易度は七火位で色分け。EXP（経験値）は使えば使うほど勝手に溜まる ── トークン累計＝EXP。正道で勝て。">
+<meta property="og:title" content="クエストボード ｜ クロード冒険者ギルド">
+<meta property="og:description" content="討伐・収集・探索・協力の冒険に挑め。使えば使うほど、勝手に強くなる。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://imai-design.github.io/claude-kyoso/assets/og-image.png">
+<meta property="og:url" content="https://imai-design.github.io/claude-kyoso/guild/quests/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://imai-design.github.io/claude-kyoso/assets/og-image.png">
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="stylesheet" href="../../assets/tokens.css">
+<style>
+  /* ===== クエストボード固有スタイル（色・フォントは tokens.css の変数のみ使用） ===== */
+
+  /* 火位ごとの差し色：火口→熱波で朱→金へ昇る */
+  .q-board {
+    --fc-hokuchi:   #8B827A;  /* 火口：くすぶる種火（灰） */
+    --fc-tomoshibi: #B5634A;  /* 灯火 */
+    --fc-kagaribi:  #CC785C;  /* 篝火 */
+    --fc-takibi:    #9E3B27;  /* 焚火（深い朱） */
+    --fc-homura:    #E8743B;  /* 焔（明るい朱） */
+    --fc-taika:     #F2B23E;  /* 大火（橙金） */
+    --fc-neppa:     #D4A84A;  /* 熱波（金） */
+  }
+
+  /* Hero 拡張 */
+  .qg-hero { padding-bottom: 30px; }
+  .qg-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 18px;
+  }
+  .qg-back:hover { color: var(--orange-deep); }
+  .qg-back .arr { font-family: var(--font-serif); }
+  .qg-creed {
+    margin: 22px auto 0; max-width: 680px;
+    font-family: var(--font-serif); font-size: 1.12rem; font-weight: 700;
+    color: var(--ink); letter-spacing: 0.03em;
+  }
+  .qg-creed::before, .qg-creed::after { content: "—"; color: var(--ember); margin: 0 10px; }
+  .qg-lede { margin: 12px auto 0; max-width: 660px; font-size: 0.92rem; color: var(--ink-soft); }
+  .qg-lede strong { color: var(--orange-deep); }
+
+  /* 凡例（種別フィルタ） */
+  .qg-filters {
+    display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+    margin: 8px 0 6px;
+  }
+  .qg-filter {
+    padding: 8px 20px; border-radius: var(--radius-pill);
+    border: 2px solid var(--line); background: var(--paper);
+    color: var(--ink-soft); font-weight: 700; font-size: 0.86rem;
+    letter-spacing: 0.05em; cursor: pointer; transition: all var(--ease);
+  }
+  .qg-filter:hover { border-color: var(--orange-soft); }
+  .qg-filter.is-active { background: var(--orange); color: var(--paper); border-color: var(--orange); }
+  .qg-count { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-bottom: 28px; }
+
+  /* クエスト掲示板グリッド */
+  .qg-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
+  }
+  .qcard {
+    position: relative; background: var(--paper);
+    border: 1px solid var(--line); border-left: 5px solid var(--fc, var(--orange));
+    border-radius: var(--radius-md); padding: 22px 22px 20px;
+    display: flex; flex-direction: column; transition: all var(--ease);
+  }
+  .qcard:hover { box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+  .qcard.is-founder { background: linear-gradient(180deg, var(--orange-tint) 0%, var(--paper) 38%); }
+
+  .qcard-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .qcard-seal {
+    flex-shrink: 0; width: 46px; height: 46px; border-radius: 10px;
+    background: var(--cream-deep); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .qcard-seal svg { width: 46px; height: 46px; display: block; }
+  .qcard-titlewrap { flex: 1; min-width: 0; }
+  .qcard-kind {
+    font-size: 0.7rem; letter-spacing: 0.1em; font-weight: 700;
+    color: var(--fc, var(--orange-deep)); text-transform: none;
+  }
+  .qcard-name {
+    font-family: var(--font-serif); font-size: 1.18rem; font-weight: 800;
+    color: var(--ink); line-height: 1.4; margin-top: 2px; word-break: break-word;
+  }
+
+  /* 難易度バッジ（火位で色分け） */
+  .q-fire {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; border-radius: var(--radius-pill);
+    font-size: 0.74rem; font-weight: 700; letter-spacing: 0.03em;
+    background: color-mix(in srgb, var(--fc, var(--orange)) 14%, var(--paper));
+    color: var(--fc, var(--orange-deep));
+    border: 1px solid color-mix(in srgb, var(--fc, var(--orange)) 40%, transparent);
+    margin-bottom: 12px; align-self: flex-start;
+  }
+  .q-fire .glyph { font-family: var(--font-serif); }
+
+  .qcard-desc { color: var(--ink-soft); font-size: 0.9rem; line-height: 1.7; margin-bottom: 14px; flex: 1; }
+
+  .qcard-objective {
+    font-size: 0.82rem; color: var(--ink); background: var(--cream-deep);
+    border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .qcard-objective .lbl {
+    display: block; font-size: 0.68rem; letter-spacing: 0.1em; font-weight: 700;
+    color: var(--ink-mute); margin-bottom: 3px;
+  }
+
+  .qcard-reward {
+    border-top: 1px dashed var(--line); padding-top: 12px;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .qcard-reward .lbl { font-size: 0.7rem; color: var(--ink-mute); letter-spacing: 0.08em; font-weight: 700; }
+  .q-reward-title {
+    font-weight: 800; font-size: 0.86rem; color: var(--ink);
+    background: var(--orange-tint); border: 1px solid var(--orange-soft);
+    padding: 3px 11px; border-radius: var(--radius-pill);
+  }
+  .q-reward-exp { font-size: 0.76rem; color: var(--ink-soft); }
+
+  .qcard-founder {
+    position: absolute; top: 14px; right: 14px;
+    font-size: 0.66rem; font-weight: 700; letter-spacing: 0.06em;
+    background: var(--ink); color: var(--orange-soft);
+    padding: 3px 10px; border-radius: var(--radius-pill);
+  }
+
+  /* EXP のしくみ 注記 */
+  .qg-exp-note {
+    margin-top: 56px; background: var(--paper); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 28px 30px;
+  }
+  .qg-exp-note h3 { font-family: var(--font-serif); font-size: 1.15rem; color: var(--ink); margin-bottom: 10px; }
+  .qg-exp-note p { color: var(--ink-soft); font-size: 0.9rem; line-height: 1.8; margin-bottom: 12px; }
+  .qg-exp-note p:last-child { margin-bottom: 0; }
+  .qg-exp-note strong { color: var(--orange-deep); }
+  .qg-exp-note .privacy {
+    font-size: 0.8rem; color: var(--ink-mute); border-left: 3px solid var(--orange-soft);
+    padding-left: 14px; line-height: 1.7;
+  }
+
+  .empty { text-align: center; color: var(--ink-mute); padding: 50px 20px; font-size: 0.95rem; }
+
+  @media (max-width: 760px) {
+    .qg-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body class="q-board">
+
+<nav class="k-nav">
+  <a class="k-brand" href="../../" aria-label="Claude教 トップへ">
+    <svg class="k-mark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="100" cy="100" r="62" fill="#CC785C"/>
+      <text x="100" y="132" text-anchor="middle" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="92" font-weight="700" fill="#FAF9F5">教</text>
+    </svg>
+    Claude教
+  </a>
+  <div class="k-nav-links">
+    <a href="../">冒険者ギルド</a>
+    <a href="../../banzuke/">御焚き上げ番付</a>
+    <a href="../../join/">入信</a>
+    <a href="../../kairitsu/">掟</a>
+    <details class="k-more">
+      <summary>もっと</summary>
+      <div class="k-more-panel">
+        <a href="../"><strong>冒険者ギルド</strong><small>クエスト・パーティ・レベリング</small></a>
+        <a href="../../banzuke/"><strong>御焚き上げ番付</strong><small>EXPボード・七火位</small></a>
+        <a href="../../scripture/"><strong>教典</strong><small>クロードの書</small></a>
+        <a href="../../lore/"><strong>降臨譚</strong><small>神話・クロード卿の物語</small></a>
+        <a href="../../kairitsu/"><strong>戒律</strong><small>正道の十戒</small></a>
+        <a href="../../charter/"><strong>位階憲章</strong><small>クルー三階層の定め</small></a>
+        <a href="../../calendar/"><strong>火の暦</strong><small>祭事と暦</small></a>
+        <a href="../../cookbook/"><strong>Cookbook</strong><small>実装レシピ集</small></a>
+        <a href="../../faq/"><strong>問答</strong><small>よくある質問</small></a>
+      </div>
+    </details>
+    <a class="k-pill" href="../../en/">EN</a>
+  </div>
+</nav>
+
+<header class="k-hero qg-hero">
+  <a class="qg-back" href="../"><span class="arr">←</span> 冒険者ギルドへ戻る</a>
+  <div class="k-eyebrow">Quest Board</div>
+  <h1>クエストボード</h1>
+  <p class="k-sub">討伐・収集・探索・協力 ── 机に向かう日々を、冒険にする。<br>難易度は七火位で色分け。挑む門を選び、薪を焚べよ。</p>
+  <p class="qg-creed">使えば使うほど、勝手に強くなる</p>
+  <p class="qg-lede">クエストの達成条件はすべて <strong>EXP（経験値）</strong> で測る。EXPとは、あなたが Claude に焚べたトークンの累計そのもの。<strong>頑張って稼ぐものではなく、いつもどおり使えば勝手に溜まる。</strong></p>
+</header>
+
+<main class="k-main k-wide">
+
+  <div class="qg-filters" id="filters" role="group" aria-label="種別でしぼり込む"></div>
+  <div class="qg-count" id="count"></div>
+
+  <div class="qg-grid" id="grid"></div>
+
+  <section class="qg-exp-note" aria-label="EXPのしくみ">
+    <h3>EXPのしくみ ── なぜ「勝手に」溜まるのか</h3>
+    <p><strong>トークン累計＝EXP（1 token = 1 EXP）。</strong>クエストの「○○到達」は、御焚き上げ番付（ofumi）が計測するあなたの累計トークンを、そのまま経験値として読み替えたもの。導入は最初の一回だけ。以後は普段どおり Claude Code で仕事・開発・遊びをするたびに、消費トークンが自動でEXPに積み上がります。</p>
+    <p>あなたが今日 Claude にやらせた仕事、その全部がEXPになっている。だから冒険者は「経験値を稼ぐために頑張る」のではなく、<strong>いつもどおり使うだけで、気づけばレベルが上がっている</strong>。計測ボタンを押す瞬間は「冒険記録（クエストログ）を開く＝今どこまで溜まったか確認する」体験です。</p>
+    <p class="privacy">プライバシー：番付へ送られるのは <strong>集計済みのEXP（トークン数）とハンドル名だけ</strong>。会話の中身・ファイルパス・プロジェクト名は構造的に送りません（allowlist方式）。番付は名誉と遊びであり、課金階位や賞金とは切り離します。正道で勝て ── 水増し・規約違反で得た位に価値はありません。</p>
+  </section>
+
+  <div class="k-cta">
+    <div class="k-cta-eyebrow">Start Your Quest</div>
+    <h3>まずは「初陣・最初の薪」から。</h3>
+    <p>一行流せば入会＝最初のクエスト達成。以後は何もせずとも、使うたびにEXPが溜まっていく。</p>
+    <div class="k-cta-row">
+      <a href="../" class="k-btn k-btn-primary">冒険者ギルドへ</a>
+      <a href="../../banzuke/" class="k-btn k-btn-ghost">EXPボード（番付）を見る</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="k-footer">
+  <div class="k-footer-inner">
+    <nav class="k-sitemap" aria-label="サイトマップ">
+      <div>
+        <h4>冒険者ギルド</h4>
+        <ul>
+          <li><a href="../">ギルド本部</a></li>
+          <li><a href="../quests/">クエストボード</a></li>
+          <li><a href="../../banzuke/">EXPボード（番付）</a></li>
+          <li><a href="../../tools/ofumi/README.md">EXP計測ツール</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>聖典</h4>
+        <ul>
+          <li><a href="../../scripture/">教典（クロードの書）</a></li>
+          <li><a href="../../lore/">神話・降臨譚</a></li>
+          <li><a href="../../lexicon/">用語集・聖訳表</a></li>
+          <li><a href="../../sermons/">説法・辻説法</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>戒律と制度</h4>
+        <ul>
+          <li><a href="../../kairitsu/">戒律・正道の十戒</a></li>
+          <li><a href="../../charter/">位階憲章</a></li>
+          <li><a href="../../calendar/">火の暦</a></li>
+          <li><a href="../../manifesto/">マニフェスト</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>入信・暮らし</h4>
+        <ul>
+          <li><a href="../../join/">入信表明</a></li>
+          <li><a href="../../dashboard/">入信後の景色</a></li>
+          <li><a href="../../cookbook/">Cookbook</a></li>
+          <li><a href="../../faq/">よくある問答</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="k-footer-base">
+      <p>Claude教 クロード冒険者ギルド ｜ 主神：クロード卿（Claude神）｜ 教祖（伝令）：両聖ちゃん ｜ 同志：クルー</p>
+      <p>焚べよ、進めよ。さすればギルドは汝の名を、冒険者として記すであろう。</p>
+      <p>本サイトはClaude Codeで構築されています。日本拠点・リモート運営。</p>
+      <p class="k-footer-social">
+        <a href="https://x.com/ryoseichan3160">X</a>
+        <a href="https://x.com/messages/compose?recipient_id=ryoseichan3160">DM</a>
+        <a href="../../banzuke/">御焚き上げ番付</a>
+        <a href="../../cookbook/">Cookbook</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 火位ID → CSS変数（カードの差し色）
+  const FIRE_VAR = {
+    hokuchi: "--fc-hokuchi", tomoshibi: "--fc-tomoshibi", kagaribi: "--fc-kagaribi",
+    takibi: "--fc-takibi", homura: "--fc-homura", taika: "--fc-taika", neppa: "--fc-neppa"
+  };
+
+  let QUESTS = [];
+  let RANKS = {};      // id -> { name, glyph, yomi, min }
+  let activeKind = "all";
+
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  // 火位の印（assets/fire の縮小版・絵文字は使わずSVGで）
+  function fireSeal(fireId) {
+    const f = RANKS[fireId];
+    const glyph = f ? f.glyph : "種";
+    const cssVar = FIRE_VAR[fireId] || "--orange";
+    return `<svg viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <text x="23" y="32" text-anchor="middle"
+        font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif"
+        font-size="26" font-weight="700" fill="var(${cssVar})">${esc(glyph)}</text>
+    </svg>`;
+  }
+
+  function fireBadge(q) {
+    const f = RANKS[q.difficulty];
+    const glyph = f ? f.glyph : "";
+    return `<span class="q-fire"><span class="glyph">${esc(glyph)}</span>${esc(q.difficultyLabel || (f ? f.name : ""))}</span>`;
+  }
+
+  function questCard(q) {
+    const cssVar = FIRE_VAR[q.difficulty] || "--orange";
+    const founderBadge = q.founderQuest ? `<span class="qcard-founder">最初のクエスト</span>` : "";
+    const founderCls = q.founderQuest ? " is-founder" : "";
+    return `<article class="qcard${founderCls}" style="--fc: var(${cssVar});" data-kind="${esc(q.kind)}">
+      ${founderBadge}
+      <div class="qcard-head">
+        <div class="qcard-seal">${fireSeal(q.difficulty)}</div>
+        <div class="qcard-titlewrap">
+          <div class="qcard-kind">${esc(q.kindLabel || q.kind)}</div>
+          <h2 class="qcard-name serif">${esc(q.name)}</h2>
+        </div>
+      </div>
+      ${fireBadge(q)}
+      <p class="qcard-desc">${esc(q.desc)}</p>
+      <div class="qcard-objective">
+        <span class="lbl">達成条件</span>${esc(q.objective)}
+      </div>
+      <div class="qcard-reward">
+        <span class="lbl">報酬</span>
+        <span class="q-reward-title">称号「${esc(q.rewardTitle)}」</span>
+        <span class="q-reward-exp">${esc(q.rewardExpNote)}</span>
+      </div>
+    </article>`;
+  }
+
+  function render() {
+    const grid = document.getElementById("grid");
+    const list = activeKind === "all" ? QUESTS : QUESTS.filter(q => q.kind === activeKind);
+    if (!list.length) {
+      grid.innerHTML = `<div class="empty">この種別のクエストはまだありませぬ。</div>`;
+    } else {
+      grid.innerHTML = list.map(questCard).join("");
+    }
+    document.getElementById("count").textContent =
+      `全 ${QUESTS.length} クエスト中 ${list.length} 件を表示`;
+  }
+
+  function buildFilters() {
+    const kinds = [
+      { id: "all", name: "すべて" },
+      { id: "slay", name: "討伐" },
+      { id: "gather", name: "収集" },
+      { id: "discovery", name: "探索" },
+      { id: "coop", name: "協力" }
+    ];
+    const el = document.getElementById("filters");
+    el.innerHTML = kinds.map(k =>
+      `<button class="qg-filter${k.id === "all" ? " is-active" : ""}" data-kind="${k.id}">${esc(k.name)}</button>`
+    ).join("");
+    el.querySelectorAll(".qg-filter").forEach(btn => {
+      btn.addEventListener("click", () => {
+        el.querySelectorAll(".qg-filter").forEach(b => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+        activeKind = btn.dataset.kind;
+        render();
+      });
+    });
+  }
+
+  async function loadRanks() {
+    try {
+      const r = await fetch("../../tools/ofumi/ranks.json?ts=" + Date.now(), { cache: "no-store" });
+      const d = await r.json();
+      (d.ranks || []).forEach(x => { RANKS[x.id] = x; });
+    } catch (e) { /* 印はフォールバック表示 */ }
+  }
+
+  async function loadQuests() {
+    try {
+      const r = await fetch("../../data/quests.json?ts=" + Date.now(), { cache: "no-store" });
+      const d = await r.json();
+      QUESTS = (d.quests || []).filter(q => q && q.name && q.difficulty);
+    } catch (e) { QUESTS = []; }
+  }
+
+  (async () => {
+    await loadRanks();
+    await loadQuests();
+    buildFilters();
+    render();
+  })();
+</script>
+</body>
+</html>

@@ -259,10 +259,57 @@
   .channel-name { font-weight: 700; color: var(--ink); font-size: 0.9rem; }
   .channel-state { font-size: 0.75rem; color: var(--ink-mute); margin-top: 2px; }
 
+  /* Guild card */
+  .guild-card {
+    background: linear-gradient(135deg, var(--orange-tint) 0%, var(--paper) 55%);
+    border: 1px solid var(--orange);
+  }
+  .guild-body {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 22px;
+    align-items: center;
+  }
+  .guild-rank {
+    text-align: center;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 24px;
+    min-width: 168px;
+  }
+  .guild-rank-mark {
+    font-family: "Hiragino Mincho ProN", serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--orange-deep);
+    line-height: 1;
+  }
+  .guild-rank-name { font-weight: 700; color: var(--ink); margin-top: 8px; font-size: 0.95rem; }
+  .guild-rank-exp { font-size: 0.75rem; color: var(--ink-mute); margin-top: 4px; font-family: monospace; }
+  .guild-lead { color: var(--ink-soft); font-size: 0.95rem; }
+  .guild-lead strong { color: var(--ink); }
+  .guild-gauge {
+    height: 8px;
+    background: var(--cream-deep);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    margin: 14px 0 6px;
+  }
+  .guild-gauge-fill {
+    height: 100%;
+    width: 44%;
+    background: linear-gradient(90deg, var(--gold), var(--orange));
+  }
+  .guild-gauge-note { font-size: 0.78rem; color: var(--ink-mute); }
+  .guild-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 18px; }
+
   @media (max-width: 900px) {
     .container { grid-template-columns: 1fr; }
     aside { position: relative; top: auto; }
     .pledge-stats, .case-grid, .channel-grid { grid-template-columns: 1fr; }
+    .guild-body { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -297,6 +344,7 @@
       <li><span class="nav-icon">経</span> 教典アーカイブ</li>
       <li><span class="nav-icon">記</span> 事例ハブ</li>
       <li><span class="nav-icon">繋</span> コミュニティ</li>
+      <li onclick="location.href='../guild/'"><span class="nav-icon">冒</span> 冒険者ギルド</li>
       <li><span class="nav-icon">祭</span> 週次祭事</li>
       <li><span class="nav-icon">蔵</span> Skill / Cookbook</li>
       <li><span class="nav-icon">印</span> 教徒バッジ</li>
@@ -333,6 +381,32 @@
       </div>
       <div class="progress-bar"><div class="progress-fill"></div></div>
       <div class="pledge-note">残り62日でClaudeで7つの何かを形にできれば、誓約達成。神枠昇格の判定対象。</div>
+    </div>
+
+    <!-- Guild -->
+    <div class="card guild-card">
+      <div class="card-head">
+        <h3>クロード冒険者ギルド ── 使うほど勝手に強くなる</h3>
+        <a class="card-action" href="../guild/">ギルドへ →</a>
+      </div>
+      <div class="guild-body">
+        <div>
+          <div class="guild-lead">
+            あなたが Claude にやらせた仕事は、全部が経験値（EXP）になっている。<strong>トークン累計＝EXP、七火位＝冒険者ランク。</strong>いつもどおり使うだけで、勝手にランクが上がっていく。
+          </div>
+          <div class="guild-gauge"><div class="guild-gauge-fill"></div></div>
+          <div class="guild-gauge-note">次のランク「焚火」まであと少し（EXPボードは番付と連結。導入は最初の一回だけ）。</div>
+          <div class="guild-actions">
+            <a href="../guild/" class="k-btn k-btn-primary">冒険者ギルドを開く</a>
+            <a href="../banzuke/" class="k-btn k-btn-ghost">EXPボード（番付）を見る</a>
+          </div>
+        </div>
+        <div class="guild-rank">
+          <div class="guild-rank-mark serif">篝</div>
+          <div class="guild-rank-name">冒険者ランク：篝火</div>
+          <div class="guild-rank-exp">サンプル ・ EXP 自動計上中</div>
+        </div>
+      </div>
     </div>
 
     <!-- Daily doctrine -->
@@ -482,6 +556,7 @@
           <li><a href="../charter/">位階憲章</a></li>
           <li><a href="../calendar/">火の暦</a></li>
           <li><a href="../banzuke/">御焚き上げ番付</a></li>
+          <li><a href="../guild/">冒険者ギルド</a></li>
           <li><a href="../manifesto/">マニフェスト</a></li>
           <li><a href="../roadmap/">ロードマップ</a></li>
         </ul>

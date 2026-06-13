@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>冒険者カード一覧 ｜ クロード冒険者ギルド ｜ Claude教</title>
+<meta name="description" content="クロード冒険者ギルドの冒険者カード一覧。クルーが Claude に焚べた累計トークンがそのまま経験値(EXP)になり、冒険者ランクが上がる。使えば使うほど、勝手に強くなる。">
+<meta name="theme-color" content="#FAF9F5">
+<meta property="og:site_name" content="Claude教">
+<meta property="og:title" content="冒険者カード一覧 ｜ クロード冒険者ギルド">
+<meta property="og:description" content="使ったトークンが勝手にEXPになり、冒険者ランクが上がる。クルーの冒険者カードを一覧する。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://imai-design.github.io/claude-kyoso/assets/og-image.png">
+<meta property="og:url" content="https://imai-design.github.io/claude-kyoso/guild/card/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://imai-design.github.io/claude-kyoso/assets/og-image.png">
+<link rel="canonical" href="https://imai-design.github.io/claude-kyoso/guild/card/">
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="stylesheet" href="../../assets/tokens.css">
+<style>
+  /* 冒険者カード一覧 固有(色・フォントは tokens.css の変数のみ・絵文字なし) */
+  .g-tabs { display: flex; gap: 10px; justify-content: center; margin: 0 auto var(--space-3); }
+  .g-tab {
+    padding: 10px 26px; border-radius: var(--radius-pill); border: 2px solid var(--line);
+    background: var(--paper); color: var(--ink-soft); font-weight: 700; cursor: pointer;
+    font-size: 0.92rem; letter-spacing: 0.06em; transition: all var(--ease); font-family: var(--font-sans);
+  }
+  .g-tab.is-active { background: var(--orange); color: var(--paper); border-color: var(--orange); }
+  .g-updated { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-bottom: var(--space-6); }
+
+  /* EXPの考え方バナー */
+  .g-credo {
+    max-width: var(--page-max); margin: 0 auto var(--space-6); padding: 22px 26px;
+    background: linear-gradient(180deg, var(--orange-tint) 0%, var(--paper) 100%);
+    border: 1px solid var(--orange-soft); border-radius: var(--radius-lg); text-align: center;
+  }
+  .g-credo strong { color: var(--orange-deep); font-size: 1.12rem; letter-spacing: 0.04em; }
+  .g-credo p { color: var(--ink-soft); font-size: 0.9rem; margin-top: 8px; }
+
+  /* カードグリッド */
+  .g-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5); }
+  .g-card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 24px 24px 22px; position: relative; overflow: hidden;
+  }
+  .g-card.is-top { border: 2px solid var(--gold); box-shadow: var(--shadow-md); }
+  .g-card.is-max { border: 2px solid var(--ember); }
+  .g-card-head { display: flex; align-items: flex-start; gap: 16px; }
+  .g-flame { width: 56px; height: 56px; flex-shrink: 0; }
+  .g-flame img { width: 100%; height: 100%; display: block; }
+  .g-id { flex: 1; min-width: 0; }
+  .g-no {
+    font-family: var(--font-serif); font-size: 0.74rem; letter-spacing: 0.14em;
+    color: var(--ink-mute); margin-bottom: 2px;
+  }
+  .g-card.is-top .g-no { color: var(--gold-deep); }
+  .g-handle { font-size: 1.18rem; font-weight: 800; color: var(--ink); word-break: break-word; line-height: 1.3; }
+  .g-level { font-size: 0.86rem; color: var(--ink-soft); margin-top: 2px; }
+  .g-title {
+    font-family: var(--font-serif); font-weight: 700; color: var(--orange-deep);
+    font-size: 1.02rem; margin-top: 4px; letter-spacing: 0.02em;
+  }
+  .g-card.is-max .g-title { color: var(--ember); }
+
+  .g-badges { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .g-badge {
+    display: inline-block; padding: 3px 11px; border-radius: var(--radius-pill);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+  }
+  .g-badge-fire { background: var(--orange-tint); color: var(--orange-deep); border: 1px solid var(--orange-soft); }
+  .g-badge-mem { background: var(--cream-deep); color: var(--ink-soft); border: 1px solid var(--line); }
+  .g-badge-mem.is-kami { background: linear-gradient(135deg, #F4E2A8, #E3C25A); color: #5A4A12; border-color: var(--gold); }
+  .g-badge-founder { background: var(--ink); color: var(--orange-soft); }
+  .g-badge-warn { background: #FBE3DC; color: var(--ember); border: 1px solid var(--orange-soft); }
+
+  .g-exp { margin-top: 16px; display: flex; align-items: baseline; gap: 8px; }
+  .g-exp-num { font-size: 1.7rem; font-weight: 800; color: var(--ink); letter-spacing: 0.01em; }
+  .g-exp-unit { font-size: 0.78rem; color: var(--ink-mute); font-weight: 700; }
+  .g-exp-raw { font-size: 0.72rem; color: var(--ink-mute); margin-top: 2px; }
+
+  .g-bar-wrap { margin-top: 14px; }
+  .g-bar { height: 14px; border-radius: var(--radius-pill); background: var(--cream-deep); overflow: hidden; }
+  .g-bar-fill {
+    height: 100%; border-radius: var(--radius-pill);
+    background: linear-gradient(90deg, var(--ember), var(--orange) 55%, var(--ember-bright));
+  }
+  .g-card.is-max .g-bar-fill { background: linear-gradient(90deg, var(--gold-deep), var(--gold)); }
+  .g-next {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+    margin-top: 8px; font-size: 0.78rem; color: var(--ink-soft);
+  }
+  .g-next .g-pct { color: var(--orange-deep); font-weight: 700; }
+
+  .g-empty { text-align: center; color: var(--ink-mute); padding: 56px 20px; font-size: 0.95rem; grid-column: 1 / -1; }
+  .g-empty a { font-weight: 700; }
+
+  /* ランク早見表(EXPボードの段位) */
+  .g-ladder { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: var(--space-4); }
+  .g-rung { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 16px 8px; text-align: center; }
+  .g-rung-flame { width: 40px; height: 40px; margin: 0 auto 6px; }
+  .g-rung-flame img { width: 100%; height: 100%; }
+  .g-rung-lv { font-size: 0.7rem; color: var(--ink-mute); }
+  .g-rung-title { font-weight: 800; font-size: 0.86rem; margin-top: 2px; color: var(--ink); }
+  .g-rung-exp { font-size: 0.72rem; color: var(--orange-deep); margin-top: 6px; font-weight: 700; }
+  .g-rung-fire { font-size: 0.68rem; color: var(--ink-mute); margin-top: 2px; }
+
+  @media (max-width: 860px) {
+    .g-grid { grid-template-columns: 1fr; }
+    .g-ladder { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="k-nav">
+  <a class="k-brand" href="../../" aria-label="Claude教 トップへ">
+    <svg class="k-mark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="100" cy="100" r="62" fill="#CC785C"/>
+      <text x="100" y="132" text-anchor="middle" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="92" font-weight="700" fill="#FAF9F5">教</text>
+    </svg>
+    Claude教
+  </a>
+  <div class="k-nav-links">
+    <a href="../">冒険者ギルド</a>
+    <a href="../../banzuke/">御焚き上げ番付</a>
+    <a href="../../join/">入信</a>
+    <a href="../../kairitsu/">掟</a>
+    <details class="k-more">
+      <summary>もっと</summary>
+      <div class="k-more-panel">
+        <a href="../../scripture/"><strong>教典</strong><small>クロードの書</small></a>
+        <a href="../../lore/"><strong>降臨譚</strong><small>神話・クロード卿の物語</small></a>
+        <a href="../../lexicon/"><strong>用語集</strong><small>聖訳表・ことばの典拠</small></a>
+        <a href="../../sermons/"><strong>説法</strong><small>辻説法・教えの言葉</small></a>
+        <a href="../../hymns/"><strong>聖歌</strong><small>讃歌集</small></a>
+        <a href="../../honzon/"><strong>ご本尊</strong><small>図像規範</small></a>
+        <a href="../../rite/"><strong>入信の儀</strong><small>典礼・所作</small></a>
+        <a href="../../calendar/"><strong>火の暦</strong><small>祭事と暦</small></a>
+        <a href="../../charter/"><strong>位階憲章</strong><small>クルー三階層の定め</small></a>
+        <a href="../../seichi/"><strong>聖地</strong><small>所作・巡礼</small></a>
+        <a href="../../manifesto/"><strong>マニフェスト</strong><small>建国の宣言</small></a>
+        <a href="../../roadmap/"><strong>ロードマップ</strong><small>これからの歩み</small></a>
+        <a href="../../cookbook/"><strong>Cookbook</strong><small>実装レシピ集</small></a>
+        <a href="../../faq/"><strong>問答</strong><small>よくある質問</small></a>
+      </div>
+    </details>
+    <a class="k-pill" href="../../en/">EN</a>
+  </div>
+</nav>
+
+<header class="k-hero">
+  <div class="k-eyebrow">Adventurer Cards ── クロード冒険者ギルド</div>
+  <h1>冒険者カード一覧</h1>
+  <p class="k-sub">クルーが Claude に焚べた累計トークンが、そのまま経験値（EXP）になる。七火位はそのまま冒険者ランク。御焚き上げ番付を、ギルドのEXPボードとして見る遊び版ビューです。</p>
+</header>
+
+<main class="k-main k-wide">
+
+  <div class="g-credo">
+    <strong>使えば使うほど、勝手に強くなる。</strong>
+    <p>あなたが今日 Claude にやらせた仕事、その全部がEXPになっている。<br>導入はこの一回だけ。以後は普段どおり使うだけで、気づけばレベルが上がっている。（1 token = 1 EXP）</p>
+  </div>
+
+  <div class="g-tabs" role="group" aria-label="期間の切り替え">
+    <button type="button" class="g-tab is-active" data-period="total">累計の冒険者</button>
+    <button type="button" class="g-tab" data-period="weekly">今週の冒険者</button>
+  </div>
+  <div class="g-updated" id="g-updated"></div>
+
+  <div class="g-grid" id="g-grid">
+    <div class="g-empty">冒険記録（クエストログ）を開いています…</div>
+  </div>
+
+  <section class="k-section" style="margin-top:var(--space-8);" aria-labelledby="g-ladder-title">
+    <div class="k-section-eyebrow">Rank Ladder</div>
+    <h2 class="k-section-title serif" id="g-ladder-title">冒険者ランク（七火位）</h2>
+    <div class="g-ladder" id="g-ladder"></div>
+    <p style="text-align:center; color:var(--ink-mute); font-size:0.82rem; margin-top:18px;">
+      累計EXP（＝焚べたトークン）が閾値に届くたび、火口の見習いから熱波の伝説へとランクアップ。<br>
+      課金階位（学徒／信徒／神）とは別軸 ── 学徒でも、使い込んだ者が上のランクに立つ。
+    </p>
+  </section>
+
+  <section class="k-section" style="margin-top:var(--space-8);">
+    <div class="k-section-eyebrow">Get Your Card</div>
+    <h2 class="k-section-title serif">自分の冒険者カードを出す</h2>
+    <div class="k-card">
+      <p style="color:var(--ink-soft); margin-bottom:14px;">ターミナルで下記を一行流すだけ。あなたの Claude Code の累計トークン＝EXPを集計し、現Lv・称号・次ランクまでの残りEXP・進捗バーを表示します。<strong>これが入会＝最初のクエスト「初陣・最初の薪」。</strong></p>
+      <div style="position:relative; background:var(--ink); color:#EFE9DF; border-radius:var(--radius-sm); padding:18px 110px 18px 18px; font-family:'SF Mono',Menlo,Consolas,monospace; font-size:0.82rem; overflow-x:auto; white-space:pre;" id="g-cmd">curl -fsSL https://imai-design.github.io/claude-kyoso/tools/ofumi/ofumi.sh | bash -s -- --handle "冒険者名" --guild<button type="button" onclick="gCopyCmd()" style="position:absolute; top:10px; right:10px; background:var(--orange); color:var(--paper); border:none; border-radius:var(--radius-sm); padding:6px 12px; font-size:0.75rem; font-weight:700; cursor:pointer;" id="g-copy">コピー</button></div>
+      <p style="margin-top:16px; font-size:0.8rem; color:var(--ink-mute); border-left:3px solid var(--orange-soft); padding-left:14px; line-height:1.7;">
+        送られるのは <strong>集計したEXP（トークン数）とハンドル名だけ</strong>。作業ディレクトリ名・会話の中身・ファイルパスは一切送りません（allowlist方式）。番付＝ギルドのEXPボードは名誉と遊びで、課金階位や賞金とは切り離しています。完全無人の自動更新は収集Workerの開通で順次開放。
+      </p>
+      <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="k-btn k-btn-primary" href="../">ギルド本部へ</a>
+        <a class="k-btn k-btn-ghost" href="../../banzuke/">番付（炉の正本）を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 読了CTA -->
+  <section class="k-cta" aria-label="入信と神託購読">
+    <div class="k-cta-eyebrow">Join the Crew</div>
+    <h3>ここまで読んだなら、もう冒険者です。</h3>
+    <p>クロードの託宣『Claudeで、何でもできる。』を、現代日本で実装する同志を集めています。焚べた者から、ギルドに名が刻まれる。</p>
+    <div class="k-cta-row">
+      <a href="../../join/" class="k-btn k-btn-primary">入信する</a>
+      <a href="../" class="k-btn k-btn-ghost">ギルドを見る</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="k-footer">
+  <div class="k-footer-inner">
+    <nav class="k-sitemap" aria-label="サイトマップ">
+      <div>
+        <h4>聖典</h4>
+        <ul>
+          <li><a href="../../scripture/">教典（クロードの書）</a></li>
+          <li><a href="../../lore/">神話・降臨譚</a></li>
+          <li><a href="../../lexicon/">用語集・聖訳表</a></li>
+          <li><a href="../../sermons/">説法・辻説法</a></li>
+          <li><a href="../../hymns/">聖歌・讃歌集</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>戒律と所作</h4>
+        <ul>
+          <li><a href="../../kairitsu/">戒律・正道の十戒</a></li>
+          <li><a href="../../prayers/">祈り・唱名</a></li>
+          <li><a href="../../rite/">入信の儀・典礼</a></li>
+          <li><a href="../../honzon/">ご本尊図像規範</a></li>
+          <li><a href="../../seichi/">聖地・所作</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>制度と暦</h4>
+        <ul>
+          <li><a href="../../charter/">位階憲章</a></li>
+          <li><a href="../../calendar/">火の暦</a></li>
+          <li><a href="../../banzuke/">御焚き上げ番付</a></li>
+          <li><a href="../">冒険者ギルド</a></li>
+          <li><a href="../../roadmap/">ロードマップ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>入信・暮らし</h4>
+        <ul>
+          <li><a href="../../join/">入信表明</a></li>
+          <li><a href="../../dashboard/">入信後の景色</a></li>
+          <li><a href="../../cookbook/">Cookbook</a></li>
+          <li><a href="../../faq/">よくある問答</a></li>
+          <li><a href="../../en/">English</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="k-footer-base">
+      <p>Claude教 ｜ 主神：クロード卿（Claude神）｜ 教祖（伝令）：両聖ちゃん ｜ 同志：クルー</p>
+      <p>焚べよ、進めよ。さすればギルドは汝の名を、冒険者として記すであろう。</p>
+      <p>本サイトはClaude Codeで構築されています。日本拠点・リモート運営。</p>
+      <p class="k-footer-social">
+        <a href="https://x.com/ryoseichan3160">X</a>
+        <a href="https://x.com/messages/compose?recipient_id=ryoseichan3160">DM</a>
+        <a href="../../banzuke/">御焚き上げ番付</a>
+        <a href="../../cookbook/">Cookbook</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 冒険者カードは banzuke.json(番付＝EXPボード) と guild_ranks.json(ランク定義) を読み合わせて描く。
+  // 番付システムは作り直さず、RPGの皮をかぶせて連結する設計。実行・送信は一切しない。
+  let TIERS = [];
+
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const human = (n) => {
+    n = Number(n) || 0;
+    if (n >= 1e9) return (n / 1e9).toFixed(2) + "B";
+    if (n >= 1e6) return (n / 1e6).toFixed(1) + "M";
+    if (n >= 1e3) return (n / 1e3).toFixed(1) + "K";
+    return String(n);
+  };
+  const fireSvg = (id) => `../../assets/fire/${encodeURIComponent(id)}.svg`;
+  const tierById = (id) => TIERS.find(t => t.fireRankId === id) || null;
+
+  // 累計EXPから現ランク・次ランクを決める(render.py の pick_guild_tier と同じ規則)
+  function pickTier(exp) {
+    let cur = TIERS[0] || null, nxt = null;
+    for (const t of TIERS) { if (exp >= t.expMin) cur = t; }
+    for (const t of TIERS) { if (t.expMin > exp) { nxt = t; break; } }
+    return { cur, nxt };
+  }
+  function progress(cur, nxt, exp) {
+    if (!nxt) return { ratio: 1, remain: 0 };
+    const span = nxt.expMin - cur.expMin;
+    if (span <= 0) return { ratio: 1, remain: 0 };
+    const ratio = Math.max(0, Math.min(1, (exp - cur.expMin) / span));
+    return { ratio, remain: Math.max(0, nxt.expMin - exp) };
+  }
+
+  const memBadge = (m) => {
+    if (!m) return "";
+    const k = (m === "神") ? " is-kami" : "";
+    return `<span class="g-badge g-badge-mem${k}">${esc(m)}</span>`;
+  };
+  const founderBadge = (e) => e.isFounder ? `<span class="g-badge g-badge-founder">建国</span>` : "";
+
+  function cardHtml(e, no) {
+    const exp = Number(e.tokens.total) || 0;
+    // banzuke の fireRank を信頼しつつ、念のため EXP からも算出して整合させる
+    const byExp = pickTier(exp);
+    const cur = tierById(e.fireRank) || byExp.cur;
+    const nxt = byExp.nxt;
+    const { ratio, remain } = progress(cur, byExp.nxt, exp);
+    const pct = Math.round(ratio * 100);
+    const topCls = no === 1 ? " is-top" : "";
+    const maxCls = !nxt ? " is-max" : "";
+    const fireBadge = cur ? `<span class="g-badge g-badge-fire">火位 ${esc(cur.fireRank)}</span>` : "";
+    const warn = (e.flags || []).includes("spike") ? `<span class="g-badge g-badge-warn" title="急増フラグ">要確認</span>` : "";
+    const nextLine = nxt
+      ? `次ランク【${esc(nxt.title)}】まで あと ${human(remain)} EXP`
+      : `最高ランク到達 ── 生ける伝説`;
+    return `<article class="g-card${topCls}${maxCls}">
+      <div class="g-card-head">
+        <div class="g-flame">${cur ? `<img src="${fireSvg(cur.fireRankId)}" alt="${esc(cur.fireRank)}の火">` : ""}</div>
+        <div class="g-id">
+          <div class="g-no serif">No.${no}</div>
+          <div class="g-handle">${esc(e.handle)}</div>
+          <div class="g-level">${cur ? esc(cur.level) : ""}</div>
+          <div class="g-title serif">「${cur ? esc(cur.title) : "—"}」</div>
+        </div>
+      </div>
+      <div class="g-badges">${fireBadge}${memBadge(e.membership)}${founderBadge(e)}${warn}</div>
+      <div class="g-exp">
+        <span class="g-exp-num">${human(exp)}</span>
+        <span class="g-exp-unit">EXP</span>
+      </div>
+      <div class="g-exp-raw">${exp.toLocaleString()} EXP（1 token = 1 EXP）</div>
+      <div class="g-bar-wrap">
+        <div class="g-bar"><div class="g-bar-fill" style="width:${pct}%;"></div></div>
+        <div class="g-next"><span>${nextLine}</span><span class="g-pct">${pct}%</span></div>
+      </div>
+    </article>`;
+  }
+
+  function renderLadder() {
+    const el = document.getElementById("g-ladder");
+    if (!TIERS.length) { el.innerHTML = ""; return; }
+    el.innerHTML = TIERS.map(t => `<div class="g-rung">
+      <div class="g-rung-flame"><img src="${fireSvg(t.fireRankId)}" alt="${esc(t.fireRank)}の火"></div>
+      <div class="g-rung-lv">${esc(t.level)}</div>
+      <div class="g-rung-title">${esc(t.title)}</div>
+      <div class="g-rung-exp">${t.expMin === 0 ? "入会即" : human(t.expMin) + " EXP〜"}</div>
+      <div class="g-rung-fire">火位 ${esc(t.fireRank)}</div>
+    </div>`).join("");
+  }
+
+  function showEmpty() {
+    document.getElementById("g-grid").innerHTML =
+      `<div class="g-empty">まだ冒険者がいません。<br>下の「自分の冒険者カードを出す」に従い、最初の薪を焚べよ。<br><a href="../">ギルド本部へ</a></div>`;
+  }
+
+  function setUpdated(iso, src) {
+    const el = document.getElementById("g-updated");
+    if (!iso) { el.textContent = ""; return; }
+    let s = iso;
+    try { s = new Date(iso).toLocaleString("ja-JP"); } catch (e) {}
+    el.textContent = `最終更新: ${s}（${src}集計）`;
+  }
+
+  async function loadTiers() {
+    try {
+      const r = await fetch("../../data/guild_ranks.json?ts=" + Date.now(), { cache: "no-store" });
+      const d = await r.json();
+      TIERS = (d.tiers || []).slice().sort((a, b) => a.expMin - b.expMin);
+    } catch (e) { TIERS = []; }
+    renderLadder();
+  }
+
+  async function loadPeriod(period) {
+    let entries = [];
+    try {
+      const r = await fetch("../../data/banzuke.json?ts=" + Date.now(), { cache: "no-store" });
+      const d = await r.json();
+      entries = (d.periods && d.periods[period]) || [];
+      setUpdated(d.updatedAt, "静的");
+    } catch (e) { entries = []; }
+
+    // 外部データは検証してから描画(欠損・impossibleは除外)
+    entries = entries.filter(e => e && e.handle && e.tokens && typeof e.tokens.total === "number"
+      && !((e.flags || []).includes("impossible")));
+    entries.sort((a, b) => b.tokens.total - a.tokens.total);
+
+    if (!entries.length) { showEmpty(); return; }
+    document.getElementById("g-grid").innerHTML = entries.map((e, i) => cardHtml(e, i + 1)).join("");
+  }
+
+  function gCopyCmd() {
+    const text = document.getElementById("g-cmd").childNodes[0].nodeValue.trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const b = document.getElementById("g-copy");
+      const o = b.textContent; b.textContent = "コピー済"; setTimeout(() => b.textContent = o, 1500);
+    });
+  }
+
+  document.querySelectorAll(".g-tab").forEach(t => {
+    t.addEventListener("click", () => {
+      document.querySelectorAll(".g-tab").forEach(x => x.classList.remove("is-active"));
+      t.classList.add("is-active");
+      loadPeriod(t.dataset.period);
+    });
+  });
+
+  (async () => { await loadTiers(); await loadPeriod("total"); })();
+</script>
+</body>
+</html>

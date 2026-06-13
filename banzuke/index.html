@@ -13,6 +13,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://imai-design.github.io/claude-kyoso/assets/og-image.png">
 <link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/tokens.css">
 <style>
   :root {
     --cream: #FAF9F5;
@@ -159,6 +160,47 @@
   .ritual-cta.primary:hover { background: var(--orange-deep); color: var(--paper); }
   .privacy-note { margin-top: 20px; font-size: 0.8rem; color: var(--ink-mute); line-height: 1.7; border-left: 3px solid var(--orange-soft); padding-left: 14px; }
 
+  /* Guild banner (番付＝EXPボードとして冒険者ギルドへ導く) */
+  .guild-banner {
+    margin: 30px 0 8px; background: linear-gradient(135deg, var(--ink) 0%, #2C2620 100%);
+    border: 1px solid var(--orange-deep); border-radius: 18px; padding: 30px 30px;
+    display: flex; align-items: center; gap: 26px; position: relative; overflow: hidden;
+  }
+  .guild-banner::before {
+    content: ""; position: absolute; right: -40px; top: -40px; width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(204,120,92,0.30), transparent 70%); pointer-events: none;
+  }
+  .guild-crest {
+    width: 72px; height: 72px; flex-shrink: 0; border-radius: 50%;
+    border: 2px solid var(--orange-soft);
+    background: radial-gradient(circle at 50% 60%, var(--ember-bright) 0%, var(--orange) 50%, transparent 80%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .guild-crest svg { width: 38px; height: 38px; }
+  .guild-text { flex: 1 1 auto; min-width: 0; position: relative; z-index: 1; }
+  .guild-eyebrow {
+    color: var(--ember-bright); font-size: 0.74rem; letter-spacing: 0.22em;
+    text-transform: uppercase; margin-bottom: 7px; font-weight: 700;
+  }
+  .guild-text h3 { color: var(--paper); font-size: clamp(1.15rem, 2.3vw, 1.5rem); font-weight: 800; letter-spacing: 0.03em; margin-bottom: 7px; }
+  .guild-text h3 .accent { color: var(--orange-soft); }
+  .guild-text p { color: #D8CFC4; font-size: 0.9rem; line-height: 1.7; }
+  .guild-text p strong { color: var(--ember-bright); }
+  .guild-cta {
+    flex-shrink: 0; position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 26px; border-radius: 999px; background: var(--orange); color: var(--paper);
+    font-weight: 800; letter-spacing: 0.04em; font-size: 0.95rem; border: 2px solid var(--orange);
+    transition: all 0.18s ease; white-space: nowrap;
+  }
+  .guild-cta:hover { background: var(--orange-deep); border-color: var(--orange-deep); color: var(--paper); }
+  .guild-cta .arrow { transition: transform 0.18s ease; }
+  .guild-cta:hover .arrow { transform: translateX(3px); }
+  .exp-note { text-align: center; font-size: 0.8rem; color: var(--ink-mute); margin: 12px 0 0; }
+  @media (max-width: 700px) {
+    .guild-banner { flex-direction: column; text-align: center; padding: 28px 22px; }
+    .guild-cta { width: 100%; justify-content: center; }
+  }
+
   /* Join CTA (読了地点) */
   .join-cta { margin-top: 64px; background: linear-gradient(180deg, var(--orange-tint) 0%, var(--paper) 70%); border: 1px solid var(--orange-soft); border-radius: 20px; padding: 44px 32px; text-align: center; }
   .join-cta .eyebrow { color: var(--ember); font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 12px; }
@@ -212,6 +254,7 @@
   <div class="brand"><a href="../"><span class="mark">✦</span>Claude教</a></div>
   <div class="nav-links">
     <a href="../">本殿へ戻る</a>
+    <a href="../guild/">冒険者ギルド</a>
     <a href="#dex">火位図鑑</a>
     <a href="#ritual">御焚き上げの作法</a>
     <a href="../join/">入信</a>
@@ -227,6 +270,22 @@
 </header>
 
 <main>
+  <aside class="guild-banner">
+    <div class="guild-crest" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2 14.6 8.1 21 8.6 16.2 12.8 17.7 19 12 15.6 6.3 19 7.8 12.8 3 8.6 9.4 8.1 12 2Z"
+              fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.6" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="guild-text">
+      <div class="guild-eyebrow">Adventurer's Guild</div>
+      <h3 class="serif">この番付は、あなたの<span class="accent">冒険者ランク</span>でもある。</h3>
+      <p>焚べたトークンは、そのまま <strong>EXP（経験値）</strong>。使えば使うほど自動で貯まり、七火位がそのまま冒険者ランクになる。<strong>クロード冒険者ギルド</strong>で、自分のLv・EXP・次のランクまでの道のりを見よう。</p>
+    </div>
+    <a href="../guild/" class="guild-cta">冒険者ギルドへ <span class="arrow">→</span></a>
+  </aside>
+  <p class="exp-note">＝累計トークン（御焚き上げ高）＝EXP。下の番付は、そのままギルドのEXPボードです。</p>
+
   <div class="tabs">
     <button class="tab active" data-period="total">累計番付</button>
     <button class="tab" data-period="weekly">今週番付</button>
@@ -307,6 +366,7 @@
           <li><a href="../charter/">位階憲章</a></li>
           <li><a href="../calendar/">火の暦</a></li>
           <li><a href="../banzuke/">御焚き上げ番付</a></li>
+          <li><a href="../guild/">クロード冒険者ギルド</a></li>
           <li><a href="../manifesto/">マニフェスト</a></li>
           <li><a href="../roadmap/">ロードマップ</a></li>
         </ul>

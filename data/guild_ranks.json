@@ -1,0 +1,17 @@
+{
+  "schema": "guild_ranks/v1",
+  "metric": "cumulative_total_tokens",
+  "note": "冒険者ランクは ofumi の累計総トークン total = input + output + cacheCreation + cacheRead で判定する。七火位(ranks.json)に1対1で対応し、トークン累計＝EXP(経験値)として再フレームしたもの。番付システムは作り直さず、RPGの皮をかぶせて連結する。閾値・火位は tools/ofumi/ranks.json を正とする。",
+  "source_of_truth": "tools/ofumi/ranks.json",
+  "expUnit": "1 token = 1 EXP",
+  "expCredo": "使えば使うほど、勝手に強くなる。導入は最初の一回だけ。以後は普段どおり Claude Code を使うたびに消費トークンが自動で EXP として累積し、冒険者ランクが上がる。",
+  "tiers": [
+    { "fireRankId": "hokuchi",   "fireRank": "火口", "fireRankYomi": "ほくち",   "level": "見習い冒険者 Lv.1",  "title": "灯持ちの徒",   "expMin": 0,          "expLabel": "0 EXP（入会即）",          "flavor": "ギルド門をくぐったばかりの新参。まずは一行、コマンドを焚べよ。" },
+    { "fireRankId": "tomoshibi", "fireRank": "灯火", "fireRankYomi": "ともしび", "level": "駆け出し冒険者 Lv.10", "title": "灯火の探索者", "expMin": 1000000,    "expLabel": "1,000,000 EXP（1M）",     "flavor": "百万の経験を積み、卿の灯を絶やさぬ者となった。" },
+    { "fireRankId": "kagaribi",  "fireRank": "篝火", "fireRankYomi": "かがりび", "level": "一人前冒険者 Lv.25",  "title": "篝火の遊撃手", "expMin": 10000000,   "expLabel": "10,000,000 EXP（10M）",   "flavor": "夜を照らす篝火。ひとりでクエストを完遂できる腕。" },
+    { "fireRankId": "takibi",    "fireRank": "焚火", "fireRankYomi": "たきび",   "level": "熟練冒険者 Lv.40",    "title": "焚火の隊長",   "expMin": 100000000,  "expLabel": "100,000,000 EXP（100M）", "flavor": "億の門をくぐりし者。徒党を率いる資格を得る。" },
+    { "fireRankId": "homura",    "fireRank": "焔",   "fireRankYomi": "ほむら",   "level": "英雄 Lv.60",          "title": "焔の英傑",     "expMin": 300000000,  "expLabel": "300,000,000 EXP（300M）", "flavor": "焔を立ち昇らせし篤信。名はギルドの語り草となる。" },
+    { "fireRankId": "taika",     "fireRank": "大火", "fireRankYomi": "たいか",   "level": "賢者 Lv.80",          "title": "大火の賢者",   "expMin": 1000000000, "expLabel": "1,000,000,000 EXP（1B）", "flavor": "十億の薪を焚べし者。新参に道を説く側に回る。" },
+    { "fireRankId": "neppa",     "fireRank": "熱波", "fireRankYomi": "ねっぱ",   "level": "伝説 Lv.MAX",         "title": "熱波の到達者", "expMin": 1500000000, "expLabel": "1,500,000,000 EXP（1.5B）", "flavor": "卿の御前に届く熱を放つ者。ギルドの頂、生ける伝説。" }
+  ]
+}
