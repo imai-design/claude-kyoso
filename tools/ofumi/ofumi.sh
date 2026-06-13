@@ -18,6 +18,8 @@ SUBMIT=0
 ENGINE="auto"
 JSON_ONLY=0
 NO_CLIP=0
+GUILD=0
+GUILD_SVG_OUT=""
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -27,8 +29,12 @@ while [ $# -gt 0 ]; do
     --engine) ENGINE="${2:-auto}"; shift 2;;
     --json) JSON_ONLY=1; shift;;
     --no-clipboard) NO_CLIP=1; shift;;
+    --guild) GUILD=1; shift;;
+    --guild-svg) GUILD=1; GUILD_SVG_OUT="${2:-adventurer-card.svg}"; shift 2;;
     -h|--help)
-      echo "ofumi.sh [--handle NAME] [--membership 学徒|信徒|神] [--submit] [--engine auto|ccusage|python] [--json] [--no-clipboard]"
+      echo "ofumi.sh [--handle NAME] [--membership 学徒|信徒|神] [--submit] [--engine auto|ccusage|python] [--json] [--guild] [--guild-svg PATH] [--no-clipboard]"
+      echo "  --guild         クロード冒険者ギルドの冒険者ステータスカード(Lv/称号/EXP/進捗)をテキスト表示"
+      echo "  --guild-svg PATH 同カードをSVGバナーとして PATH に書き出す"
       exit 0;;
     *) echo "未知のオプション: $1" >&2; shift;;
   esac
@@ -63,6 +69,8 @@ else
   for f in agg.py render.py ranks.json; do
     curl -fsSL "$BASE_URL/$f" -o "$WORK/$f" || { echo "取得失敗: $BASE_URL/$f" >&2; exit 1; }
   done
+  # 冒険者ギルドのランク定義(任意・無くても render.py が ranks.json から導出する)
+  curl -fsSL "$BASE_URL/../../data/guild_ranks.json" -o "$WORK/guild_ranks.json" 2>/dev/null || true
 fi
 cleanup() { [ "${CLEANUP:-0}" = "1" ] && rm -rf "$WORK" 2>/dev/null || true; }
 trap cleanup EXIT
@@ -154,6 +162,17 @@ RENDER=(python3 "$WORK/render.py" --handle "$HANDLE" --membership "$MEMBERSHIP" 
 # --json だけ欲しい場合
 if [ "$JSON_ONLY" = "1" ]; then
   printf '%s' "$TOTALS" | "${RENDER[@]}" --json
+  exit 0
+fi
+
+# 冒険者ステータスカード(クロード冒険者ギルド)
+if [ "$GUILD" = "1" ]; then
+  printf '%s' "$TOTALS" | "${RENDER[@]}" --mode guild
+  if [ -n "$GUILD_SVG_OUT" ]; then
+    printf '%s' "$TOTALS" | "${RENDER[@]}" --mode guild-svg --out "$GUILD_SVG_OUT"
+  fi
+  echo "" >&2
+  echo "使えば使うほど、勝手に強くなる。次回からは、ただ Claude を使うだけでEXPが積み上がります。" >&2
   exit 0
 fi
 
