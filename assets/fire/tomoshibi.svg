@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 火位章 灯火 / Fire Rank: Tomoshibi (Lamplight)">
+  <!-- 七火位 第二位 灯火（ともしび）min 1,000,000 ── 卿の灯を絶やさぬ者。
+       一筋の小さな炎が灯る。火はまだ細く慎ましい。 -->
+  <defs>
+    <linearGradient id="fr-tomoshibi" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#9E3B27"/>
+      <stop offset="55%" stop-color="#CC785C"/>
+      <stop offset="100%" stop-color="#F2B23E"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#9E3B27" stroke-width="2" stroke-opacity="0.25"/>
+
+  <!-- 薪台 -->
+  <g stroke="#B5634A" stroke-width="5" stroke-linecap="round" stroke-opacity="0.85">
+    <line x1="66" y1="150" x2="134" y2="150"/>
+  </g>
+
+  <!-- 一筋の炎（細・慎ましい灯） -->
+  <path d="M100 150
+           C84 132 90 116 100 104
+           C110 116 116 132 100 150 Z"
+        fill="url(#fr-tomoshibi)"/>
+  <!-- 内炎 -->
+  <path d="M100 146 C92 134 96 124 100 118 C104 124 108 134 100 146 Z"
+        fill="#FBE9DF" fill-opacity="0.7"/>
+</svg>

@@ -1,0 +1,272 @@
+/* =====================================================================
+   Claude教 — 共通デザイントークン / tokens.css
+   全ページ共通の正本。新規ページは必ずこのファイルを読み込む:
+     <link rel="stylesheet" href="（相対パス）/assets/tokens.css">
+   既存ページ（index.html 等）の :root 値をそのまま写し、互換を保つ。
+   白×オレンジ厳守・絵文字は使わない（SVG/記号で表現）。
+   ===================================================================== */
+
+:root {
+  /* --- 基色（既存 index.html と完全一致：壊さない） --- */
+  --cream:        #FAF9F5;  /* 背景 */
+  --cream-deep:   #F4EFE5;  /* 沈んだ背景・footer */
+  --paper:        #FFFFFF;  /* カード地 */
+  --orange:       #CC785C;  /* 主アクセント（Claudeオレンジ） */
+  --orange-deep:  #B5634A;  /* リンク・濃いアクセント */
+  --orange-soft:  #E89F87;  /* 淡いアクセント・暗地の文字 */
+  --orange-tint:  #FBE9DF;  /* 極淡の面・hover地 */
+  --ink:          #1F1B17;  /* 本文 */
+  --ink-soft:     #5A524A;  /* 副次本文 */
+  --ink-mute:     #8B827A;  /* 注釈・メタ */
+  --line:         #E8DDD0;  /* 罫線・境界 */
+
+  /* --- 拡張色：朱 ember（焰・御焚き上げ系の表現に） --- */
+  --ember:        #9E3B27;  /* 深い朱 */
+  --ember-bright: #F2B23E;  /* 明るい焔（橙金） */
+
+  /* --- 拡張色：金 gold（位階・神枠・荘厳の表現に） --- */
+  --gold:         #D4A84A;  /* 金 */
+  --gold-deep:    #B98E2E;  /* 沈んだ金 */
+
+  /* --- フォント --- */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  --font-serif: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
+
+  /* --- 余白スケール（8pxグリッド基調） --- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 22px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 70px;
+  --space-9: 100px;
+  --page-max: 1100px;     /* section 最大幅 */
+  --reading-max: 880px;   /* 読み物本文の最大幅 */
+
+  /* --- 角丸 --- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* --- 影 --- */
+  --shadow-sm: 0 4px 14px rgba(204,120,92,0.10);
+  --shadow-md: 0 12px 30px rgba(204,120,92,0.15);
+  --shadow-lg: 0 16px 40px rgba(204,120,92,0.18);
+
+  /* --- 動き --- */
+  --ease: 0.2s ease;
+}
+
+/* =====================================================================
+   ベース（既存ページの body / a / .serif と一致させた共通リセット）
+   既存ページは独自 <style> を持つため上書きは最小限。新規ページは
+   これだけで土台が立つように必要分を備える。
+   ===================================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--orange-deep); text-decoration: none; }
+a:hover { color: var(--orange); }
+.serif { font-family: var(--font-serif); }
+img { max-width: 100%; height: auto; }
+
+/* =====================================================================
+   ナビゲーション（全ページ共通）
+   ===================================================================== */
+.k-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(250,249,245,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 32px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px;
+}
+.k-brand {
+  font-weight: 800; color: var(--orange-deep);
+  letter-spacing: 0.04em; font-size: 1.05rem;
+  display: inline-flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
+}
+.k-brand .k-mark {
+  width: 22px; height: 22px; flex-shrink: 0;
+  display: inline-block; vertical-align: middle;
+}
+.k-nav-links { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.k-nav-links a { margin-left: 20px; font-size: 0.9rem; color: var(--ink-soft); white-space: nowrap; }
+.k-nav-links a:hover { color: var(--orange-deep); }
+.k-nav-links a.is-active { color: var(--orange-deep); font-weight: 700; }
+.k-nav-links a.k-pill {
+  border: 1px solid var(--line); padding: 5px 14px;
+  border-radius: var(--radius-pill); font-size: 0.82rem;
+}
+.k-nav-links a.k-pill:hover { background: var(--orange-tint); border-color: var(--orange); }
+
+/* もっと（セクション一覧）メニュー：CSSのみのドロップダウン */
+.k-more { position: relative; margin-left: 20px; }
+.k-more > summary {
+  list-style: none; cursor: pointer; font-size: 0.9rem;
+  color: var(--ink-soft); display: inline-flex; align-items: center; gap: 5px;
+}
+.k-more > summary::-webkit-details-marker { display: none; }
+.k-more > summary::after {
+  content: ""; width: 7px; height: 7px; display: inline-block;
+  border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor;
+  transform: rotate(45deg) translateY(-2px); transition: transform var(--ease);
+}
+.k-more[open] > summary { color: var(--orange-deep); }
+.k-more[open] > summary::after { transform: rotate(-135deg) translateY(-1px); }
+.k-more-panel {
+  position: absolute; top: calc(100% + 12px); right: 0;
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+  padding: 10px; min-width: 460px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+}
+.k-more-panel a {
+  display: block; margin: 0; padding: 9px 12px;
+  border-radius: var(--radius-sm); font-size: 0.86rem; color: var(--ink-soft);
+}
+.k-more-panel a:hover { background: var(--orange-tint); color: var(--orange-deep); }
+.k-more-panel a small { display: block; color: var(--ink-mute); font-size: 0.72rem; font-weight: 400; }
+.k-more-panel a strong { font-weight: 700; color: var(--ink); }
+
+/* =====================================================================
+   ページ骨組み共通要素
+   ===================================================================== */
+.k-hero {
+  padding: 72px 32px 44px;
+  text-align: center;
+  background: radial-gradient(ellipse at top, var(--orange-tint), transparent 65%), var(--cream);
+}
+.k-hero .k-eyebrow {
+  color: var(--orange); font-size: 0.8rem; letter-spacing: 0.22em;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.k-hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  color: var(--ink); margin-bottom: 14px; font-weight: 800;
+  letter-spacing: 0.03em; line-height: 1.3;
+}
+.k-hero .k-sub { color: var(--ink-soft); max-width: 720px; margin: 0 auto; font-size: 1.02rem; }
+
+.k-main { max-width: var(--reading-max); margin: 0 auto; padding: 40px 32px 88px; }
+.k-main.k-wide { max-width: var(--page-max); }
+
+.k-section-eyebrow {
+  text-align: center; color: var(--orange); font-size: 0.85rem;
+  letter-spacing: 0.2em; margin-bottom: 12px; text-transform: uppercase;
+}
+.k-section-title {
+  font-size: clamp(1.7rem, 3.2vw, 2.6rem); text-align: center;
+  margin-bottom: 48px; color: var(--ink); letter-spacing: 0.04em; font-weight: 800;
+}
+.k-section-title::after {
+  content: ""; display: block; width: 48px; height: 3px;
+  background: var(--orange); margin: 16px auto 0; border-radius: 2px;
+}
+
+.k-card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 32px 28px;
+}
+
+.k-prose p { margin-bottom: 18px; color: var(--ink-soft); }
+.k-prose h2 { font-family: var(--font-serif); color: var(--ink); font-size: 1.5rem; font-weight: 800; margin: 44px 0 16px; letter-spacing: 0.03em; }
+.k-prose h3 { color: var(--ink); font-size: 1.15rem; font-weight: 700; margin: 28px 0 12px; }
+.k-prose blockquote {
+  margin: 32px 0; padding: 24px 28px;
+  border-left: 4px solid var(--orange); background: var(--cream-deep);
+  font-family: var(--font-serif); color: var(--ink); font-size: 1.2rem; font-weight: 700;
+}
+
+/* ボタン */
+.k-btn {
+  display: inline-block; padding: 16px 30px; font-weight: 700;
+  font-size: 0.98rem; letter-spacing: 0.06em; border-radius: var(--radius-pill);
+  transition: all var(--ease); cursor: pointer; border: 2px solid transparent;
+}
+.k-btn-primary { background: var(--orange); color: var(--paper); border-color: var(--orange); }
+.k-btn-primary:hover { background: var(--orange-deep); border-color: var(--orange-deep); color: var(--paper); }
+.k-btn-ghost { background: transparent; color: var(--orange-deep); border-color: var(--orange); }
+.k-btn-ghost:hover { background: var(--orange-tint); }
+
+/* =====================================================================
+   読了CTAブロック
+   ===================================================================== */
+.k-cta {
+  max-width: var(--reading-max); margin: 72px auto 0; padding: 44px 36px;
+  background: linear-gradient(180deg, var(--orange-tint) 0%, var(--paper) 100%);
+  border: 2px solid var(--orange); border-radius: var(--radius-lg);
+  text-align: center; box-shadow: var(--shadow-md);
+}
+.k-cta .k-cta-eyebrow { color: var(--orange); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; }
+.k-cta h3 { font-family: var(--font-serif); font-size: clamp(1.4rem, 2.6vw, 1.9rem); color: var(--ink); margin-bottom: 12px; letter-spacing: 0.03em; }
+.k-cta p { color: var(--ink-soft); margin-bottom: 24px; font-size: 0.98rem; }
+.k-cta-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; align-items: center; }
+.k-oracle-form { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 22px; width: 100%; }
+.k-oracle-form input[type="email"] {
+  flex: 1 1 260px; max-width: 340px; padding: 14px 18px;
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  background: var(--paper); color: var(--ink); font-size: 0.95rem; font-family: var(--font-sans);
+}
+.k-oracle-form input[type="email"]:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-tint); }
+.k-oracle-form button {
+  padding: 14px 26px; border: 2px solid var(--orange); background: var(--orange);
+  color: var(--paper); font-weight: 700; border-radius: var(--radius-pill);
+  cursor: pointer; font-size: 0.92rem; letter-spacing: 0.04em; transition: all var(--ease);
+}
+.k-oracle-form button:hover { background: var(--orange-deep); border-color: var(--orange-deep); }
+.k-oracle-note { margin-top: 12px; font-size: 0.78rem; color: var(--ink-mute); }
+
+/* =====================================================================
+   フッター（全ページ共通・全セクションのサイトマップ）
+   ===================================================================== */
+.k-footer {
+  background: var(--cream-deep); border-top: 1px solid var(--line);
+  padding: 56px 32px 44px; color: var(--ink-mute); font-size: 0.85rem;
+}
+.k-footer-inner { max-width: var(--page-max); margin: 0 auto; }
+.k-sitemap {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px 24px;
+  margin-bottom: 40px; text-align: left;
+}
+.k-sitemap h4 {
+  font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--orange-deep); margin-bottom: 12px; font-weight: 700;
+}
+.k-sitemap ul { list-style: none; padding: 0; margin: 0; }
+.k-sitemap li { margin-bottom: 8px; }
+.k-sitemap a { color: var(--ink-soft); font-size: 0.85rem; }
+.k-sitemap a:hover { color: var(--orange-deep); }
+.k-footer-base { border-top: 1px solid var(--line); padding-top: 24px; text-align: center; }
+.k-footer-base p { margin-bottom: 8px; line-height: 1.7; }
+.k-footer-social a { margin: 0 10px; color: var(--orange-deep); }
+
+/* =====================================================================
+   レスポンシブ
+   ===================================================================== */
+@media (max-width: 900px) {
+  .k-sitemap { grid-template-columns: repeat(2, 1fr); }
+  .k-more-panel { grid-template-columns: 1fr; min-width: 240px; }
+}
+@media (max-width: 760px) {
+  .k-nav { padding: 12px 18px; flex-wrap: wrap; }
+  .k-nav-links a { margin-left: 14px; font-size: 0.82rem; }
+  .k-more { margin-left: 14px; }
+  .k-main { padding: 32px 22px 64px; }
+  .k-hero { padding: 56px 22px 36px; }
+  .k-cta { padding: 34px 22px; }
+  .k-sitemap { grid-template-columns: 1fr 1fr; gap: 22px 16px; }
+}

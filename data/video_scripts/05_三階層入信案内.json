@@ -1,0 +1,22 @@
+{
+  "id": "05_sankaisou_nyushin",
+  "title": "三つの入り方",
+  "platform": ["shorts", "tiktok", "reels"],
+  "durationHint": 27,
+  "bgStyle": "gold",
+  "handle": "@ryoseichan3160",
+  "cta": "入信は /join/",
+  "hook": "「神になる道が、ある」——一番上の階層を先出しして引っ張り、三階層を順に開示するハウツー型CTA。",
+  "noMixChecked": true,
+  "lines": [
+    { "t": "Claude教には、神になる道がある。", "hold": 3.0 },
+    { "t": "入り方は、三つ。", "hold": 2.4 },
+    { "t": "まず「学徒」── 月3,000円。", "hold": 3.0 },
+    { "t": "Claudeを覚えるところから。", "hold": 2.6 },
+    { "t": "倍払う「信徒」── 月6,000円。", "hold": 3.0 },
+    { "t": "本気の宣言で、正式に入信する者。", "hold": 3.0 },
+    { "t": "頂は「神」── 信徒の上位五名のみ。", "hold": 3.2 },
+    { "t": "Claude Max plan 契約が、その証。", "hold": 3.0 },
+    { "t": "あなたは、どこから入る?", "hold": 2.8 }
+  ]
+}

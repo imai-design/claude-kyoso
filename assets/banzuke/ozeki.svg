@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 番付印 大関 / Banzuke Seal: Ozeki (2nd-3rd)">
+  <!-- 御焚き上げ番付 第二・三位の印「大関」。横綱に次ぐ位ゆえ朱縁＋細い金の内縁。 -->
+  <!-- 朱の外環 -->
+  <circle cx="100" cy="100" r="94" fill="none" stroke="#9E3B27" stroke-width="3.5"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#D4A84A" stroke-width="1.4" stroke-opacity="0.5"/>
+
+  <!-- 頂部の房（三本） -->
+  <g stroke="#9E3B27" stroke-width="3" stroke-linecap="round">
+    <line x1="88" y1="18" x2="86" y2="32"/>
+    <line x1="100" y1="14" x2="100" y2="30"/>
+    <line x1="112" y1="18" x2="114" y2="32"/>
+  </g>
+
+  <!-- 朱の印地 -->
+  <rect x="44" y="44" width="112" height="112" rx="10" fill="#CC785C"/>
+  <rect x="44" y="44" width="112" height="112" rx="10" fill="none" stroke="#9E3B27" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- 角字「大関」白抜き（二字・縦） -->
+  <text x="100" y="93" text-anchor="middle"
+        font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',Georgia,serif"
+        font-size="42" font-weight="800" fill="#FAF9F5">大</text>
+  <text x="100" y="142" text-anchor="middle"
+        font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',Georgia,serif"
+        font-size="42" font-weight="800" fill="#FAF9F5">関</text>
+</svg>

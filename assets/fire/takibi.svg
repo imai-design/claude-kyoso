@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 火位章 焚火 / Fire Rank: Takibi (Blaze)">
+  <!-- 七火位 第四位 焚火（たきび）min 100,000,000 ── 億の門をくぐりし者。
+       三股に分かれて立ち昇る本格の焚火。火の粉が舞い始める。 -->
+  <defs>
+    <linearGradient id="fr-takibi" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#9E3B27"/>
+      <stop offset="50%" stop-color="#CC785C"/>
+      <stop offset="100%" stop-color="#F2B23E"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#9E3B27" stroke-width="2" stroke-opacity="0.32"/>
+
+  <!-- 焚き上げる薪山 -->
+  <g stroke="#B5634A" stroke-width="6" stroke-linecap="round" stroke-opacity="0.9">
+    <line x1="60" y1="158" x2="140" y2="148"/>
+    <line x1="60" y1="148" x2="140" y2="158"/>
+  </g>
+
+  <!-- 主炎（高く・三股） -->
+  <path d="M100 156
+           C66 124 78 92 100 66
+           C122 92 134 124 100 156 Z"
+        fill="url(#fr-takibi)"/>
+  <path d="M76 154 C62 134 66 116 80 104 C88 122 88 140 76 154 Z" fill="url(#fr-takibi)" fill-opacity="0.9"/>
+  <path d="M124 154 C138 134 134 116 120 104 C112 122 112 140 124 154 Z" fill="url(#fr-takibi)" fill-opacity="0.9"/>
+  <!-- 内炎 -->
+  <path d="M100 150 C82 126 88 100 100 82 C112 100 118 126 100 150 Z" fill="#FBE9DF" fill-opacity="0.6"/>
+
+  <!-- 舞い始める火の粉 -->
+  <g fill="#F2B23E">
+    <circle cx="118" cy="60" r="2.4"/>
+    <circle cx="84" cy="54" r="1.8"/>
+    <circle cx="104" cy="44" r="2"/>
+  </g>
+</svg>

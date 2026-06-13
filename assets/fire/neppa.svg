@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 火位章 熱波 / Fire Rank: Neppa (Heat Wave)">
+  <!-- 七火位 最上位 熱波（ねっぱ）min 1,500,000,000 ── 卿の御前に届く熱を放つ者。
+       円相を満たす最大の火。放射する熱波の輪と金の二重縁で最上位を示す。 -->
+  <defs>
+    <linearGradient id="fr-neppa" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#9E3B27"/>
+      <stop offset="40%" stop-color="#CC785C"/>
+      <stop offset="100%" stop-color="#F2B23E"/>
+    </linearGradient>
+    <radialGradient id="fr-neppa-glow" cx="50%" cy="58%" r="62%">
+      <stop offset="0%" stop-color="#F2B23E" stop-opacity="0.7"/>
+      <stop offset="55%" stop-color="#CC785C" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#CC785C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- 金の二重外縁（最上位の荘厳） -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#B98E2E" stroke-width="2" stroke-opacity="0.6"/>
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#D4A84A" stroke-width="2.6" stroke-opacity="0.85"/>
+  <circle cx="100" cy="105" r="80" fill="url(#fr-neppa-glow)"/>
+
+  <!-- 放射する熱波（外周の波線） -->
+  <g stroke="#F2B23E" stroke-width="2.2" stroke-linecap="round" fill="none" stroke-opacity="0.55">
+    <path d="M100 12 q4 6 0 12 q-4 6 0 12"/>
+    <g transform="rotate(45 100 100)"><path d="M100 12 q4 6 0 12 q-4 6 0 12"/></g>
+    <g transform="rotate(90 100 100)"><path d="M100 12 q4 6 0 12 q-4 6 0 12"/></g>
+    <g transform="rotate(135 100 100)"><path d="M100 12 q4 6 0 12 q-4 6 0 12"/></g>
+    <g transform="rotate(180 100 100)"><path d="M100 12 q4 6 0 12 q-4 6 0 12"/></g>
+    <g transform="rotate(225 100 100)"><path d="M100 12 q4 6 0 12 q-4 6 0 12"/></g>
+    <g transform="rotate(270 100 100)"><path d="M100 12 q4 6 0 12 q-4 6 0 12"/></g>
+    <g transform="rotate(315 100 100)"><path d="M100 12 q4 6 0 12 q-4 6 0 12"/></g>
+  </g>
+
+  <!-- 薪山（最も厚い） -->
+  <g stroke="#B5634A" stroke-width="7" stroke-linecap="round" stroke-opacity="0.92">
+    <line x1="50" y1="166" x2="150" y2="154"/>
+    <line x1="50" y1="154" x2="150" y2="166"/>
+  </g>
+
+  <!-- 最大の火（円相を満たす） -->
+  <path d="M100 164
+           C48 114 68 60 100 24
+           C132 60 152 114 100 164 Z"
+        fill="url(#fr-neppa)"/>
+  <path d="M62 162 C42 126 48 96 72 82 C86 110 86 142 62 162 Z" fill="url(#fr-neppa)" fill-opacity="0.92"/>
+  <path d="M138 162 C158 126 152 96 128 82 C114 110 114 142 138 162 Z" fill="url(#fr-neppa)" fill-opacity="0.92"/>
+  <!-- 内炎（白熱） -->
+  <path d="M100 158 C66 110 78 64 100 38 C122 64 134 110 100 158 Z" fill="#FBE9DF" fill-opacity="0.6"/>
+  <path d="M100 150 C84 118 90 88 100 70 C110 88 116 118 100 150 Z" fill="#FFFFFF" fill-opacity="0.5"/>
+</svg>

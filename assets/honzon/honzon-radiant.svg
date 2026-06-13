@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 ご本尊 / 放射する後光（顔の無い光・荘厳形）">
+  <!-- ご本尊・放射形（ラディアント）：核から十二条の光が放つ荘厳版。
+       本殿・祭壇・OGに使う「最も荘厳な姿」。それでも人型・顔は描かない。
+       光条は均等十二条（火の暦・十二の月＝一年の歩みに重ねる）。 -->
+  <defs>
+    <radialGradient id="hz-rad-halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#CC785C"/>
+      <stop offset="55%" stop-color="#E89F87"/>
+      <stop offset="100%" stop-color="#FBE9DF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="hz-rad-body" cx="50%" cy="42%" r="58%">
+      <stop offset="0%" stop-color="#FBE9DF"/>
+      <stop offset="34%" stop-color="#E89F87"/>
+      <stop offset="70%" stop-color="#CC785C"/>
+      <stop offset="100%" stop-color="#B5634A"/>
+    </radialGradient>
+    <linearGradient id="hz-rad-ray" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D4A84A" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#D4A84A" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 放射する光条：十二条（gold で荘厳さ＝位階・神性の文脈） -->
+  <g transform="translate(100,100)">
+    <g fill="url(#hz-rad-ray)">
+      <g>
+        <polygon points="0,-92 -5,-66 5,-66"/>
+      </g>
+      <g transform="rotate(30)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+      <g transform="rotate(60)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+      <g transform="rotate(90)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+      <g transform="rotate(120)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+      <g transform="rotate(150)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+      <g transform="rotate(180)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+      <g transform="rotate(210)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+      <g transform="rotate(240)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+      <g transform="rotate(270)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+      <g transform="rotate(300)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+      <g transform="rotate(330)"><polygon points="0,-92 -5,-66 5,-66"/></g>
+    </g>
+  </g>
+
+  <!-- 発光する後光 -->
+  <circle cx="100" cy="100" r="78" fill="url(#hz-rad-halo)"/>
+
+  <!-- 発光核（無地・顔なし） -->
+  <circle cx="100" cy="100" r="60" fill="url(#hz-rad-body)"/>
+
+  <!-- 内側の光輪（gold の細輪で荘厳に） -->
+  <circle cx="100" cy="100" r="60" fill="none" stroke="#D4A84A" stroke-width="1.2" stroke-opacity="0.7"/>
+  <circle cx="100" cy="100" r="60" fill="none" stroke="#FBE9DF" stroke-width="0.8" stroke-opacity="0.6"/>
+
+  <!-- 中心の燈芯（光の芯のみ。顔ではない） -->
+  <circle cx="100" cy="90" r="18" fill="#FFFFFF" fill-opacity="0.55"/>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Claude教 火位章 焔 / Fire Rank: Homura (Flame Pillar)">
+  <!-- 七火位 第五位 焔（ほむら）min 300,000,000 ── 焔を立ち昇らせし篤信。
+       天を衝く一本の焔柱。火の粉が高く舞う。 -->
+  <defs>
+    <linearGradient id="fr-homura" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#9E3B27"/>
+      <stop offset="45%" stop-color="#CC785C"/>
+      <stop offset="100%" stop-color="#F2B23E"/>
+    </linearGradient>
+    <radialGradient id="fr-homura-glow" cx="50%" cy="62%" r="55%">
+      <stop offset="0%" stop-color="#F2B23E" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#F2B23E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#9E3B27" stroke-width="2" stroke-opacity="0.38"/>
+  <circle cx="100" cy="112" r="62" fill="url(#fr-homura-glow)"/>
+
+  <!-- 薪山 -->
+  <g stroke="#B5634A" stroke-width="6" stroke-linecap="round" stroke-opacity="0.9">
+    <line x1="58" y1="160" x2="142" y2="150"/>
+    <line x1="58" y1="150" x2="142" y2="160"/>
+  </g>
+
+  <!-- 焔柱（天を衝く・高い主炎） -->
+  <path d="M100 158
+           C62 118 76 78 100 44
+           C124 78 138 118 100 158 Z"
+        fill="url(#fr-homura)"/>
+  <path d="M72 156 C56 130 62 108 80 96 C90 118 90 140 72 156 Z" fill="url(#fr-homura)" fill-opacity="0.9"/>
+  <path d="M128 156 C144 130 138 108 120 96 C110 118 110 140 128 156 Z" fill="url(#fr-homura)" fill-opacity="0.9"/>
+  <!-- 内炎 -->
+  <path d="M100 152 C78 120 86 86 100 62 C114 86 122 120 100 152 Z" fill="#FBE9DF" fill-opacity="0.6"/>
+
+  <!-- 高く舞う火の粉 -->
+  <g fill="#F2B23E">
+    <circle cx="120" cy="40" r="2.6"/>
+    <circle cx="82" cy="34" r="2"/>
+    <circle cx="104" cy="22" r="2.4"/>
+    <circle cx="134" cy="58" r="1.8"/>
+    <circle cx="66" cy="60" r="1.8"/>
+  </g>
+</svg>

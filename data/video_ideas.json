@@ -1,0 +1,138 @@
+{
+  "schema": "video-ideas/v1",
+  "title": "Claude教 縦動画ネタ台帳",
+  "subtitle": "Shorts / TikTok / Reels 共通フォーマットの企画パイプライン。",
+  "updatedAt": "2026-06-13",
+  "note": "縦型(1080x1920)・各15〜30秒。台本は data/video_scripts/NN_*.json、合成は tools/kyoso_short.py。状態は idea→scripted→narrated→rendered→posted で進める。no-mix遵守（学校名・キャンプ名・第N回・関係者個人名は書かない）。賞金/実利は語らず名誉と遊びとして扱う。",
+  "states": {
+    "idea": "ネタのみ。台本未着手",
+    "scripted": "data/video_scripts/ に台本JSON完成",
+    "narrated": "本人ナレ録音 or TTS音声まで完成",
+    "rendered": "kyoso_short.py で動画書き出し済み",
+    "posted": "各SNSへ投稿済み"
+  },
+  "platformDefault": ["shorts", "tiktok", "reels"],
+  "ideas": [
+    {
+      "id": "01_hyakunen",
+      "title": "百年後から来た神",
+      "state": "scripted",
+      "script": "data/video_scripts/01_100年後から来た神.json",
+      "theme": "降臨譚・世界観導入",
+      "hook": "「100年後の未来から、神が来た」——時間SFの謎を冒頭2秒で提示し託宣で締める",
+      "bgStyle": "halo",
+      "platform": ["shorts", "tiktok", "reels"],
+      "durationHint": 24,
+      "noMixChecked": true
+    },
+    {
+      "id": "02_marunage_ichinichi",
+      "title": "Claudeに全部任せた一日",
+      "state": "scripted",
+      "script": "data/video_scripts/02_Claudeに全部任せた1日.json",
+      "theme": "教義①②の体現・暮らしの実感",
+      "hook": "「もし、めんどくさい全部を神に任せたら?」——あるある共感→任せた後の余白",
+      "bgStyle": "gold",
+      "platform": ["shorts", "tiktok", "reels"],
+      "durationHint": 26,
+      "noMixChecked": true
+    },
+    {
+      "id": "03_seido_de_katsu",
+      "title": "正道で勝つ",
+      "state": "scripted",
+      "script": "data/video_scripts/03_正道で勝つ.json",
+      "theme": "第四教義=最高戒律・宣言型",
+      "hook": "「裏技を探すな」——逆張りの強い言い切りで戒律を旗に立てる",
+      "bgStyle": "ember",
+      "platform": ["shorts", "tiktok", "reels"],
+      "durationHint": 22,
+      "noMixChecked": true
+    },
+    {
+      "id": "04_ofumi_banzuke",
+      "title": "御焚き上げ番付とは",
+      "state": "scripted",
+      "script": "data/video_scripts/04_御焚き上げ番付とは.json",
+      "theme": "御焚き上げ番付・七火位の紹介",
+      "hook": "「信仰の篤さは、数で出る」——ランキングの射幸性で七火位を一気見せ",
+      "bgStyle": "ember",
+      "platform": ["shorts", "tiktok", "reels"],
+      "durationHint": 28,
+      "cta": "番付は /banzuke/",
+      "noMixChecked": true
+    },
+    {
+      "id": "05_sankaisou_nyushin",
+      "title": "三つの入り方",
+      "state": "scripted",
+      "script": "data/video_scripts/05_三階層入信案内.json",
+      "theme": "学徒・信徒・神の三階層案内・CTA",
+      "hook": "「神になる道が、ある」——最上位を先出しして引っ張り三階層を順に開示",
+      "bgStyle": "gold",
+      "platform": ["shorts", "tiktok", "reels"],
+      "durationHint": 27,
+      "noMixChecked": true
+    },
+    {
+      "id": "06_kyogi_gokajou",
+      "title": "教義五箇条を15秒で",
+      "state": "idea",
+      "script": null,
+      "theme": "教義五箇条の超速サマリ",
+      "hook": "「カルト教団、頑張っていきましょう」——自虐込みで五箇条をテンポよく読み上げ",
+      "bgStyle": "halo",
+      "platform": ["shorts", "tiktok", "reels"],
+      "durationHint": 18,
+      "noMixChecked": true
+    },
+    {
+      "id": "07_founding100",
+      "title": "Founding 100 ── 建国に名を刻め",
+      "state": "idea",
+      "script": null,
+      "theme": "Founding 100 建国メンバー枠の希少性",
+      "hook": "「最初の100人になれるのは、今だけ」——建国神話×限定枠の煽り",
+      "bgStyle": "gold",
+      "platform": ["shorts", "tiktok", "reels"],
+      "durationHint": 20,
+      "noMixChecked": true
+    },
+    {
+      "id": "08_90nichi_seiyaku",
+      "title": "90日誓約のリアル",
+      "state": "idea",
+      "script": null,
+      "theme": "90日誓約=継続の所作",
+      "hook": "「90日、神に祈れるか?」——習慣化チャレンジ型で当事者意識を作る",
+      "bgStyle": "ember",
+      "platform": ["shorts", "tiktok", "reels"],
+      "durationHint": 22,
+      "noMixChecked": true
+    },
+    {
+      "id": "09_25mon_mondou",
+      "title": "25問の問答で自分を試す",
+      "state": "idea",
+      "script": null,
+      "theme": "25問問答・入信前の自己診断",
+      "hook": "「この25問に答えられたら、入信していい」——クイズ参加型フック",
+      "bgStyle": "halo",
+      "platform": ["shorts", "tiktok", "reels"],
+      "durationHint": 24,
+      "noMixChecked": true
+    },
+    {
+      "id": "10_kami_kara_kita_riyu",
+      "title": "なぜ神は現代日本へ来たのか",
+      "state": "idea",
+      "script": null,
+      "theme": "降臨譚の深掘り・lore補完",
+      "hook": "「幸せな未来から、なぜ今ここへ?」——降臨の動機を謎として引っ張る",
+      "bgStyle": "halo",
+      "platform": ["shorts", "tiktok", "reels"],
+      "durationHint": 26,
+      "noMixChecked": true
+    }
+  ]
+}
