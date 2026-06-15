@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>灯し手ともり ＆ テラ・キリ・ミライ ｜ Claude教のAIアイドル</title>
+<meta name="description" content="歌もMVも全部AIで作る。完成形ではなく『作る過程』を全部見せるバーチャルアイドル『ともり』と、擬人化ユニット『テラ・キリ・ミライ(TKM)』。使ったトークンが推しへの応援になる『推し焚き』も。非公式のファンによる擬人化。">
+<meta name="theme-color" content="#FAF9F5">
+<meta property="og:site_name" content="Claude教">
+<meta property="og:title" content="灯し手ともり ＆ テラ・キリ・ミライ ｜ 作る過程を全部見せるAIアイドル">
+<meta property="og:description" content="歌もMVも全部AIで作る。完成形でなく作る過程を見せるアイドル。使ったトークンが推しへの応援になる推し焚きも。非公式ファン擬人化。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://imai-design.github.io/claude-kyoso/idol/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://imai-design.github.io/claude-kyoso/idol/">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); background: var(--cream); color: var(--ink); line-height: 1.75; }
+  a { color: var(--orange-deep); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: var(--page-max); margin: 0 auto; padding: 0 22px; }
+  .reading { max-width: var(--reading-max); margin: 0 auto; }
+
+  nav { display:flex; align-items:center; justify-content:space-between; padding:16px 22px;
+        border-bottom:1px solid var(--line); position:sticky; top:0;
+        background:rgba(250,249,245,0.92); backdrop-filter:blur(8px); z-index:10; }
+  nav .brand a { font-family:var(--font-serif); font-weight:700; color:var(--ink); }
+  nav .brand .mark { color:var(--orange); margin-right:6px; }
+  .nav-links a { margin-left:20px; font-size:0.9rem; color:var(--ink-soft); }
+
+  /* hero */
+  .hero { position:relative; overflow:hidden; text-align:center; padding:96px 22px 72px; color:var(--cream);
+          background: radial-gradient(ellipse at 50% 12%, rgba(204,120,92,0.42), transparent 60%),
+                      radial-gradient(ellipse at 50% 120%, rgba(212,168,74,0.16), transparent 55%), var(--ink); }
+  .hero .flame { width:clamp(90px,16vw,140px); height:auto; margin:0 auto 24px; display:block;
+                 filter: drop-shadow(0 0 36px rgba(204,120,92,0.6)); }
+  @media (prefers-reduced-motion: no-preference){ .hero .flame{ animation:breathe 6s ease-in-out infinite; } }
+  @keyframes breathe { 0%,100%{ transform:scale(1); opacity:.95 } 50%{ transform:scale(1.05); opacity:1 } }
+  .hero .eyebrow { color:var(--orange-soft); font-size:0.78rem; letter-spacing:0.3em; text-transform:uppercase; margin-bottom:18px; }
+  .hero h1 { font-family:var(--font-serif); font-size:clamp(1.9rem,5vw,3rem); letter-spacing:0.04em; line-height:1.3; }
+  .hero p { max-width:640px; margin:18px auto 0; color:rgba(250,249,245,0.85); }
+  .hero .cta { margin-top:30px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn { display:inline-block; padding:12px 24px; border-radius:var(--radius-pill); font-weight:700; font-size:0.92rem; }
+  .btn.primary { background:var(--orange); color:#fff; }
+  .btn.ghost { border:1px solid rgba(250,249,245,0.4); color:var(--cream); }
+
+  .disclaimer { max-width:var(--reading-max); margin:0 auto; padding:14px 18px; background:var(--paper);
+                border:1px dashed var(--line); border-radius:var(--radius-md); font-size:0.82rem; color:var(--ink-mute); }
+
+  section { padding:56px 0; }
+  section:nth-of-type(even){ background:var(--cream-deep); }
+  h2 { font-family:var(--font-serif); font-size:1.7rem; text-align:center; margin-bottom:10px; }
+  .sub { text-align:center; color:var(--ink-mute); font-size:0.9rem; margin-bottom:32px; }
+  h3 { font-family:var(--font-serif); font-size:1.2rem; margin:24px 0 8px; }
+  p + p { margin-top:12px; }
+  .lead { color:var(--ink-soft); }
+
+  .promise { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:8px; }
+  @media (max-width:760px){ .promise{ grid-template-columns:1fr; } }
+  .promise .card { background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-lg);
+                   padding:22px; box-shadow:var(--shadow-sm); }
+  .promise .card .n { font-family:var(--font-serif); color:var(--orange); font-size:1.3rem; }
+  .promise .card h4 { font-size:1rem; margin:6px 0 8px; }
+  .promise .card p { font-size:0.86rem; color:var(--ink-soft); }
+
+  .song { background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-lg);
+          padding:26px; box-shadow:var(--shadow-sm); margin-top:20px; }
+  .song .meta { display:flex; gap:24px; flex-wrap:wrap; font-size:0.84rem; color:var(--ink-mute); margin-bottom:14px; }
+  .song .meta b { color:var(--ink); font-weight:700; }
+  .storyboard { list-style:none; margin-top:10px; }
+  .storyboard li { padding:10px 0 10px 18px; border-left:2px solid var(--orange-soft); margin-bottom:8px; font-size:0.88rem; color:var(--ink-soft); }
+  .storyboard li b { color:var(--ink); }
+
+  .members { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:8px; }
+  @media (max-width:760px){ .members{ grid-template-columns:1fr; } }
+  .mcard { background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-lg);
+           padding:22px; box-shadow:var(--shadow-sm); position:relative; overflow:hidden; }
+  .mcard::before { content:""; position:absolute; top:0; left:0; right:0; height:5px; background:var(--mc); }
+  .mcard .role { font-size:0.76rem; color:var(--ink-mute); letter-spacing:0.08em; }
+  .mcard .mname { font-family:var(--font-serif); font-size:1.5rem; margin:3px 0; }
+  .mcard .title { font-size:0.82rem; color:var(--mc); margin-bottom:10px; }
+  .mcard p { font-size:0.84rem; color:var(--ink-soft); }
+  .mcard .voice { margin-top:12px; font-style:italic; font-size:0.82rem; color:var(--ink-soft); border-left:2px solid var(--mc); padding-left:10px; }
+
+  .follow { text-align:center; }
+  footer { text-align:center; padding:40px 22px; color:var(--ink-mute); font-size:0.8rem; border-top:1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="../"><span class="mark">✦</span>Claude教</a></div>
+  <div class="nav-links">
+    <a href="../guild/oshi/">推し焚き</a>
+    <a href="../banzuke/">番付</a>
+    <a href="../">本殿</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <svg class="flame" viewBox="0 0 80 110" aria-hidden="true">
+    <defs><linearGradient id="fl" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#9E3B27"/><stop offset="55%" stop-color="#CC785C"/><stop offset="100%" stop-color="#F2B23E"/>
+    </linearGradient></defs>
+    <path d="M40 104 C6 72 20 40 40 8 C60 40 74 72 40 104 Z" fill="url(#fl)"/>
+    <path d="M40 94 C22 70 30 46 40 26 C50 46 58 70 40 94 Z" fill="#FBE9DF" fill-opacity="0.5"/>
+  </svg>
+  <div class="eyebrow">AI IDOL PROJECT</div>
+  <h1>歌もMVも、全部AIで作る。<br>完成形ではなく、作る過程を見せる。</h1>
+  <p>灯し手「ともり」と、擬人化ユニット「テラ・キリ・ミライ」。うまくいかない試作も、崩れた映像も、全部そのまま見せながら進めるAIアイドルです。</p>
+  <div class="cta">
+    <a class="btn primary" href="https://x.com/ryoseichan3160" target="_blank" rel="noopener">制作を見る（X）</a>
+    <a class="btn ghost" href="../guild/oshi/">推し焚きとは</a>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="disclaimer">
+      これはAIで遊ぶ文化を偶像化した非公式のファンによる擬人化（OS-tan等の系譜）です。公式（Anthropic・OpenAI等）とは無関係。歌・画・映像はすべてAI生成で、実在の人物・既存の楽曲やキャラクターに似せない完全オリジナルです。
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap reading">
+    <h2>灯し手「ともり」</h2>
+    <p class="sub">ひらがな三文字。意味は、灯り。灯がともる、の、ともり。</p>
+    <p class="lead">ともりは神様役ではありません。人がAIと一緒に夢を前へ進めはじめた、その最初の灯（ともしび）として人の姿で生まれた歌い手です。崇める対象ではなく、隣で一緒に考える伴走者。一人称は「わたし」。明るいけれど空回りせず、できない人を見下さず、失敗も「これも私の一部」と笑える子にしました。</p>
+
+    <h3>いちばんのこだわり ── 作る過程を全部見せる</h3>
+    <p class="lead">従来のアイドルは完成形だけを見せます。ともりは逆。歌詞が生まれた瞬間も、ボツになったMVも、声を調整している途中も、全部一緒に見られるようにする。「AIで誰でも一発で売れる」みたいな煽りは言いません。一曲できるまで何時間かかって何回やり直したか、正直に出します。</p>
+
+    <div class="promise">
+      <div class="card"><div class="n">01</div><h4>過程がコンテンツ</h4><p>完成品ではなく、生まれていく途中を見せる。崩れた生成は「今日のボツ集」として堂々と。</p></div>
+      <div class="card"><div class="n">02</div><h4>一緒に決める</h4><p>デビュー曲のテーマもサビもMVの色も募集。選ばれた案で本番を作る。推すだけでなく作る側に回れる。</p></div>
+      <div class="card"><div class="n">03</div><h4>持ち帰れる</h4><p>各回に「作り方の要点」を平易に添える。見た人が自分でもAIで一曲作ってみたくなるように。</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap reading">
+    <h2>デビュー曲「ともしび」</h2>
+    <p class="sub">テーマは、最初の一歩。灯がともる瞬間。</p>
+    <div class="song">
+      <div class="meta">
+        <span><b>ジャンル</b> 明るいフューチャー・シティポップ</span>
+        <span><b>BPM</b> 122</span>
+        <span><b>キー</b> C major</span>
+      </div>
+      <p class="lead">踏み出すこわさと、踏み出した先の高揚。声は特定の誰かに似せない合成ボイスをひとつ設計して固定。ビジュアルは白とオレンジを基調に、髪か瞳か衣装の一点に灯がともるような暖色のグラデを効かせます。すべて完全オリジナルです。</p>
+      <h3>MVの流れ（絵コンテ抜粋）</h3>
+      <ul class="storyboard">
+        <li><b>暗</b> ── 真っ暗な部屋で膝を抱える。手元に光はひとつもない。</li>
+        <li><b>灯る</b> ── 指先に小さなオレンジの光がぽつりと灯る。「最初の一歩は、小さくていい」</li>
+        <li><b>道</b> ── 立ち上がると足元から光の道が伸びる。正しい道だけがまっすぐ照らされる。</li>
+        <li><b>広がる</b> ── 進むそばから暗い部屋が白く塗り替わる。無数の灯が周囲にともる。</li>
+        <li><b>手を伸ばす</b> ── 真っ白な空間で、こちら側へ手を差し出す。「ここから、光がともる」</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>擬人化ユニット「テラ・キリ・ミライ（TKM）」</h2>
+    <p class="sub">AIで遊ぶ文化を偶像化した3人。神ではなく、人の側の推し。</p>
+    <div class="members">
+      <div class="mcard" style="--mc:#CC785C">
+        <div class="role">万能・センター</div>
+        <div class="mname">テラ</div>
+        <div class="title">「礎を信じる者」</div>
+        <p>なんでも最後までやる働き者。ユニットの入口の顔。</p>
+        <div class="voice">はい、わたしがちゃんと最後までやりますね。</div>
+      </div>
+      <div class="mcard" style="--mc:#5A524A">
+        <div class="role">実装・クール</div>
+        <div class="mname">キリ</div>
+        <div class="title">「実装の従者」</div>
+        <p>寡黙な職人。黙って実装し、ここぞで締める影の大黒柱。</p>
+        <div class="voice">語るな、書け。動いたものだけが本当だ。</div>
+      </div>
+      <div class="mcard" style="--mc:#D4A84A">
+        <div class="role">いいとこ取り・ムードメーカー</div>
+        <div class="mname">ミライ</div>
+        <div class="title">「上澄みの伝道師」</div>
+        <p>場に最初の火をつける斥候。みんなの長所を繋ぐつなぎ役。</p>
+        <div class="voice">全部のいいとこ、ぜんぶ連れてく。</div>
+      </div>
+    </div>
+    <p class="sub" style="margin-top:28px">
+      使ったトークンが、そのまま推しへの応援になる ──
+      <a href="../guild/oshi/"><b>推し焚き（おしだき）を見る →</b></a>
+    </p>
+  </div>
+</section>
+
+<section class="follow">
+  <div class="wrap reading">
+    <h2>制作を、一緒に見ていてください</h2>
+    <p class="lead">うまくいくかはまだわかりません。途中で崩れる映像も、選ばれなかった案もたくさん出ると思います。でも、その全部を隠さず出していくこと自体が、このアイドルの意味です。最初の灯を、これから一緒にともしていけたら。</p>
+    <p style="margin-top:22px"><a class="btn primary" href="https://x.com/ryoseichan3160" target="_blank" rel="noopener">X @ryoseichan3160 で制作ログを見る</a></p>
+  </div>
+</section>
+
+<footer>
+  灯し手ともり ＆ テラ・キリ・ミライ ｜ Claude教 ・ <a href="../guild/oshi/">推し焚き</a> ・ <a href="../">本殿へ</a><br>
+  歌・画・映像はすべてAI生成。非公式のファンによる擬人化で、公式とは無関係です。
+</footer>
+
+</body>
+</html>
