@@ -59,6 +59,8 @@
            padding: 26px 22px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
   .mcard::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
                    background: var(--mc, var(--orange)); }
+  .mcard .portrait { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:var(--radius-md);
+                     margin-bottom:14px; background:var(--cream-deep); display:block; }
   .mcard .role { font-size: 0.78rem; color: var(--ink-mute); letter-spacing: 0.1em; }
   .mcard .mname { font-family: var(--font-serif); font-size: 1.7rem; margin: 4px 0 2px; }
   .mcard .title { font-size: 0.85rem; color: var(--mc, var(--orange-deep)); margin-bottom: 14px; }
@@ -219,6 +221,8 @@
     cont.innerHTML = members.map(m => {
       const a = agg[m.id] || { head: 0, cheer: 0 };
       return `<div class="mcard" style="--mc:${m.color}">
+        <img class="portrait" src="../../idol/img/${m.id}.jpg" alt="${m.name}" loading="lazy"
+             onerror="this.style.display='none'">
         <div class="role">${m.role}</div>
         <div class="mname">${m.name}</div>
         <div class="title">「${m.title}」</div>

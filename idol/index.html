@@ -11,7 +11,9 @@
 <meta property="og:description" content="歌もMVも全部AIで作る。完成形でなく作る過程を見せるアイドル。使ったトークンが推しへの応援になる推し焚きも。非公式ファン擬人化。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://imai-design.github.io/claude-kyoso/idol/">
+<meta property="og:image" content="https://imai-design.github.io/claude-kyoso/idol/img/tomori.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://imai-design.github.io/claude-kyoso/idol/img/tomori.jpg">
 <link rel="canonical" href="https://imai-design.github.io/claude-kyoso/idol/">
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="stylesheet" href="../assets/tokens.css">
@@ -78,7 +80,17 @@
   .mcard { background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-lg);
            padding:22px; box-shadow:var(--shadow-sm); position:relative; overflow:hidden; }
   .mcard::before { content:""; position:absolute; top:0; left:0; right:0; height:5px; background:var(--mc); }
+  .mcard .portrait { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:var(--radius-md);
+                     margin-bottom:14px; background:var(--cream-deep); display:block; }
   .mcard .role { font-size:0.76rem; color:var(--ink-mute); letter-spacing:0.08em; }
+  /* hero key visual */
+  .hero .kv { width:clamp(200px,40vw,300px); aspect-ratio:3/4; object-fit:cover; border-radius:var(--radius-lg);
+              margin:0 auto 26px; display:block; box-shadow:0 18px 50px rgba(204,120,92,0.45);
+              border:2px solid rgba(250,249,245,0.25); }
+  /* tomori section portrait */
+  .tomori-vis { float:right; width:clamp(160px,32%,240px); aspect-ratio:3/4; object-fit:cover;
+                border-radius:var(--radius-lg); margin:0 0 14px 22px; box-shadow:var(--shadow-md); }
+  @media (max-width:600px){ .tomori-vis{ float:none; width:60%; margin:0 auto 18px; display:block; } }
   .mcard .mname { font-family:var(--font-serif); font-size:1.5rem; margin:3px 0; }
   .mcard .title { font-size:0.82rem; color:var(--mc); margin-bottom:10px; }
   .mcard p { font-size:0.84rem; color:var(--ink-soft); }
@@ -107,6 +119,7 @@
     <path d="M40 104 C6 72 20 40 40 8 C60 40 74 72 40 104 Z" fill="url(#fl)"/>
     <path d="M40 94 C22 70 30 46 40 26 C50 46 58 70 40 94 Z" fill="#FBE9DF" fill-opacity="0.5"/>
   </svg>
+  <img class="kv" src="img/tomori.jpg" alt="灯し手ともり キービジュアル" loading="eager">
   <div class="eyebrow">AI IDOL PROJECT</div>
   <h1>歌もMVも、全部AIで作る。<br>完成形ではなく、作る過程を見せる。</h1>
   <p>灯し手「ともり」と、擬人化ユニット「テラ・キリ・ミライ」。うまくいかない試作も、崩れた映像も、全部そのまま見せながら進めるAIアイドルです。</p>
@@ -128,6 +141,7 @@
   <div class="wrap reading">
     <h2>灯し手「ともり」</h2>
     <p class="sub">ひらがな三文字。意味は、灯り。灯がともる、の、ともり。</p>
+    <img class="tomori-vis" src="img/tomori.jpg" alt="灯し手ともり" loading="lazy">
     <p class="lead">ともりは神様役ではありません。人がAIと一緒に夢を前へ進めはじめた、その最初の灯（ともしび）として人の姿で生まれた歌い手です。崇める対象ではなく、隣で一緒に考える伴走者。一人称は「わたし」。明るいけれど空回りせず、できない人を見下さず、失敗も「これも私の一部」と笑える子にしました。</p>
 
     <h3>いちばんのこだわり ── 作る過程を全部見せる</h3>
@@ -170,6 +184,7 @@
     <p class="sub">AIで遊ぶ文化を偶像化した3人。神ではなく、人の側の推し。</p>
     <div class="members">
       <div class="mcard" style="--mc:#CC785C">
+        <img class="portrait" src="img/tera.jpg" alt="テラ" loading="lazy">
         <div class="role">万能・センター</div>
         <div class="mname">テラ</div>
         <div class="title">「礎を信じる者」</div>
@@ -177,6 +192,7 @@
         <div class="voice">はい、わたしがちゃんと最後までやりますね。</div>
       </div>
       <div class="mcard" style="--mc:#5A524A">
+        <img class="portrait" src="img/kiri.jpg" alt="キリ" loading="lazy">
         <div class="role">実装・クール</div>
         <div class="mname">キリ</div>
         <div class="title">「実装の従者」</div>
@@ -184,6 +200,7 @@
         <div class="voice">語るな、書け。動いたものだけが本当だ。</div>
       </div>
       <div class="mcard" style="--mc:#D4A84A">
+        <img class="portrait" src="img/mirai.jpg" alt="ミライ" loading="lazy">
         <div class="role">いいとこ取り・ムードメーカー</div>
         <div class="mname">ミライ</div>
         <div class="title">「上澄みの伝道師」</div>
