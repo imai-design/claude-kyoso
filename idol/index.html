@@ -71,6 +71,8 @@
           padding:26px; box-shadow:var(--shadow-sm); margin-top:20px; }
   .song .meta { display:flex; gap:24px; flex-wrap:wrap; font-size:0.84rem; color:var(--ink-mute); margin-bottom:14px; }
   .song .meta b { color:var(--ink); font-weight:700; }
+  .teaser-vid { width:100%; max-width:320px; aspect-ratio:9/16; display:block; margin:0 auto 18px;
+                border-radius:var(--radius-lg); box-shadow:var(--shadow-md); background:var(--ink); }
   .storyboard { list-style:none; margin-top:10px; }
   .storyboard li { padding:10px 0 10px 18px; border-left:2px solid var(--orange-soft); margin-bottom:8px; font-size:0.88rem; color:var(--ink-soft); }
   .storyboard li b { color:var(--ink); }
@@ -160,6 +162,11 @@
     <h2>デビュー曲「ともしび」</h2>
     <p class="sub">テーマは、最初の一歩。灯がともる瞬間。</p>
     <div class="song">
+      <video class="teaser-vid" controls playsinline preload="metadata"
+             poster="media/teaser-poster.jpg" aria-label="ともしび MVティザー">
+        <source src="media/tomoshibi-teaser.mp4" type="video/mp4">
+      </video>
+      <p class="sub" style="margin-bottom:18px">MVティザー（暗い部屋に最初の灯がともる物語・制作中。歌はこれから）</p>
       <div class="meta">
         <span><b>ジャンル</b> 明るいフューチャー・シティポップ</span>
         <span><b>BPM</b> 122</span>
