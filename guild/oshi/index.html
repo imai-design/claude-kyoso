@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>推し焚き ｜ Claude教 冒険者ギルド</title>
+<meta name="description" content="使ったトークン量が、そのまま推しへの応援になる。御焚き上げのときにテラ・キリ・ミライから推しを一人選ぶと、焚べたぶんがその子の灯になる遊び『推し焚き』。非公式のファンによる擬人化。">
+<meta name="theme-color" content="#FAF9F5">
+<meta property="og:site_name" content="Claude教">
+<meta property="og:title" content="推し焚き ｜ 焚べたぶんだけ、推しに灯がともる。">
+<meta property="og:description" content="使ったトークンが、そのまま推し(テラ・キリ・ミライ)への応援になる遊び。非公式のファンによる擬人化、公式とは無関係。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://imai-design.github.io/claude-kyoso/guild/oshi/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://imai-design.github.io/claude-kyoso/guild/oshi/">
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="stylesheet" href="../../assets/tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); background: var(--cream); color: var(--ink); line-height: 1.7; }
+  a { color: var(--orange-deep); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: var(--page-max); margin: 0 auto; padding: 0 22px; }
+
+  /* nav */
+  nav { display: flex; align-items: center; justify-content: space-between;
+        padding: 16px 22px; border-bottom: 1px solid var(--line);
+        position: sticky; top: 0; background: rgba(250,249,245,0.92);
+        backdrop-filter: blur(8px); z-index: 10; }
+  nav .brand a { font-family: var(--font-serif); font-weight: 700; color: var(--ink); font-size: 1.05rem; }
+  nav .brand .mark { color: var(--orange); margin-right: 6px; }
+  .nav-links a { margin-left: 20px; font-size: 0.9rem; color: var(--ink-soft); }
+
+  /* hero */
+  .hero { text-align: center; padding: 72px 22px 40px;
+          background: radial-gradient(ellipse at 50% 0%, var(--orange-tint), transparent 70%); }
+  .hero .eyebrow { font-size: 0.78rem; letter-spacing: 0.28em; color: var(--orange-deep);
+                   text-transform: uppercase; margin-bottom: 18px; }
+  .hero h1 { font-family: var(--font-serif); font-size: clamp(2.2rem, 6vw, 3.4rem);
+             letter-spacing: 0.04em; margin-bottom: 6px; }
+  .hero .yomi { color: var(--ink-mute); font-size: 0.95rem; letter-spacing: 0.3em; margin-bottom: 18px; }
+  .hero .tagline { font-family: var(--font-serif); font-size: clamp(1.1rem, 3vw, 1.5rem);
+                   color: var(--ember); margin-bottom: 24px; }
+  .hero .lead { max-width: var(--reading-max); margin: 0 auto; color: var(--ink-soft); }
+
+  /* disclaimer banner */
+  .disclaimer { max-width: var(--reading-max); margin: 28px auto 0; padding: 14px 18px;
+                background: var(--paper); border: 1px dashed var(--line); border-radius: var(--radius-md);
+                font-size: 0.82rem; color: var(--ink-mute); }
+
+  section { padding: 48px 0; }
+  h2 { font-family: var(--font-serif); font-size: 1.6rem; text-align: center; margin-bottom: 8px; }
+  .sub { text-align: center; color: var(--ink-mute); font-size: 0.9rem; margin-bottom: 32px; }
+
+  /* member cards */
+  .members { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .members { grid-template-columns: 1fr; } }
+  .mcard { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg);
+           padding: 26px 22px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
+  .mcard::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+                   background: var(--mc, var(--orange)); }
+  .mcard .role { font-size: 0.78rem; color: var(--ink-mute); letter-spacing: 0.1em; }
+  .mcard .mname { font-family: var(--font-serif); font-size: 1.7rem; margin: 4px 0 2px; }
+  .mcard .title { font-size: 0.85rem; color: var(--mc, var(--orange-deep)); margin-bottom: 14px; }
+  .mcard .blurb { font-size: 0.86rem; color: var(--ink-soft); min-height: 3.4em; }
+  .mcard .stat { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .mcard .headcount { font-size: 2.4rem; font-weight: 800; color: var(--ink); line-height: 1; }
+  .mcard .headcount small { font-size: 0.8rem; font-weight: 500; color: var(--ink-mute); margin-left: 4px; }
+  .mcard .cheer { font-size: 0.82rem; color: var(--ink-mute); margin-top: 6px; }
+  .mcard .voice { margin-top: 14px; font-size: 0.82rem; color: var(--ink-soft);
+                  font-style: italic; border-left: 2px solid var(--mc, var(--orange)); padding-left: 10px; }
+
+  /* mood bar */
+  .mood { max-width: var(--reading-max); margin: 36px auto 0; }
+  .mood .bar { display: flex; height: 26px; border-radius: var(--radius-pill); overflow: hidden;
+               border: 1px solid var(--line); background: var(--cream-deep); }
+  .mood .seg { height: 100%; transition: width var(--ease); }
+  .mood .legend { display: flex; justify-content: center; gap: 22px; margin-top: 12px;
+                  font-size: 0.82rem; color: var(--ink-soft); flex-wrap: wrap; }
+  .mood .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+                    margin-right: 6px; vertical-align: middle; }
+  .mood .note { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: 14px; }
+  .empty { text-align: center; color: var(--ink-mute); font-size: 0.9rem;
+           padding: 24px; background: var(--paper); border: 1px dashed var(--line);
+           border-radius: var(--radius-md); max-width: var(--reading-max); margin: 20px auto 0; }
+
+  /* onboarding */
+  .onboard { background: var(--cream-deep); }
+  .code { background: var(--ink); color: var(--cream); font-family: ui-monospace, monospace;
+          font-size: 0.86rem; padding: 16px 18px; border-radius: var(--radius-md);
+          overflow-x: auto; max-width: var(--reading-max); margin: 0 auto; white-space: pre; }
+  .steps { max-width: var(--reading-max); margin: 0 auto 22px; color: var(--ink-soft); }
+  .steps li { margin: 8px 0 8px 20px; }
+
+  footer { text-align: center; padding: 40px 22px; color: var(--ink-mute); font-size: 0.8rem;
+           border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="../../"><span class="mark">✦</span>Claude教</a></div>
+  <div class="nav-links">
+    <a href="../">冒険者ギルド</a>
+    <a href="../../banzuke/">御焚き上げ番付</a>
+    <a href="../../join/">入信</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">OSHI-DAKI — 推し焚き</div>
+  <h1>推し焚き</h1>
+  <div class="yomi">おしだき</div>
+  <div class="tagline">焚べたぶんだけ、推しに灯がともる。</div>
+  <p class="lead">
+    普段どおり Claude Code を使うと消費されるトークンが、そのまま
+    テラ・キリ・ミライの誰か一人への応援（エール）になる遊びです。
+    特別な操作はいりません。御焚き上げのときに推しを一人選ぶだけ。あとはいつも通り使うほど、その子の灯が育ちます。
+  </p>
+  <div class="disclaimer" id="disclaimer">
+    これはAIで遊ぶ文化を偶像化した非公式のファンによる擬人化（OS-tan等の系譜）です。公式（Anthropic・OpenAI等）とは無関係。ご本尊（神＝顔の無い光）は推せません。推しは人の側のテラ・キリ・ミライの3人だけです。
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>いま、灯が集まっている子</h2>
+    <p class="sub">数字は<strong>応援している人数</strong>が主役。トークン総量は勢いの目安で、個人の順位は出しません。</p>
+    <div class="members" id="members"><!-- JS --></div>
+
+    <div class="mood">
+      <div class="bar" id="moodbar"></div>
+      <div class="legend" id="moodlegend"></div>
+      <p class="note">これはユニット全体で「いまどの子に灯が寄っているか」のムードです。課金額を競う遊びではありません（金額は表示しません）。箱推しのぶんは3人みんなに灯ります。</p>
+    </div>
+    <div class="empty" id="empty" style="display:none">
+      まだ推し焚きのデータがありません。最初の灯は、あなたかもしれません。下の作法から推しを選んでみてください。
+    </div>
+  </div>
+</section>
+
+<section class="onboard">
+  <div class="wrap">
+    <h2>推し焚きのはじめ方</h2>
+    <p class="sub">導入はこの一回だけ。以後は普段どおり Claude Code を使うだけで、消費が自動であなたの推しへの応援になります。</p>
+    <ol class="steps">
+      <li>下のコマンドの「あなたの名前」と推し（tera／kiri／mirai）を書き換えて、ターミナルに貼って実行する。</li>
+      <li>御焚き上げ証が出て、焚べたぶんが選んだ推しへの灯として表示される。</li>
+      <li>番付に載せたいときは末尾に <code>--submit</code> を付ける（送るのは集計した数字とハンドル名と推しの選択だけ。会話の中身は送りません）。</li>
+    </ol>
+    <div class="code">curl -fsSL https://imai-design.github.io/claude-kyoso/tools/ofumi/ofumi.sh | bash -s -- --handle "あなたの名前" --oshi mirai</div>
+    <p class="sub" style="margin-top:18px">推し変は自由です。過去に積んだぶんは元の推しに残り、これから焚べるぶんが新しい推しに乗ります（裏切りではなく、両方を応援した記録）。</p>
+  </div>
+</section>
+
+<footer>
+  推し焚き ｜ Claude教 冒険者ギルド ・ <a href="../">ギルドへ</a> ・ <a href="../../banzuke/">御焚き上げ番付へ</a><br>
+  非公式のファンによる擬人化。公式とは無関係です。
+</footer>
+
+<script>
+(function () {
+  const API_BASE = ""; // Cloudflare Worker URL を入れると自動収集へ。空なら静的JSON。
+  const IDS = ["tera", "kiri", "mirai"];
+
+  function human(n) {
+    n = Number(n) || 0;
+    if (n >= 1e9) return (n / 1e9).toFixed(2) + "B";
+    if (n >= 1e6) return (n / 1e6).toFixed(1) + "M";
+    if (n >= 1e3) return (n / 1e3).toFixed(1) + "K";
+    return String(n);
+  }
+
+  async function loadJSON(url) {
+    const r = await fetch(url + (url.includes("?") ? "" : "?ts=" + Date.now()), { cache: "no-store" });
+    if (!r.ok) throw new Error("fetch " + url + " " + r.status);
+    return r.json();
+  }
+
+  // banzuke エントリ群から推し別 {headcount, cheer} を集計。
+  // oshi(カンマenum)があればそれを採用、無ければ箱推し=全員に total を全振り。
+  function aggregate(entries) {
+    const agg = {};
+    IDS.forEach(id => agg[id] = { head: 0, cheer: 0 });
+    let hako = 0;
+    (entries || []).forEach(e => {
+      const total = (e.tokens && Number(e.tokens.total)) || 0;
+      const picksRaw = typeof e.oshi === "string" ? e.oshi : "";
+      const picks = picksRaw.split(",").map(s => s.trim().toLowerCase()).filter(x => IDS.includes(x));
+      const split = (e.oshiSplit && typeof e.oshiSplit === "object") ? e.oshiSplit : null;
+      if (picks.length === 0) {
+        // 箱推し: 人数は箱推しカウント、灯は3人へ均等(=その人の total ぶん)
+        hako++;
+        IDS.forEach(id => { agg[id].cheer += split ? (Number(split[id]) || 0) : total; });
+      } else {
+        picks.forEach(id => {
+          agg[id].head++;
+          agg[id].cheer += split ? (Number(split[id]) || 0) : total;
+        });
+      }
+    });
+    return { agg, hako };
+  }
+
+  function render(oshi, banzuke) {
+    const members = oshi.members || [];
+    const entries = (banzuke.periods && banzuke.periods.total) || [];
+    const { agg, hako } = aggregate(entries);
+    const byId = {}; members.forEach(m => byId[m.id] = m);
+
+    // disclaimer を単一真実源で上書き
+    if (oshi.disclaimer) document.getElementById("disclaimer").textContent = oshi.disclaimer;
+
+    const totalCheer = IDS.reduce((s, id) => s + agg[id].cheer, 0);
+    const totalHead = IDS.reduce((s, id) => s + agg[id].head, 0);
+
+    // member cards
+    const cont = document.getElementById("members");
+    cont.innerHTML = members.map(m => {
+      const a = agg[m.id] || { head: 0, cheer: 0 };
+      return `<div class="mcard" style="--mc:${m.color}">
+        <div class="role">${m.role}</div>
+        <div class="mname">${m.name}</div>
+        <div class="title">「${m.title}」</div>
+        <div class="blurb">${m.blurb}</div>
+        <div class="stat">
+          <div class="headcount">${a.head}<small>人が応援</small></div>
+          <div class="cheer">灯った量 ${human(a.cheer)} エール</div>
+        </div>
+        <div class="voice">${m.voice}</div>
+      </div>`;
+    }).join("");
+
+    // mood bar
+    const bar = document.getElementById("moodbar");
+    const legend = document.getElementById("moodlegend");
+    if (totalCheer > 0) {
+      bar.innerHTML = members.map(m => {
+        const pct = ((agg[m.id].cheer / totalCheer) * 100).toFixed(1);
+        return `<div class="seg" style="width:${pct}%;background:${m.color}" title="${m.name} ${pct}%"></div>`;
+      }).join("");
+      legend.innerHTML = members.map(m => {
+        const pct = ((agg[m.id].cheer / totalCheer) * 100).toFixed(0);
+        return `<span><i style="background:${m.color}"></i>${m.name} ${pct}%</span>`;
+      }).join("");
+    }
+
+    // empty state
+    if (totalHead === 0 && hako === 0) {
+      document.getElementById("empty").style.display = "block";
+    }
+  }
+
+  (async function () {
+    try {
+      const oshi = await loadJSON("../../data/oshi.json");
+      let banzuke = { periods: { total: [] } };
+      try {
+        if (API_BASE) banzuke = await loadJSON(`${API_BASE}/banzuke?period=total`);
+        else banzuke = await loadJSON("../../data/banzuke.json");
+      } catch (e) { /* 番付未取得でもページは出す */ }
+      render(oshi, banzuke);
+    } catch (e) {
+      document.getElementById("empty").style.display = "block";
+      document.getElementById("empty").textContent = "推し焚きの読み込みに失敗しました。時間をおいて再度お試しください。";
+    }
+  })();
+})();
+</script>
+</body>
+</html>

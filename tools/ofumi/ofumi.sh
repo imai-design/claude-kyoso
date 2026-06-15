@@ -14,6 +14,7 @@ set -euo pipefail
 
 HANDLE=""
 MEMBERSHIP=""
+OSHI=""
 SUBMIT=0
 ENGINE="auto"
 JSON_ONLY=0
@@ -25,6 +26,7 @@ while [ $# -gt 0 ]; do
   case "$1" in
     --handle) HANDLE="${2:-}"; shift 2;;
     --membership) MEMBERSHIP="${2:-}"; shift 2;;
+    --oshi) OSHI="${2:-}"; shift 2;;
     --submit) SUBMIT=1; shift;;
     --engine) ENGINE="${2:-auto}"; shift 2;;
     --json) JSON_ONLY=1; shift;;
@@ -32,7 +34,8 @@ while [ $# -gt 0 ]; do
     --guild) GUILD=1; shift;;
     --guild-svg) GUILD=1; GUILD_SVG_OUT="${2:-adventurer-card.svg}"; shift 2;;
     -h|--help)
-      echo "ofumi.sh [--handle NAME] [--membership 学徒|信徒|神] [--submit] [--engine auto|ccusage|python] [--json] [--guild] [--guild-svg PATH] [--no-clipboard]"
+      echo "ofumi.sh [--handle NAME] [--membership 学徒|信徒|神] [--oshi tera|kiri|mirai] [--submit] [--engine auto|ccusage|python] [--json] [--guild] [--guild-svg PATH] [--no-clipboard]"
+      echo "  --oshi tera|kiri|mirai  推し焚き: 焚べたトークンを推しメンバー(テラ/キリ/ミライ)への応援に。カンマで掛け持ち可・未指定=箱推し"
       echo "  --guild         クロード冒険者ギルドの冒険者ステータスカード(Lv/称号/EXP/進捗)をテキスト表示"
       echo "  --guild-svg PATH 同カードをSVGバナーとして PATH に書き出す"
       exit 0;;
@@ -157,7 +160,7 @@ if [ -z "$TOTALS" ]; then
   exit 1
 fi
 
-RENDER=(python3 "$WORK/render.py" --handle "$HANDLE" --membership "$MEMBERSHIP" --engine "$ENGINE_RESOLVED" --ranks "$WORK/ranks.json")
+RENDER=(python3 "$WORK/render.py" --handle "$HANDLE" --membership "$MEMBERSHIP" --oshi "$OSHI" --engine "$ENGINE_RESOLVED" --ranks "$WORK/ranks.json")
 
 # --json だけ欲しい場合
 if [ "$JSON_ONLY" = "1" ]; then

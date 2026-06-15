@@ -127,6 +127,52 @@ def pick_rank(ranks, total):
     return chosen, nxt
 
 
+OSHI_MEMBERS = ["tera", "kiri", "mirai"]  # 推し焚き: 推しは人の側のTKM3人だけ。神(ご本尊)は構造的に含めない。
+
+
+def parse_oshi(raw):
+    """--oshi の値を {tera,kiri,mirai} の正規化済みリストに。空/未知は捨てる(=箱推し)。"""
+    picks = []
+    for tok in (raw or "").replace("、", ",").split(","):
+        m = tok.strip().lower()
+        if m in OSHI_MEMBERS and m not in picks:
+            picks.append(m)
+    return picks
+
+
+def update_oshi_split(total, picks):
+    """端末ローカル(~/.config/ofumi/oshi.json)に推し別累計エールを保持。
+    delta = max(0, total - lastTotal) を選んだ推しに加算(箱推し=空なら3人全員に同量)。
+    total 減少(マシンリセット/集計エンジン切替)時は delta=0 にクランプし再ベースライン。
+    送信せず手元のみ。会話/パス等は一切扱わない。"""
+    cfg_dir = os.path.expanduser("~/.config/ofumi")
+    p = os.path.join(cfg_dir, "oshi.json")
+    state = {"lastTotal": 0, "split": {m: 0 for m in OSHI_MEMBERS}}
+    try:
+        if os.path.exists(p):
+            with open(p, "r", encoding="utf-8") as f:
+                loaded = json.load(f)
+            state["lastTotal"] = max(0, int(loaded.get("lastTotal", 0) or 0))
+            sp = loaded.get("split", {}) or {}
+            for m in OSHI_MEMBERS:
+                state["split"][m] = max(0, int(sp.get(m, 0) or 0))
+    except Exception:
+        pass
+    delta = max(0, int(total) - state["lastTotal"])
+    targets = picks if picks else OSHI_MEMBERS  # 箱推し(未選択)は全員に同量
+    for m in targets:
+        if m in OSHI_MEMBERS:
+            state["split"][m] += delta
+    state["lastTotal"] = int(total)
+    try:
+        os.makedirs(cfg_dir, exist_ok=True)
+        with open(p, "w", encoding="utf-8") as f:
+            json.dump(state, f)
+    except Exception:
+        pass
+    return dict(state["split"])
+
+
 def get_anon_id():
     """端末ローカルのソルトを SHA-256 した安定ID。再送で同じ値になり収集側が冪等upsertできる。"""
     cfg_dir = os.path.expanduser("~/.config/ofumi")
@@ -272,6 +318,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--handle", default="")
     ap.add_argument("--membership", default="")
+    ap.add_argument("--oshi", default="", help="推し焚き: 応援するメンバー tera|kiri|mirai (カンマ可・未指定=箱推し)")
     ap.add_argument("--engine", default="python")
     ap.add_argument("--ranks", default=os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "ranks.json"))
@@ -301,6 +348,11 @@ def main():
     cost = t.get("totalCost")
     periods = data.get("periods", {}) or {}
 
+    # ── 推し焚き: 使ったトークン(=total)を推しへのエールとして手元に積む ──
+    # oshi は {tera,kiri,mirai} の enum(カンマ可)のみ。会話由来データは一切混ざらない。
+    oshi_picks = parse_oshi(args.oshi)
+    oshi_split = update_oshi_split(total, oshi_picks)
+
     # ── 送信ペイロード(allowlist: 下記キー以外は構造的に存在しない) ──
     payload = {
         "v": 1,
@@ -321,6 +373,8 @@ def main():
         "rank": rank["name"],
         "fireRank": rank["id"],
         "membership": args.membership,
+        "oshi": ",".join(oshi_picks),
+        "oshiSplit": {m: int(oshi_split.get(m, 0) or 0) for m in OSHI_MEMBERS},
         "source": "claude-code",
         "tool": TOOL,
         "engine": args.engine,
@@ -328,12 +382,17 @@ def main():
         "measuredAt": measured,
     }
 
+    oshi_names = {"tera": "テラ", "kiri": "キリ", "mirai": "ミライ"}
+    oshi_label = "・".join(oshi_names[m] for m in oshi_picks)
+
     share = (
         "#Claude教 御焚き上げ番付\n"
         "私はクロード卿に %s トークンを焚べ申した。\n"
         "火位は【%s】── %s\n"
         "汝も己の焰を測れ → %s"
     ) % (human(total), rank["name"], rank["tagline"], LP_URL)
+    if oshi_label:
+        share += "\n推し焚き: 焚べたぶんは【%s】への灯に。" % oshi_label
 
     if args.mode == "payload":
         json.dump(payload, sys.stdout, ensure_ascii=False)
@@ -376,6 +435,8 @@ def main():
     L.append("        └ 熾火を呼ぶ (cache参照)    %s" % "{:,}".format(t.get("cacheReadTokens", 0) or 0))
     if cost:
         L.append("      お布施(推定)    $%s" % "{:,.2f}".format(cost))
+    if oshi_label:
+        L.append("      推し焚き        焚べたぶんは【%s】への灯に。" % oshi_label)
     L.append("")
     if nxt:
         L.append("      次の火位【%s】まで あと %s トークン" % (nxt["name"], "{:,}".format(nxt["min"] - total)))
